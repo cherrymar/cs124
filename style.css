@@ -1,0 +1,61 @@
+/*
+<body>
+    <div id="header"></div>
+    <div id="title"><h1>Todo(s):</h1></div>
+    <form>
+        <input type="text" id="new-todo-box" placeholder="New Task"/>
+        <button>Add</button>
+    </form>
+    <div id="menu"></div>
+</body>
+*/
+
+#header {
+    width: 100%;
+    /*height: 20px;*/
+    background: lightskyblue;
+}
+
+h1 {
+    color: midnightblue;
+    /*text-decoration: underline;*/
+    /*text-underline-offset: 0.2em;*/
+    padding: 10px 5px;
+}
+
+#menu {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100px;
+    background: lightskyblue;
+}
+
+#new-todo-box {
+    border: none;
+    border-bottom: 2px solid cornflowerblue;
+    transition: 0.5s;
+}
+
+#new-todo-box:focus {
+    outline: none;
+    /*border: none;*/
+    background-color: lightcyan;
+}
+
+#add-button {
+    background-color: Transparent;
+    border-color: Transparent;
+    font-size: x-large;
+}
+
+#disabled-button {
+    background-color: Transparent;
+    border-color: Transparent;
+    font-size: x-large;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+
