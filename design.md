@@ -30,7 +30,7 @@ For the first bullet, the screen starts with just the header, footer, a textbox 
 ### Designs
 |                         |                         |                         |
 |:-----------------------:|:-----------------------:|:-----------------------:|
-| <img src="./images/bullet1before.png"> | <img src="./images/bullet1during.png"> | <img src="./images/bullet1after.png"> |
+| <img width= "500" src="./images/bullet1before.png"> | <img width= "500" src="./images/bullet1during.png"> | <img width= "500" src="./images/bullet1after.png"> |
 |Before: The screen starts with just the header, footer, New Task textbox, and add button. | During: A user can start typing their task into the text box. | After: Once the user clicks the "+" button or presses enter, a new task is created and added to the list below. |
 | <img src="./images/bullet1after.png"> | <img src="./images/bullet2during.png"> | <img src="./images/bullet2after.png"> |
 | Before: We start with a non empty list. | During: The user starts typing a new task to add. | After: Another task is added to the non-empty task list. |
