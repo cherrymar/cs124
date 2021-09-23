@@ -36,7 +36,7 @@ For the first bullet, the screen starts with just the header, footer, a textbox 
 ### Designs
 |                           |                           |                           |
 |:-------------------------:|:-------------------------:|:-------------------------:|
-|<img width="1604" src="./images/bullet1before.png">  Before |<img width="1604" src="./images/bullet1during.png"> During |<img width="1604" src="./images/bullet1after.png"> After |
+|<img width="1600" src="./images/bullet1before.png">  Before |<img width="1600" src="./images/bullet1during.png"> During |<img width="1600" src="./images/bullet1after.png"> After |
 
 
 ## Challenges
