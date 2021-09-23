@@ -33,6 +33,12 @@ We plan to do user testing when we make the app more functional.
 
 For the first bullet, the screen starts with just the header, footer, a textbox with placeholder "New Task" and an add button. Then, the user can add the text into the textbox and the final screen shows the added task as a bulletpoint with a checkbox. 
 
+### Designs
+|                           |                           |                           |
+|:-------------------------:|:-------------------------:|:-------------------------:|
+|<img width="1604" src="./images/bullet1before.png">  Before |  <img width="1604" src="./images/bullet1during.png"> During|<img width="1604" src="./images/bullet1after.png"> After|
+
+
 ## Challenges
 <!-- challenges you faced -->
 
@@ -42,4 +48,3 @@ We wanted to remove the border of the texboxes when clicked, but setting the bor
 <!-- parts of the design you're most proud of -->
 
 We are proud of figuring out how to add a trashcan icon.
-
