@@ -41,7 +41,7 @@ table th:nth-of-type(3) {
 }
 </style>
 
-|                         |                         |                         |
+|  <div style="width:290px">property</div> |  <div style="width:290px">property</div> |  <div style="width:290px">property</div> |
 |:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
 |<img width="500" src="./images/bullet1before.png"> Before: The screen starts with just the header, footer, New Task textbox, and add button. |<img width="500" src="./images/bullet1during.png"> During: A user can start typing their task into the text box. |<img width="500" src="./images/bullet1after.png"> After: Once the user clicks the "+" button or presses enter, a new task is created and added to the list below. |
 |<img width="500" src="./images/bullet1after.png"> Before: We start with a non empty list. |<img width="500" src="./images/bullet2during.png"> During: The user starts typing a new task to add. |<img width="500" src="./images/bullet2after.png"> After: Another task is added to the non-empty task list. |
