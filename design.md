@@ -38,10 +38,10 @@ For the first bullet, the screen starts with just the header, footer, a textbox 
 |:-------------------------:|:-------------------------:|:-------------------------:|
 |<img src="./images/bullet1before.png"> Before |<img src="./images/bullet1during.png"> During |<img src="./images/bullet1after.png"> After |
 |<img src="./images/bullet1after.png"> Before |<img src="./images/bullet1during.png"> During |<img src="./images/bullet2after.png"> After |
-|<img src="./images/bullet3before.png"> Before | |<img src="./images/bullet3after.png"> After |
+|<img src="./images/bullet3before.png"> Before | NA |<img src="./images/bullet3after.png"> After |
 |<img src="./images/bullet4before.png"> Before |<img src="./images/bullet1during.png"> During |<img src="./images/bullet4after.png"> After |
-|<img src="./images/bullet5before.png"> Before | |<img src="./images/bullet5after.png"> After |
-|<img src="./images/bullet6before.png"> Before | |<img src="./images/bullet6after.png"> After |
+|<img src="./images/bullet5before.png"> Before | NA |<img src="./images/bullet5after.png"> After |
+|<img src="./images/bullet6before.png"> Before | NA |<img src="./images/bullet6after.png"> After |
 
 
 
