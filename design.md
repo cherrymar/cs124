@@ -28,6 +28,19 @@ We plan to do user testing when we make the app more functional.
 For the first bullet, the screen starts with just the header, footer, a textbox with placeholder "New Task" and an add button. Then, the user can add the text into the textbox and the final screen shows the added task as a bulletpoint with a checkbox. 
 
 ### Designs
+<style>
+table th:first-of-type {
+    width: 33%;
+}
+table th:nth-of-type(2) {
+    width: 33%;
+}
+table th:nth-of-type(3) {
+    width: 33%;
+}
+}
+</style>
+
 |                         |                         |                         |
 |:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
 |<img width="500" src="./images/bullet1before.png"> Before: The screen starts with just the header, footer, New Task textbox, and add button. |<img width="500" src="./images/bullet1during.png"> During: A user can start typing their task into the text box. |<img width="500" src="./images/bullet1after.png"> After: Once the user clicks the "+" button or presses enter, a new task is created and added to the list below. |
