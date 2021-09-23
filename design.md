@@ -30,8 +30,10 @@ For the first bullet, the screen starts with just the header, footer, a textbox 
 ### Designs
 |                         |                         |                         |
 |:-----------------------:|:-----------------------:|:-----------------------:|
-|<img src="./images/bullet1before.png"> Before: The screen starts with just the header, footer, New Task textbox, and add button. |<img src="./images/bullet1during.png"> During: A user can start typing their task into the text box. |<img src="./images/bullet1after.png"> After: Once the user clicks the "+" button or presses enter, a new task is created and added to the list below. |
-|<img src="./images/bullet1after.png"> Before: We start with a non empty list. |<img src="./images/bullet2during.png"> During: The user starts typing a new task to add. |<img src="./images/bullet2after.png"> After: Another task is added to the non-empty task list. |
+| <img src="./images/bullet1before.png"> | <img src="./images/bullet1during.png"> | <img src="./images/bullet1after.png"> |
+|Before: The screen starts with just the header, footer, New Task textbox, and add button. | During: A user can start typing their task into the text box. | After: Once the user clicks the "+" button or presses enter, a new task is created and added to the list below. |
+| <img src="./images/bullet1after.png"> | <img src="./images/bullet2during.png"> | <img src="./images/bullet2after.png"> |
+| Before: We start with a non empty list. | During: The user starts typing a new task to add. | After: Another task is added to the non-empty task list. |
 |<img src="./images/bullet3before.png"> Before: We start with a non empty list with a task called "Call Mom". | NA |<img src="./images/bullet3after.png"> After: When the user clicks the checkbox, the box is checked (or unchecked if already checked). |
 |<img src="./images/bullet4before.png"> Before: We start with a non empty list with "Test John". |<img src="./images/bullet1during.png"> During: When the user clicks on the task, it focuses the textbox so that the user can edit the task description. |<img src="./images/bullet4after.png"> After: When the user clicks outside of the textbox or presses enter, the task is updated with the new description. |
 |<img src="./images/bullet5before.png"> Before: We start with a task list where some items are checked. | NA |<img src="./images/bullet5after.png"> After: When the user clicks the "View Incomplete" button, the list shows of filtered view of only tasks that have not been checked. |
