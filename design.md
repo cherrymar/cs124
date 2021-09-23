@@ -28,28 +28,64 @@ We plan to do user testing when we make the app more functional.
 For the first bullet, the screen starts with just the header, footer, a textbox with placeholder "New Task" and an add button. Then, the user can add the text into the textbox and the final screen shows the added task as a bulletpoint with a checkbox. 
 
 ### Designs
-
-| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
-|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+<!-- |                         |                         |                         |
+|:-----------------------:|:-----------------------:|:-----------------------:|
 |<img width="500" src="./images/bullet1before.png"> Before: The screen starts with just the header, footer, New Task textbox, and add button. |<img width="500" src="./images/bullet1during.png"> During: A user can start typing their task into the text box. |<img width="500" src="./images/bullet1after.png"> After: Once the user clicks the "+" button or presses enter, a new task is created and added to the list below. |
 |<img width="500" src="./images/bullet1after.png"> Before: We start with a non empty list. |<img width="500" src="./images/bullet2during.png"> During: The user starts typing a new task to add. |<img width="500" src="./images/bullet2after.png"> After: Another task is added to the non-empty task list. |
 |<img width="500" src="./images/bullet3before.png"> Before: We start with a non empty list with a task called "Call Mom". | NA |<img src="./images/bullet3after.png"> After: When the user clicks the checkbox, the box is checked (or unchecked if already checked). |
 |<img width="500" src="./images/bullet4before.png"> Before: We start with a non empty list with "Test John". |<img width="500" src="./images/bullet1during.png"> During: When the user clicks on the task, it focuses the textbox so that the user can edit the task description. |<img width="500" src="./images/bullet4after.png"> After: When the user clicks outside of the textbox or presses enter, the task is updated with the new description. |
 |<img width="500" src="./images/bullet5before.png"> Before: We start with a task list where some items are checked. | NA |<img width="500" src="./images/bullet5after.png"> After: When the user clicks the "View Incomplete" button, the list shows of filtered view of only tasks that have not been checked. |
-|<img width="500" src="./images/bullet6before.png"> Before: We start with a task list where some items are checked. | NA |<img width="500" src="./images/bullet6after.png"> After: When the user clicks the "Delete All Completed" button, all checked tasks are deleted from the list. The "Delete All Completed" button becomes disabled until new tasks are checked. |
+|<img width="500" src="./images/bullet6before.png"> Before: We start with a task list where some items are checked. | NA |<img width="500" src="./images/bullet6after.png"> After: When the user clicks the "Delete All Completed" button, all checked tasks are deleted from the list. The "Delete All Completed" button becomes disabled until new tasks are checked. | -->
 
 
-<!-- 
+
 |                         |                         |                         |
 |:-----------------------:|:-----------------------:|:-----------------------:|
 | <img width= "500" src="./images/bullet1before.png"> | <img width= "500" src="./images/bullet1during.png"> | <img width= "500" src="./images/bullet1after.png"> |
+
+|                         |                         |                         |
+|:-----------------------:|:-----------------------:|:-----------------------:|
 |Before: The screen starts with just the header, footer, New Task textbox, and add button. | During: A user can start typing their task into the text box. | After: Once the user clicks the "+" button or presses enter, a new task is created and added to the list below. |
+
+|                         |                         |                         |
+|:-----------------------:|:-----------------------:|:-----------------------:|
 | <img src="./images/bullet1after.png"> | <img src="./images/bullet2during.png"> | <img src="./images/bullet2after.png"> |
+
+|                         |                         |                         |
+|:-----------------------:|:-----------------------:|:-----------------------:|
 | Before: We start with a non empty list. | During: The user starts typing a new task to add. | After: Another task is added to the non-empty task list. |
-|<img src="./images/bullet3before.png"> Before: We start with a non empty list with a task called "Call Mom". | NA |<img src="./images/bullet3after.png"> After: When the user clicks the checkbox, the box is checked (or unchecked if already checked). |
-|<img src="./images/bullet4before.png"> Before: We start with a non empty list with "Test John". |<img src="./images/bullet1during.png"> During: When the user clicks on the task, it focuses the textbox so that the user can edit the task description. |<img src="./images/bullet4after.png"> After: When the user clicks outside of the textbox or presses enter, the task is updated with the new description. |
-|<img src="./images/bullet5before.png"> Before: We start with a task list where some items are checked. | NA |<img src="./images/bullet5after.png"> After: When the user clicks the "View Incomplete" button, the list shows of filtered view of only tasks that have not been checked. |
-|<img src="./images/bullet6before.png"> Before: We start with a task list where some items are checked. | NA |<img src="./images/bullet6after.png"> After: When the user clicks the "Delete All Completed" button, all checked tasks are deleted from the list. The "Delete All Completed" button becomes disabled until new tasks are checked. | -->
+
+|                         |                         |
+|:-----------------------:|:-----------------------:|
+|<img src="./images/bullet3before.png"> |<img src="./images/bullet3after.png"> |
+
+|                         |                         |
+|:-----------------------:|:-----------------------:|
+| Before: We start with a non empty list with a task called "Call Mom". |After: When the user clicks the checkbox, the box is checked (or unchecked if already checked). |
+
+|                         |                         |                         |
+|:-----------------------:|:-----------------------:|:-----------------------:|
+|<img src="./images/bullet4before.png"> | <img src="./images/bullet1during.png"> | <img src="./images/bullet4after.png"> |
+
+|                         |                         |                         |
+|:-----------------------:|:-----------------------:|:-----------------------:|
+| Before: We start with a non empty list with "Test John". | During: When the user clicks on the task, it focuses the textbox so that the user can edit the task description. | After: When the user clicks outside of the textbox or presses enter, the task is updated with the new description. |
+
+|                         |                         |
+|:-----------------------:|:-----------------------:|
+|<img src="./images/bullet5before.png"> |<img src="./images/bullet5after.png"> |
+
+|                         |                         |
+|:-----------------------:|:-----------------------:|
+| Before: We start with a task list where some items are checked. | After: When the user clicks the "View Incomplete" button, the list shows of filtered view of only tasks that have not been checked.|
+
+|                         |                         |
+|:-----------------------:|:-----------------------:|
+|<img src="./images/bullet6before.png"> | <img src="./images/bullet6after.png"> |
+
+|                         |                         |
+|:-----------------------:|:-----------------------:|
+| Before: We start with a task list where some items are checked. | After: When the user clicks the "Delete All Completed" button, all checked tasks are deleted from the list. The "Delete All Completed" button becomes disabled until new tasks are checked. |
 
 ## Challenges
 <!-- challenges you faced -->
