@@ -1,23 +1,43 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
 
-function App() {
+import TaskList from './components/TaskList';
+import NewTask from './components/NewTask';
+
+
+function App(props) {
+  
+  const [data, setData] = useState(props.initialData);
+
+  function handleDeleteTask(taskId) {
+      setData(data.filter(task => task.id !==taskId))
+  }
+
+  function handleAddTask(description) {
+      setData([...data, {
+          id: generateUniqueID(),
+          description: description,
+          completed: false
+      }])
+  }
+
+  function handleTaskFieldChanged(taskId, field, value) {
+      setData(data.map(
+          task => task.id !== taskId
+              ? task
+              : {...task, [field]: value}))
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {/* <TextField placeholder="New task" variant="standard" fullWidth margin="dense" size="medium" /> */}
+      <NewTask onAddTask={handleAddTask}/>
+      <TaskList 
+        data={data} 
+        onDeleteTask={handleDeleteTask}
+        onTaskFieldChanged={handleTaskFieldChanged}
+      />
     </div>
   );
 }

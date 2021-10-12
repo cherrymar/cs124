@@ -1,12 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import InMemoryApp from './InMemoryApp';
 import reportWebVitals from './reportWebVitals';
+
+
+let initialData = [
+  {
+    id: 1,
+    description: "Do laundry",
+    completed: false,
+  },
+  {
+    id: 2,
+    description: "Call mom",
+    completed: false,
+  },
+
+]
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    {/* <App initialData={initialData}/> */}
+    <InMemoryApp initialData={initialData}/>
   </React.StrictMode>,
   document.getElementById('root')
 );
