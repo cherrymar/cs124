@@ -12,6 +12,7 @@ function TaskList(props) {
                 onRowClick={(id) =>
                     setSelectedId(id)}
                 onTaskFieldChanged={props.onTaskFieldChanged}
+                onDeleteTask={props.onDeleteTask}
                 selected={a.id === selectedId}
                 key={a.id}
                 {...a} />)}
@@ -27,9 +28,6 @@ function TaskList(props) {
                 Add
             </button> */}
           </div>
-
-
-
 
 
 

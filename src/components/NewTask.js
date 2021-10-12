@@ -1,18 +1,35 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 
+import Button from '@mui/material/Button';
 
 const NewItem = styled.input`
     outline: none;
-    width: 90%;
+    width: 85%;
     font-size: 4vw;
     border: none;
     border-bottom: 2px solid black;
-    padding: 0px;
-    margin: 40px;
+    padding: 0;
+    // margin: 50px 50px 50px 0;
+    margin: 8wh 8wh 8wh 0;
+    background-color: black;
+    color: lightgray;
     &:focus {
         border-bottom: 2px solid cornflowerblue;
     }
+`;
+
+const SubmitButtonContainer = styled.div`
+    width: 5%;
+    // margin: 50px 50px 50px 0;
+    margin: 5wh 5wh 5wh 0;
+    // align-self: flex-end;
+`;
+
+const Container = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: center;
 `;
 
 
@@ -26,11 +43,11 @@ function NewTask(props) {
 
     return (
     <>
-        {/* <form onSubmit={handleSubmit}> */}
+        <Container>
             <NewItem placeholder="New task" value={taskDescription} onChange={event => setTaskDescription(event.target.value)}/> 
-            <button onClick={handleSubmit}>Submit</button>
-            {/* <input type="submit" value="Submit" /> */}
-        {/* </form> */}
+            <SubmitButtonContainer><Button variant="contained" sx={{width: "25%", fontSize: 10}} onClick={handleSubmit}>Submit</Button></SubmitButtonContainer>
+
+        </Container>
         
     </>
   );

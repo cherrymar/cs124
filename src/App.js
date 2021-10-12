@@ -1,9 +1,25 @@
-import './App.css';
 import { useState } from 'react';
 import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
+import styled from 'styled-components';
+
+import Button from '@mui/material/Button';
+
 
 import TaskList from './components/TaskList';
 import NewTask from './components/NewTask';
+import DeleteAllCompletedButton from './components/DeleteAllCompletedButton';
+
+import './App.css';
+
+const Title = styled.div`
+  font-size: 10vw;
+  font-weight: 700;
+  text-align: left;
+`;
+
+const Contianer = styled.div`
+  margin: 5vw;
+`
 
 
 function App(props) {
@@ -29,16 +45,27 @@ function App(props) {
               : {...task, [field]: value}))
   }
 
+  function handleDeleteAllCompletedTasks() {
+    setData(data.filter(task => !task.completed))
+}
+
   return (
-    <div className="App">
-      {/* <TextField placeholder="New task" variant="standard" fullWidth margin="dense" size="medium" /> */}
-      <NewTask onAddTask={handleAddTask}/>
-      <TaskList 
-        data={data} 
-        onDeleteTask={handleDeleteTask}
-        onTaskFieldChanged={handleTaskFieldChanged}
-      />
-    </div>
+    <>
+      <Contianer className="App">
+        <Title>Tasks</Title>
+        {/* <TextField placeholder="New task" variant="standard" fullWidth margin="dense" size="medium" /> */}
+        <NewTask onAddTask={handleAddTask}/>
+        <TaskList 
+          data={data} 
+          onDeleteTask={handleDeleteTask}
+          onTaskFieldChanged={handleTaskFieldChanged}
+        />
+
+        <DeleteAllCompletedButton onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}/>
+        
+      </Contianer>
+    </>
+    
   );
 }
 

@@ -16,7 +16,11 @@ let initialData = [
     description: "Call mom",
     completed: false,
   },
-
+  {
+    id: 3,
+    description: "Call dad",
+    completed: true,
+  },
 ]
 
 
