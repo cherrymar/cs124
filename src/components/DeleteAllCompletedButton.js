@@ -15,14 +15,15 @@ import react, {useState} from 'react';
 const Container = styled.div`
     // display: flex;
     // justifyContent: flex-end;
-    // position: absolute;
+    // position: relative;
     // right: 0;
     // bottom: 0;
-    margin: 0;
+    // margin: 50px;
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
     font-size: 4px;
+    
     
 `;
 
@@ -62,6 +63,12 @@ const CustomButtonRoot = styled('button')(`
 const ModalText = styled.div`
   color: black;
   font-size: 30px;
+`;
+
+
+const StyledButton = styled(Button)`
+
+
 `;
 
 function DeleteAllCompletedButton(props) {

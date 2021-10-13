@@ -22,6 +22,7 @@ const Title = styled.div`
 
 const Container = styled.div`
   margin: 5vw;
+  height: 95vh;
 `
 
 const Selector = styled.select`
@@ -62,7 +63,6 @@ function App(props) {
     <>
       <Container className="App">
         <Title>Tasks</Title>
-        {/* <TextField placeholder="New task" variant="standard" fullWidth margin="dense" size="medium" /> */}
         <NewTask onAddTask={handleAddTask}/>
         <TaskList 
           data={data} 
@@ -70,8 +70,10 @@ function App(props) {
           onTaskFieldChanged={handleTaskFieldChanged}
           view={view}
         />
+        { view !== 2 && <DeleteAllCompletedButton onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}/>
 
-        <DeleteAllCompletedButton onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}/>
+        }
+        
         {/* <Selector onChange={(values) => setView(values)} color="black">
           <option value="all">all</option>
             <option value="completed">completed</option>

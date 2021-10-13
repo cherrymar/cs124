@@ -15,6 +15,7 @@ const Item = styled.input`
     &:focus {
         border-bottom: 2px solid lightgray;
     }
+    overflowX: "auto";
 `;
 
 const Container = styled.div`
@@ -26,8 +27,8 @@ const Container = styled.div`
 `;
 
 const CheckBox = styled.input`
-    width: 2vw;
-    height: 2vw;
+    width: 4vw;
+    height: 4vw;
     // margin: 50px 50px 50px 0;
     margin: 5wh 5wh 5wh 0;
 `;
@@ -47,7 +48,7 @@ function TaskItem(props) {
                 onChange={event => props.onTaskFieldChanged(props.id, "description", event.target.value)}
                 /> 
             <IconButton aria-label="delete" size="small" onClick={() => props.onDeleteTask(props.id)}>
-                <DeleteIcon fontSize="small" color="gray"/>
+                <DeleteIcon fontSize="small" sx={{color: "lightgray"}}/>
             </IconButton> 
         </Container>
         
