@@ -5,6 +5,13 @@ import Button from '@mui/material/Button';
 import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/core/ButtonUnstyled';
 import { ButtonBase } from '@mui/material';
 
+
+
+import Alert from './Alert.js';
+import './Alert.css';
+import react, {useState} from 'react';
+
+
 const Container = styled.div`
     // display: flex;
     // justifyContent: flex-end;
@@ -52,14 +59,38 @@ const CustomButtonRoot = styled('button')(`
   }
 `);
 
+const ModalText = styled.div`
+  color: black;
+  font-size: 30px;
+`;
+
 function DeleteAllCompletedButton(props) {
+    const [showAlert, setShowAlert] = useState(false);
+
+    function toggleModal(modalState) {
+        setShowAlert(modalState)
+    }
+
+    function handleAlertOK() {
+        toggleModal(false)
+        props.onDeleteAllCompletedTasks()
+    }
+
+
+    
   return (
     <>
         <Container>
             {/* <ButtonBase>ButtonBase</ButtonBase>
             <CustomButtonRoot>Button</CustomButtonRoot>
             <ButtonUnstyled {...props} component={CustomButtonRoot} >Delete All Completed</ButtonUnstyled> */}
-            <Button variant="contained" onClick={() => props.onDeleteAllCompletedTasks()} sx={{fontSize: 10}}>Delete Completed</Button>
+            <Button variant="contained" onClick={() => toggleModal(!showAlert)} sx={{fontSize: 10}}>Delete Completed</Button>
+
+            {showAlert && <Alert onClose={() => toggleModal(false)} onOK={() => handleAlertOK()} cancelText="Cancel" OKText="Delete" >
+                <ModalText>
+                    Are you sure you want to delete all tasks?
+                </ModalText>
+            </Alert>}
         </Container>
         
     </>

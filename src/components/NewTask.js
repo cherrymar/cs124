@@ -5,13 +5,13 @@ import Button from '@mui/material/Button';
 
 const NewItem = styled.input`
     outline: none;
-    width: 85%;
+    width: 80%;
     font-size: 4vw;
     border: none;
     border-bottom: 2px solid black;
     padding: 0;
     // margin: 50px 50px 50px 0;
-    margin: 8wh 8wh 8wh 0;
+    margin: 2vw 2vw 2vw 0;
     background-color: black;
     color: lightgray;
     &:focus {
@@ -22,7 +22,7 @@ const NewItem = styled.input`
 const SubmitButtonContainer = styled.div`
     width: 5%;
     // margin: 50px 50px 50px 0;
-    margin: 5wh 5wh 5wh 0;
+    // margin: 5wh 5wh 5wh 0;
     // align-self: flex-end;
 `;
 
