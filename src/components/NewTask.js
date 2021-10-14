@@ -5,6 +5,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import Select from "react-dropdown-select";
+
 
 import '../App.css'
 
@@ -23,6 +25,9 @@ const NewItem = styled.textarea`
         border-bottom: 2px solid cornflowerblue;
     }
     overflow-wrap: break-word;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
 `;
 
 const SubmitButtonContainer = styled.div`
@@ -73,22 +78,24 @@ const TextInput = styled(TextField)({
   });
 
 
+  const defaultTheme = createTheme();
+
   const theme = createTheme({
     components: {
-      // Name of the component
       MuiButton: {
-        styleOverrides: {
-          // Name of the slot
-          root: {
-            // Some CSS
-            fontSize: '1rem',
-            fontColor: "white"
+        variants: [
+          {
+            props: { variant: 'contained' },
+            style: {
+            //   textTransform: 'none',
+            //   border: `2px dashed ${defaultTheme.palette.primary.main}`,
+            //   color: defaultTheme.palette.primary.main,
+            },
           },
-        },
+        ],
       },
     },
   });
-
 
 function NewTask(props) {
     const [taskDescription, setTaskDescription] = useState("");
@@ -101,7 +108,7 @@ function NewTask(props) {
     return (
     <>
         <Container>
-        <Box
+        {/* <Box
             component="form"
             sx={{
                 '& .MuiTextField-root': { m: 1, width: '20ch'},
@@ -109,8 +116,8 @@ function NewTask(props) {
             noValidate
             autoComplete="off"
         >
-            {/* <ThemeProvider theme={theme}> */}
-                <TextField
+                <StyledSelect
+                    color={"blue"}
                     id="standard-multiline-flexible"
                     label="New task"
                     multiline
@@ -118,14 +125,16 @@ function NewTask(props) {
                     variant="standard"
                     sx={{color: "white", opacity: "50%"}}
                 />
-            {/* </ThemeProvider> */}
-            
-        </Box>
 
             
-            {/* <NewItem placeholder="New task" value={taskDescription} onChange={event => setTaskDescription(event.target.value)}/>  */}
+        </Box> */}
+
+            
+            <NewItem placeholder="New task" value={taskDescription} onChange={event => setTaskDescription(event.target.value)}/> 
             <SubmitButtonContainer>
-                <Button disabled={taskDescription===""} variant="contained" sx={{width: "25%", fontSize: 10}} onClick={handleSubmit}>Submit</Button>
+                <ThemeProvider theme={theme}>
+                <   Button disabled={taskDescription===""} variant="contained" sx={{width: "25%", fontSize: 10}} onClick={handleSubmit}>Submit</Button>
+                </ThemeProvider>
                 {/* <SubmitButton disabled={taskDescription===""} variant="contained">Submit</SubmitButton> */}
             </SubmitButtonContainer>
 

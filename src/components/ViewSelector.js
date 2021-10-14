@@ -37,7 +37,7 @@ export default function ViewSelector(props) {
   return (
     <React.Fragment>
       <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
-        <Button>{options[selectedIndex]}</Button>
+        <Button sx={{width: "110px", zIndex: "-1"}}>{options[selectedIndex]}</Button>
         <Button
           size="small"
           aria-controls={open ? 'split-button-menu' : undefined}
@@ -63,6 +63,7 @@ export default function ViewSelector(props) {
               transformOrigin:
                 placement === 'bottom' ? 'center top' : 'center bottom',
             }}
+            sx={{width: "110px", zIndex: "-1"}}
           >
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>

@@ -4,18 +4,24 @@ import styled from 'styled-components';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const Item = styled.input`
+const Item = styled.textarea`
     outline: none;
     width: 80%;
     font-size: 4vw;
-    border: 2px solid transparent;
-    // padding: 0 0 0 40px;
+    border: none;
+    border-bottom: 2px solid black;
+    padding: 0;
+    // margin: 50px 50px 50px 0;
+    margin: 2vw 2vw 2vw 0;
     background-color: black;
     color: lightgray;
     &:focus {
-        border-bottom: 2px solid lightgray;
+        border-bottom: 2px solid cornflowerblue;
     }
-    overflowX: "auto";
+    overflow-wrap: break-word;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
 `;
 
 const Container = styled.div`
@@ -30,7 +36,7 @@ const CheckBox = styled.input`
     width: 4vw;
     height: 4vw;
     // margin: 50px 50px 50px 0;
-    margin: 5wh 5wh 5wh 0;
+    margin: 2vw 2vw 2vw 0;
 `;
 
 function TaskItem(props) {

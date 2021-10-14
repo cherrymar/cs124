@@ -25,19 +25,21 @@ const Container = styled.div`
   height: 95vh;
 `
 
-const Selector = styled.select`
-  font-size: 20px;
-  background-color: darkgray;
-  color: white;
+const HeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 function App(props) {
   
   const [data, setData] = useState(props.initialData);
   const [view, setView] = useState(0);
+  const [hasCompleted, setHasCompleted] = useState(data.filter(task => task.completed) !== []);
+  
 
   function handleDeleteTask(taskId) {
       setData(data.filter(task => task.id !==taskId))
+      setHasCompleted(data.filter(task => task.completed) !== []);
   }
 
   function handleAddTask(description) {
@@ -46,6 +48,7 @@ function App(props) {
           description: description,
           completed: false
       }])
+      setHasCompleted(data.filter(task => task.completed) !== []);
   }
 
   function handleTaskFieldChanged(taskId, field, value) {
@@ -53,16 +56,24 @@ function App(props) {
           task => task.id !== taskId
               ? task
               : {...task, [field]: value}))
+      setHasCompleted(data.filter(task => task.completed) !== []);
+
+      console.log(hasCompleted);
   }
 
   function handleDeleteAllCompletedTasks() {
     setData(data.filter(task => !task.completed))
+    setHasCompleted(data.filter(task => task.completed) !== []);
   }
 
   return (
     <>
       <Container className="App">
-        <Title>Tasks</Title>
+        <HeaderContainer>
+          <Title>Tasks</Title>
+          <ViewSelector onSelectView={setView} sx={{width: "100px"}}/>
+        </HeaderContainer>
+        
         <NewTask onAddTask={handleAddTask}/>
         <TaskList 
           data={data} 
@@ -70,17 +81,7 @@ function App(props) {
           onTaskFieldChanged={handleTaskFieldChanged}
           view={view}
         />
-        { view !== 2 && <DeleteAllCompletedButton onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}/>
-
-        }
-        
-        {/* <Selector onChange={(values) => setView(values)} color="black">
-          <option value="all">all</option>
-            <option value="completed">completed</option>
-            <option value="not completed">not completed</option>
-          
-          </Selector> */}
-        <ViewSelector onSelectView={setView} />
+        <DeleteAllCompletedButton disabled={view === 2 || !hasCompleted} onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}/>
       </Container>
     </>
     
