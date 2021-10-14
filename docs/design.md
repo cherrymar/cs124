@@ -7,6 +7,8 @@ Cher Ma and Emily Chin
 Fall 2021
 
 
+View website here: https://cherrymar.github.io/cs124/
+
 ## Design Decisions
 <!-- your design decisions, including their rationale (include images) -->
 
