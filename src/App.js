@@ -22,12 +22,16 @@ const Title = styled.div`
 
 const Container = styled.div`
   margin: 5vw;
-  height: 95vh;
+  height: 90vh;
+  width: 90vw;
+  z-index: 1;
 `
 
 const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  position: relative;
+  z-index: 2;
 `;
 
 function App(props) {

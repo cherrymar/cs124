@@ -37,7 +37,7 @@ export default function ViewSelector(props) {
   return (
     <React.Fragment>
       <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
-        <Button sx={{width: "110px", zIndex: "-1"}}>{options[selectedIndex]}</Button>
+        <Button sx={{width: "110px", height: "30px"}}>{options[selectedIndex]}</Button>
         <Button
           size="small"
           aria-controls={open ? 'split-button-menu' : undefined}
@@ -45,6 +45,7 @@ export default function ViewSelector(props) {
           aria-label="select merge strategy"
           aria-haspopup="menu"
           onClick={handleToggle}
+          sx={{height: "30px"}}
         >
           <ArrowDropDownIcon />
         </Button>
@@ -63,7 +64,7 @@ export default function ViewSelector(props) {
               transformOrigin:
                 placement === 'bottom' ? 'center top' : 'center bottom',
             }}
-            sx={{width: "110px", zIndex: "-1"}}
+            sx={{width: "150px"}}
           >
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>

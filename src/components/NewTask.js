@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Select from "react-dropdown-select";
+import { createMuiTheme } from '@material-ui/core/styles'
 
 
 import '../App.css'
@@ -48,10 +49,6 @@ const Container = styled.div`
 const SubmitButton = styled(Button)`
     width: 25%;
     font-size: 10;
-
-    &:disabled {
-        opacity: 50%;
-    }
 `;
 
 
@@ -77,26 +74,19 @@ const TextInput = styled(TextField)({
     },
   });
 
+  
 
-  const defaultTheme = createTheme();
 
-  const theme = createTheme({
-    components: {
-      MuiButton: {
-        variants: [
-          {
-            props: { variant: 'contained' },
-            style: {
-            //   textTransform: 'none',
-            //   border: `2px dashed ${defaultTheme.palette.primary.main}`,
-            //   color: defaultTheme.palette.primary.main,
-            },
-          },
-        ],
-      },
-    },
-  });
+  const theme = createMuiTheme({
+    palette: {
+      action: {
+        disabledBackground: '#0d47a1',
+        disabled: 'white',
+      }
+    }
+  })
 
+  
 function NewTask(props) {
     const [taskDescription, setTaskDescription] = useState("");
     
@@ -108,34 +98,12 @@ function NewTask(props) {
     return (
     <>
         <Container>
-        {/* <Box
-            component="form"
-            sx={{
-                '& .MuiTextField-root': { m: 1, width: '20ch'},
-            }}
-            noValidate
-            autoComplete="off"
-        >
-                <StyledSelect
-                    color={"blue"}
-                    id="standard-multiline-flexible"
-                    label="New task"
-                    multiline
-                    onChange={event => setTaskDescription(event.target.value)}
-                    variant="standard"
-                    sx={{color: "white", opacity: "50%"}}
-                />
-
-            
-        </Box> */}
-
-            
             <NewItem placeholder="New task" value={taskDescription} onChange={event => setTaskDescription(event.target.value)}/> 
             <SubmitButtonContainer>
-                <ThemeProvider theme={theme}>
+                {/* <ThemeProvider theme={theme}>
                 <   Button disabled={taskDescription===""} variant="contained" sx={{width: "25%", fontSize: 10}} onClick={handleSubmit}>Submit</Button>
-                </ThemeProvider>
-                {/* <SubmitButton disabled={taskDescription===""} variant="contained">Submit</SubmitButton> */}
+                </ThemeProvider> */}
+                <SubmitButton className="submitButton" disabled={taskDescription===""} variant="contained" theme={theme} sx={{width: "25%", fontSize: 10, disabledBackground: "white"}} onClick={handleSubmit}>Add</SubmitButton>
             </SubmitButtonContainer>
 
         </Container>
