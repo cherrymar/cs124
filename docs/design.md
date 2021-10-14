@@ -95,6 +95,11 @@ On the other hand, some features that were easy to use and understand include:
 |:-----------------------:|:-----------------------:|:-----------------------:|
 | Before: We start with a task list where some items are checked. | During: When the "Delete Completed" button is clicked, a modal alert warning shows up to make sure the user actually wants to delete all completed tasks before deleting. | After: When the user clicks the "Delete Completed" button, all checked tasks are deleted from the list. |
 
+
+<img width= "500" src="./react-starter/title_favicon.png">
+
+We added a checklist icon as a logo on the brower window. 
+
 ## Challenges
 <!-- challenges you faced -->
 
