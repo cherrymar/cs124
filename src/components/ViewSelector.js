@@ -1,5 +1,6 @@
 import * as React from 'react';
-// import Button from '@mui/material/Button';
+
+import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
@@ -8,8 +9,9 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
+
+// Local import
 import OurButton from './OurButton';
-// const options = ['Date Created', 'Priority', 'Name'];
 
 export default function ViewSelector(props) {
   const [open, setOpen] = React.useState(false);
