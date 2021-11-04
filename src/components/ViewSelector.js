@@ -39,7 +39,7 @@ export default function ViewSelector(props) {
   return (
     <React.Fragment>
       <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
-        <OurButton>{sortView}</OurButton>
+        <OurButton>{props.sortByOptions[sortView]}</OurButton>
         {/* <Button sx={{width: "110px", height: "30px", fontSize: "8px"}}>{sortView}</Button> */}
         <OurButton
           // size="small"
@@ -73,13 +73,13 @@ export default function ViewSelector(props) {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu">
-                  {props.sortByOptions.map((option, index) => (
+                  {Object.keys(props.sortByOptions).map((option) => (
                     <MenuItem
                       key={option}
-                      selected={props.sortByOptions[index] === sortView}
-                      onClick={(event) => handleMenuItemClick(event, props.sortByOptions[index], props.onSelectView)}
+                      selected={option === sortView}
+                      onClick={(event) => handleMenuItemClick(event, option, props.onSelectView)}
                     >
-                      {option}
+                      {props.sortByOptions[option]}
                     </MenuItem>
                   ))}
                 </MenuList>

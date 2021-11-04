@@ -3,9 +3,6 @@ import { useState } from 'react';
 import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
 import styled from 'styled-components';
 
-// Theme
-// import { createMuiTheme, ThemeProvider } from '@material-ui/core';
-
 // Firebase imports 
 import firebase from "firebase/compat";
 import {useCollection} from "react-firebase-hooks/firestore";
@@ -19,24 +16,6 @@ import TabList from './components/ViewTabs/TabList';
 import TasksSortedList from './components/TasksSortedList';
 
 import './App.css';
-
-
-
-
-
-
-// Custom Theme
-// const theme = createMuiTheme({
-//   overrides: {
-//     MuiButton: {
-//       root: {
-//         disabled: {
-//           backgroundColor: "#fefefe"
-//         }
-//       }
-//     }
-//   }
-// })
 
 
 // Set up Firebase
@@ -95,7 +74,12 @@ function App() {
   const query = db.collection(collection).orderBy(view);
   const [value, loading, error] = useCollection(query);
 
-  const sortByOptions = ['dateCreated', 'priority', 'description'];
+  const sortByOptions = {
+    "dateCreated" : "Date Created", 
+    "priority" : "Priority", 
+    "description" : "Description",
+  }
+  const options = ['dateCreated', 'priority', 'description'];
   
   // Helper functions
   function handleDeleteTask(taskId) {
