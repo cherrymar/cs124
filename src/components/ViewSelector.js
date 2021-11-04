@@ -1,5 +1,6 @@
 import * as React from 'react';
-// import Button from '@mui/material/Button';
+
+import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
@@ -8,8 +9,10 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
+
+// Local import
 import OurButton from './OurButton';
-// const options = ['Date Created', 'Priority', 'Name'];
+import CustomDropdown from './CustomDropdown';
 
 export default function ViewSelector(props) {
   const [open, setOpen] = React.useState(false);
@@ -35,18 +38,19 @@ export default function ViewSelector(props) {
   };
 
   return (
+    <>
+    {/* <CustomDropdown filterView={props.sortByOptions}> */}
+{/* 
+    </CustomDropdown> */}
     <React.Fragment>
       <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
-        <OurButton>{sortView}</OurButton>
-        {/* <Button sx={{width: "110px", height: "30px", fontSize: "8px"}}>{sortView}</Button> */}
+        <OurButton>{props.sortByOptions[sortView]}</OurButton>
         <OurButton
-          // size="small"
           aria-controls={open ? 'split-button-menu' : undefined}
           aria-expanded={open ? 'true' : undefined}
           aria-label="select merge strategy"
           aria-haspopup="menu"
           onClick={handleToggle}
-          // sx={{height: "30px"}}
         >
           <ArrowDropDownIcon size="small"/>
         </OurButton>
@@ -57,7 +61,6 @@ export default function ViewSelector(props) {
         role={undefined}
         transition
         disablePortal
-        
       >
         {({ TransitionProps, placement }) => (
           <Grow
@@ -68,16 +71,16 @@ export default function ViewSelector(props) {
             }}
             sx={{width: "150px"}}
           >
-            <Paper>
+            <Paper sx={{backgroundColor: "#FFF", opacity: 100}}>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu">
-                  {props.sortByOptions.map((option, index) => (
+                  {Object.keys(props.sortByOptions).map((option) => (
                     <MenuItem
                       key={option}
-                      selected={props.sortByOptions[index] === sortView}
-                      onClick={(event) => handleMenuItemClick(event, props.sortByOptions[index], props.onSelectView)}
+                      selected={option === sortView}
+                      onClick={(event) => handleMenuItemClick(event, option, props.onSelectView)}
                     >
-                      {option}
+                      {props.sortByOptions[option]}
                     </MenuItem>
                   ))}
                 </MenuList>
@@ -87,5 +90,6 @@ export default function ViewSelector(props) {
         )}
       </Popper>
     </React.Fragment>
+    </>
   );
 }

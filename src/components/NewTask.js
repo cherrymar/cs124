@@ -1,148 +1,64 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Rating from '@mui/material/Rating';
-import StarIcon from '@mui/icons-material/Star';
 
-
+// Local imports
 import '../App.css';
 import OurButton from './OurButton';
+import AutoResizeTextArea from './AutoResizeTextArea';
+import StarsRating from './StarsRating';
 
-const NewItem = styled.input`
-    outline: none;
-    font-size: 4vw;
-    border: none;
-    border-bottom: 2px solid black;
-    padding: 0;
-    width: 60%;
-    // margin: 50px 50px 50px 0;
-    // margin: 2vw 2vw 2vw 0;
-    background-color: black;
-    color: lightgray;
-    &:focus {
-        border-bottom: 2px solid cornflowerblue;
-    }
-    overflow-wrap: break-word;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-    
-`;
 
 const SubmitButtonContainer = styled.div`
-    // width: 5%;
-    // margin: 50px 50px 50px 0;
-    // margin: 5wh 5wh 5wh 0;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 40%;
-   
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  // width: 100%;
 `;
 
 const Container = styled.div`
-    width: 100%;
-    display: flex;
-    align-items: center;
-    margin: 5vw 0 8vw 0;
-    
-    // align-content: flex-start;
-    // justify-content: space-between;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  margin: 5vw 0 8vw 0;
+  justify-content: space-between;
+  z-index: -1;
 `;
 
 
-const SubmitButton = styled(Button)`
-    width: 25%;
-    font-size: 10;
-    align-self: flex-end;
-`;
-
-
-
-
-const TextInput = styled(TextField)({
-    '& label.Mui-focused': {
-      color: 'green',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: 'green',
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: 'red',
-      },
-      '&:hover fieldset': {
-        borderColor: 'yellow',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: 'green',
-      },
-    },
-  });
-
-
-  const StyledRating = styled(Rating)({
-    margin: "10px",
-    '& .MuiRating-root': {
-      opacity: 100,
-      borderColor: "#fefefe",
-    },
-    '& .MuiRating-labelEmptyValueActive': {
-      opacity: 100,
-      borderColor: "#fefefe",
-    },
-    '& .MuiRating-iconFilled': {
-      // color: '#ff6d75',
-    },
-    '& .MuiRating-iconHover': {
-      
-      // color: '#ff3d47',
-    },
-    '& .Mui-focusVisible': {
-      opacity: 100,
-      borderColor: "#fefefe",
-    }
-    
-  });
-  
-  
 function NewTask(props) {
-    const [taskDescription, setTaskDescription] = useState("");
-    const [taskPriority, setTaskPriority] = useState(0);
-    
-    function handleSubmit() {
-        props.onAddTask(taskDescription, taskPriority)
-        setTaskDescription("")
+  const [taskDescription, setTaskDescription] = useState("");
+  const [taskPriority, setTaskPriority] = useState(0);
+  
+  function handleSubmit() {
+    props.onAddTask(taskDescription, taskPriority)
+    setTaskDescription("")
+  }
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      props.onAddTask(taskDescription, taskPriority)
+      setTaskDescription("")
     }
+  }
 
-    const handleKeyDown = (event) => {
-      if (event.key === 'Enter') {
-        props.onAddTask(taskDescription, taskPriority)
-        setTaskDescription("")
-      }
-    }
-
-
-    return (
+  return (
     <>
-        <Container>
-            <NewItem placeholder="New task" value={taskDescription} onChange={event => setTaskDescription(event.target.value)} onKeyDown={(handleKeyDown)}/> 
-            <SubmitButtonContainer>
-              <StyledRating
-                name="customized-color"
-                defaultValue={0}
-                onChange={(event, value) => setTaskPriority(value)}
-                // emptyIcon={<StarIcon style={{ opacity: .99}}/>}
-                max={3}
-                size="small"
-              />
-                <OurButton className="submitButton" disabled={taskDescription===""} variant="contained"  onClick={handleSubmit}>Add</OurButton>
-            </SubmitButtonContainer>
-
-        </Container>
+      <Container>
+        <AutoResizeTextArea completed={false} placeholder="New task" value={taskDescription} onChange={event => setTaskDescription(event.target.value)} onKeyDown={(handleKeyDown)}/> 
         
+        <SubmitButtonContainer>
+          <StarsRating
+            name="customized-color"
+            defaultValue={0}
+            onChange={(event, value) => setTaskPriority(value)}
+            max={3}
+            size="small"
+          />
+          
+          <OurButton className="submitButton" disabled={taskDescription===""} variant="contained"  onClick={handleSubmit}>Add</OurButton>
+        </SubmitButtonContainer>
+      </Container>
     </>
   );
 }

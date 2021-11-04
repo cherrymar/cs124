@@ -3,9 +3,6 @@ import { useState } from 'react';
 import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
 import styled from 'styled-components';
 
-// Theme
-// import { createMuiTheme, ThemeProvider } from '@material-ui/core';
-
 // Firebase imports 
 import firebase from "firebase/compat";
 import {useCollection} from "react-firebase-hooks/firestore";
@@ -17,26 +14,9 @@ import DeleteAllCompletedButton from './components/DeleteAllCompletedButton';
 import ViewSelector from './components/ViewSelector';
 import TabList from './components/ViewTabs/TabList';
 import TasksSortedList from './components/TasksSortedList';
+import CustomDropdown from './components/CustomDropdown';
 
 import './App.css';
-
-
-
-
-
-
-// Custom Theme
-// const theme = createMuiTheme({
-//   overrides: {
-//     MuiButton: {
-//       root: {
-//         disabled: {
-//           backgroundColor: "#fefefe"
-//         }
-//       }
-//     }
-//   }
-// })
 
 
 // Set up Firebase
@@ -65,7 +45,7 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 5;
+  z-index: 2;
   height: 10vh;
 `;
 
@@ -95,7 +75,12 @@ function App() {
   const query = db.collection(collection).orderBy(view);
   const [value, loading, error] = useCollection(query);
 
-  const sortByOptions = ['dateCreated', 'priority', 'description'];
+  const sortByOptions = {
+    "dateCreated" : "Date Created", 
+    "priority" : "Priority", 
+    "description" : "Description",
+  }
+  const options = ['dateCreated', 'priority', 'description'];
   
   // Helper functions
   function handleDeleteTask(taskId) {
@@ -168,7 +153,8 @@ function App() {
         <Container className="App">
           <Header>
             <Title>Tasks</Title>
-            <ViewSelector onSelectView={setView} sx={{width: "100px"}} sortByOptions={sortByOptions}/>
+            <CustomDropdown onSelectView={setView} sortByOptions={sortByOptions}/>
+            {/* <ViewSelector onSelectView={setView} sx={{width: "100px"}} sortByOptions={sortByOptions}/> */}
           </Header>
 
           <Body>
