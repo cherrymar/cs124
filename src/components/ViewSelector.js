@@ -9,17 +9,17 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 
-const options = ['All', 'Completed', 'Incomplete'];
+// const options = ['Date Created', 'Priority', 'Name'];
 
 export default function ViewSelector(props) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [sortView, setSortView] = React.useState("dateCreated");
 
-  const handleMenuItemClick = (event, index, onSelectView) => {
-    setSelectedIndex(index);
+  const handleMenuItemClick = (event, view, onSelectView) => {
+    setSortView(view);
     setOpen(false);
-    onSelectView(index);
+    onSelectView(view);
   };
 
   const handleToggle = () => {
@@ -37,7 +37,7 @@ export default function ViewSelector(props) {
   return (
     <React.Fragment>
       <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
-        <Button sx={{width: "110px", height: "30px"}}>{options[selectedIndex]}</Button>
+        <Button sx={{width: "110px", height: "30px", fontSize: "8px"}}>{sortView}</Button>
         <Button
           size="small"
           aria-controls={open ? 'split-button-menu' : undefined}
@@ -69,11 +69,11 @@ export default function ViewSelector(props) {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu">
-                  {options.map((option, index) => (
+                  {props.sortByOptions.map((option, index) => (
                     <MenuItem
                       key={option}
-                      selected={index === selectedIndex}
-                      onClick={(event) => handleMenuItemClick(event, index, props.onSelectView)}
+                      selected={props.sortByOptions[index] === sortView}
+                      onClick={(event) => handleMenuItemClick(event, props.sortByOptions[index], props.onSelectView)}
                     >
                       {option}
                     </MenuItem>
