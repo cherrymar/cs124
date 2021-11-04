@@ -7,7 +7,7 @@ import Rating from '@mui/material/Rating';
 
 const Item = styled.textarea`
     outline: none;
-    width: 80%;
+    width: 50%;
     font-size: 4vw;
     border: none;
     border-bottom: 2px solid black;
@@ -30,9 +30,10 @@ const Container = styled.div`
     display: flex;
     // flex-direction: row;
     flex-wrap: wrap;
-    width: 100%;
+    // width: 100%;
     // border-bottom: 1px solid transparent;
     // box-shadow: 0 3px lightgray;
+    justify-content: space-between;
 `;
 
 const CheckBox = styled.input`
@@ -44,10 +45,10 @@ const CheckBox = styled.input`
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
-      color: '#ff6d75',
+      // color: '#ff6d75',
     },
     '& .MuiRating-iconHover': {
-      color: '#ff3d47',
+      // color: '#ff3d47',
     },
     '& .Mui-focusVisible': {
       opacity: 100,
@@ -70,16 +71,18 @@ function TaskItem(props) {
                 defaultValue={props.description} 
                 onChange={event => props.onTaskFieldChanged(props.id, "description", event.target.value)}
                 /> 
-            <StyledRating
-              name="customized-color"
-              defaultValue={props.priority}
-              // getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
-              onChange={(event, value) => props.onTaskFieldChanged(props.id, "priority", value)}
-              max={3}
-            />
+
+              <StyledRating
+                name="customized-color"
+                defaultValue={props.priority}
+                onChange={(event, value) => props.onTaskFieldChanged(props.id, "priority", value)}
+                // emptyIcon={<StarIcon style={{ opacity: .99}}/>}
+                max={3}
+                size="small"
+              />
             {/* new Date(firebase.firestore.Timestamp.now().seconds*1000).toLocaleDateString() */}
-            <div>{new Date(props.dateCreated.seconds*1000).toLocaleDateString()}</div>
-            <IconButton aria-label="delete" size="small" onClick={() => props.onDeleteTask(props.id)}>
+            {/* <div>{new Date(props.dateCreated.seconds*1000).toLocaleDateString()}</div> */}
+            <IconButton aria-label="delete" size="small" onClick={() => props.onDeleteTask(props.id)} sx={{padding: 0}}>
                 <DeleteIcon fontSize="small" sx={{color: "lightgray"}}/>
             </IconButton> 
         </Container>

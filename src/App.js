@@ -178,10 +178,10 @@ function App() {
               <div key="All">
                 <TasksSortedList sortView={view} query={query} loading={loading} value={value} view={"All"} error={error} handleTaskFieldChanged={handleTaskFieldChanged} handleDeleteTask={handleDeleteTask}/>
               </div>
-              <div key="Complete">
+              <div key="Done">
                 <TasksSortedList sortView={view} query={query} loading={loading} value={value} view={"Complete"} error={error} handleTaskFieldChanged={handleTaskFieldChanged} handleDeleteTask={handleDeleteTask}/>
               </div>
-              <div key="Incomplete">
+              <div key="In Progress">
                 <TasksSortedList sortView={view} query={query} loading={loading} value={value} view={"Incomplete"} error={error} handleTaskFieldChanged={handleTaskFieldChanged} handleDeleteTask={handleDeleteTask}/>
               </div>
             </TabList>
