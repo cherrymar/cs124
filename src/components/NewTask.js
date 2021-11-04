@@ -22,6 +22,7 @@ const Container = styled.div`
   align-items: flex-start;
   margin: 5vw 0 8vw 0;
   justify-content: space-between;
+  z-index: -1;
 `;
 
 
@@ -44,7 +45,7 @@ function NewTask(props) {
   return (
     <>
       <Container>
-        <AutoResizeTextArea placeholder="New task" value={taskDescription} onChange={event => setTaskDescription(event.target.value)} onKeyDown={(handleKeyDown)}/> 
+        <AutoResizeTextArea completed={false} placeholder="New task" value={taskDescription} onChange={event => setTaskDescription(event.target.value)} onKeyDown={(handleKeyDown)}/> 
         
         <SubmitButtonContainer>
           <StarsRating

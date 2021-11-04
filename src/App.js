@@ -14,6 +14,7 @@ import DeleteAllCompletedButton from './components/DeleteAllCompletedButton';
 import ViewSelector from './components/ViewSelector';
 import TabList from './components/ViewTabs/TabList';
 import TasksSortedList from './components/TasksSortedList';
+import CustomDropdown from './components/CustomDropdown';
 
 import './App.css';
 
@@ -44,7 +45,7 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 5;
+  z-index: 2;
   height: 10vh;
 `;
 
@@ -152,7 +153,8 @@ function App() {
         <Container className="App">
           <Header>
             <Title>Tasks</Title>
-            <ViewSelector onSelectView={setView} sx={{width: "100px"}} sortByOptions={sortByOptions}/>
+            <CustomDropdown onSelectView={setView} sortByOptions={sortByOptions}/>
+            {/* <ViewSelector onSelectView={setView} sx={{width: "100px"}} sortByOptions={sortByOptions}/> */}
           </Header>
 
           <Body>

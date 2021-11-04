@@ -12,6 +12,7 @@ import MenuList from '@mui/material/MenuList';
 
 // Local import
 import OurButton from './OurButton';
+import CustomDropdown from './CustomDropdown';
 
 export default function ViewSelector(props) {
   const [open, setOpen] = React.useState(false);
@@ -37,18 +38,19 @@ export default function ViewSelector(props) {
   };
 
   return (
+    <>
+    {/* <CustomDropdown filterView={props.sortByOptions}> */}
+{/* 
+    </CustomDropdown> */}
     <React.Fragment>
       <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
         <OurButton>{props.sortByOptions[sortView]}</OurButton>
-        {/* <Button sx={{width: "110px", height: "30px", fontSize: "8px"}}>{sortView}</Button> */}
         <OurButton
-          // size="small"
           aria-controls={open ? 'split-button-menu' : undefined}
           aria-expanded={open ? 'true' : undefined}
           aria-label="select merge strategy"
           aria-haspopup="menu"
           onClick={handleToggle}
-          // sx={{height: "30px"}}
         >
           <ArrowDropDownIcon size="small"/>
         </OurButton>
@@ -59,7 +61,6 @@ export default function ViewSelector(props) {
         role={undefined}
         transition
         disablePortal
-        
       >
         {({ TransitionProps, placement }) => (
           <Grow
@@ -70,7 +71,7 @@ export default function ViewSelector(props) {
             }}
             sx={{width: "150px"}}
           >
-            <Paper>
+            <Paper sx={{backgroundColor: "#FFF", opacity: 100}}>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu">
                   {Object.keys(props.sortByOptions).map((option) => (
@@ -89,5 +90,6 @@ export default function ViewSelector(props) {
         )}
       </Popper>
     </React.Fragment>
+    </>
   );
 }
