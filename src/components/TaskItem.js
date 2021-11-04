@@ -4,6 +4,10 @@ import styled from 'styled-components';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Rating from '@mui/material/Rating';
+import TextareaAutosize from 'react-textarea-autosize';
+
+
+import AutoTextArea from './AutoTextArea';
 
 const Item = styled.textarea`
     outline: none;
@@ -15,9 +19,9 @@ const Item = styled.textarea`
     // margin: 50px 50px 50px 0;
     margin: 2vw 2vw 2vw 0;
     background-color: black;
-    color: ${prop => prop.completed ? '#555555' : 'lightgray'};;
+    color: ${prop => prop.completed ? '#555555' : 'lightgray'};
     &:focus {
-        border-bottom: 2px solid cornflowerblue;
+        border-bottom: 2px solid gray;
     }
     overflow-wrap: break-word;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -26,21 +30,23 @@ const Item = styled.textarea`
 `;
 
 const Container = styled.div`
-    padding: 0 10px;
+    padding: 5px 10px;
     display: flex;
     // flex-direction: row;
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
     // width: 100%;
     // border-bottom: 1px solid transparent;
     // box-shadow: 0 3px lightgray;
     justify-content: space-between;
+    align-items: flex-start;
+
 `;
 
 const CheckBox = styled.input`
     width: 4vw;
     height: 4vw;
     // margin: 50px 50px 50px 0;
-    margin: 2vw 2vw 2vw 0;
+    margin: 0 2vw 2vw 0;
 `;
 
 const StyledRating = styled(Rating)({
@@ -56,6 +62,17 @@ const StyledRating = styled(Rating)({
     }
   });
 
+const StyledTextareaAutosize = styled(TextareaAutosize)`
+  outline: none;  
+  background-color: black;
+  color: ${prop => prop.completed ? '#555555' : 'lightgray'};
+  border: none;
+  &:focus {
+    border: none;
+    border-bottom: 2px solid gray;
+}
+`;
+
 function TaskItem(props) {
   return (
     <>
@@ -64,13 +81,20 @@ function TaskItem(props) {
                 type="checkbox" 
                 checked={props.completed===true} 
                 onChange={event => props.onTaskFieldChanged(props.id, "completed", event.target.checked)}/> 
-            <Item 
+            <StyledTextareaAutosize
+              completed={props.completed}
+              id={props.id} 
+              placeholder={props.description} 
+              defaultValue={props.description} 
+              onChange={event => props.onTaskFieldChanged(props.id, "description", event.target.value)}
+            />
+            {/* <Item 
                 completed={props.completed}
                 id={props.id} 
                 placeholder={props.description} 
                 defaultValue={props.description} 
                 onChange={event => props.onTaskFieldChanged(props.id, "description", event.target.value)}
-                /> 
+                />  */}
 
               <StyledRating
                 name="customized-color"
