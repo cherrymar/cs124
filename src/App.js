@@ -65,24 +65,24 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 2;
-  height: 10%;
+  z-index: 5;
+  height: 10vh;
 `;
 
 const Body = styled.div`
-  height: 80%;
+  height: 75vh;
   z-index: 1;
   overflow: scroll;
   ::-webkit-scrollbar {
     display: none;
   }
+  margin: 10px 0;
 `
 const Title = styled.div`
   font-size: 10vw;
   font-weight: 700;
   text-align: left;
 `;
-
 
 
 function App() {
@@ -174,7 +174,7 @@ function App() {
           <Body>
             <NewTask onAddTask={handleAddTask}/>
           
-            {/* <TabList>
+            <TabList>
               <div key="All">
                 <TasksSortedList sortView={view} query={query} loading={loading} value={value} view={"All"} error={error} handleTaskFieldChanged={handleTaskFieldChanged} handleDeleteTask={handleDeleteTask}/>
               </div>
@@ -184,7 +184,7 @@ function App() {
               <div key="Incomplete">
                 <TasksSortedList sortView={view} query={query} loading={loading} value={value} view={"Incomplete"} error={error} handleTaskFieldChanged={handleTaskFieldChanged} handleDeleteTask={handleDeleteTask}/>
               </div>
-            </TabList> */}
+            </TabList>
           </Body>
           <DeleteAllCompletedButton disabled={!hasCompleted} onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}/>
         </Container>  

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
@@ -8,7 +8,7 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
-
+import OurButton from './OurButton';
 // const options = ['Date Created', 'Priority', 'Name'];
 
 export default function ViewSelector(props) {
@@ -37,18 +37,19 @@ export default function ViewSelector(props) {
   return (
     <React.Fragment>
       <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
-        <Button sx={{width: "110px", height: "30px", fontSize: "8px"}}>{sortView}</Button>
-        <Button
-          size="small"
+        <OurButton>{sortView}</OurButton>
+        {/* <Button sx={{width: "110px", height: "30px", fontSize: "8px"}}>{sortView}</Button> */}
+        <OurButton
+          // size="small"
           aria-controls={open ? 'split-button-menu' : undefined}
           aria-expanded={open ? 'true' : undefined}
           aria-label="select merge strategy"
           aria-haspopup="menu"
           onClick={handleToggle}
-          sx={{height: "30px"}}
+          // sx={{height: "30px"}}
         >
-          <ArrowDropDownIcon />
-        </Button>
+          <ArrowDropDownIcon size="small"/>
+        </OurButton>
       </ButtonGroup>
       <Popper
         open={open}
@@ -56,6 +57,7 @@ export default function ViewSelector(props) {
         role={undefined}
         transition
         disablePortal
+        
       >
         {({ TransitionProps, placement }) => (
           <Grow

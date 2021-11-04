@@ -1,5 +1,14 @@
 import react from 'react';
 import TaskList from './TaskList';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  overflow: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  height: 80vh;
+`
 
 function TasksSortedList(props) {
     let appContent;
@@ -14,14 +23,14 @@ function TasksSortedList(props) {
             data = data.filter((doc) => !doc.completed);
         }
         
-        appContent = <> 
+        appContent = <Container> 
                       <TaskList
                         data={data} 
                         onDeleteTask={props.handleDeleteTask}
                         onTaskFieldChanged={props.handleTaskFieldChanged}
                         view={props.view}
                       /> 
-                    </>
+                    </Container>
 
     } else {
         appContent = <h1>{props.error.message}</h1>

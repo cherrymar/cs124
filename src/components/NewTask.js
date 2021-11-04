@@ -12,16 +12,17 @@ import Rating from '@mui/material/Rating';
 // import Stack from '@mui/material/Stack';
 // import { red } from '@mui/material/colors';
 
-import '../App.css'
+import '../App.css';
+import OurButton from './OurButton';
 // import zIndex from '@mui/material/styles/zIndex';
 
 const NewItem = styled.input`
     outline: none;
-    // width: 70%;
     font-size: 4vw;
     border: none;
     border-bottom: 2px solid black;
     padding: 0;
+    width: 60%;
     // margin: 50px 50px 50px 0;
     // margin: 2vw 2vw 2vw 0;
     background-color: black;
@@ -40,8 +41,10 @@ const SubmitButtonContainer = styled.div`
     // width: 5%;
     // margin: 50px 50px 50px 0;
     // margin: 5wh 5wh 5wh 0;
+    display: flex;
     justify-content: flex-end;
-    width: 100$;
+    align-items: center;
+    width: 40%;
    
 `;
 
@@ -50,46 +53,45 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     margin: 5vw 0;
-    align-content: flex-start;
+    // height: 
+    
+    // align-content: flex-start;
     // justify-content: space-between;
 `;
 
 
-const SubmitButton = styled(Button)`
-    width: 25%;
-    font-size: 10;
-    align-self: flex-end;
-`;
+// const SubmitButton = styled(Button)`
+//     width: 25%;
+//     font-size: 10;
+//     align-self: flex-end;
+// `;
 
 
 
 
-const TextInput = styled(TextField)({
-    '& label.Mui-focused': {
-      color: 'green',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: 'green',
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: 'red',
-      },
-      '&:hover fieldset': {
-        borderColor: 'yellow',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: 'green',
-      },
-    },
-  });
+// const TextInput = styled(TextField)({
+//     '& label.Mui-focused': {
+//       color: 'green',
+//     },
+//     '& .MuiInput-underline:after': {
+//       borderBottomColor: 'green',
+//     },
+//     '& .MuiOutlinedInput-root': {
+//       '& fieldset': {
+//         borderColor: 'red',
+//       },
+//       '&:hover fieldset': {
+//         borderColor: 'yellow',
+//       },
+//       '&.Mui-focused fieldset': {
+//         borderColor: 'green',
+//       },
+//     },
+//   });
 
 
   const StyledRating = styled(Rating)({
-    '& .MuiRating-root': {
-      margin: 0,
-      padding: "5px",
-    },
+    margin: "10px",
     '& .MuiRating-iconFilled': {
       color: '#ff6d75',
     },
@@ -136,7 +138,8 @@ function NewTask(props) {
                 max={3}
                 size="small"
               />
-                <SubmitButton className="submitButton" disabled={taskDescription===""} variant="contained"  onClick={handleSubmit}>Add</SubmitButton>
+                <OurButton className="submitButton" disabled={taskDescription===""} variant="contained"  onClick={handleSubmit}>Add</OurButton>
+                {/* <SubmitButton size="small" sx={{fontSize: "10px"}} className="submitButton" disabled={taskDescription===""} variant="contained"  onClick={handleSubmit}>Add</SubmitButton> */}
             </SubmitButtonContainer>
 
         </Container>
