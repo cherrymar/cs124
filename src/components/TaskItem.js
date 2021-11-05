@@ -33,7 +33,7 @@ function TaskItem(props) {
                 checked={props.completed===true} 
                 onChange={event => props.onTaskFieldChanged(props.id, "completed", event.target.checked)}/> 
             <AutoResizeTextArea
-              completed={props.completed ? "true" : "false"}
+              completed={props.completed}
               id={props.id} 
               placeholder={props.description} 
               defaultValue={props.description} 
@@ -41,7 +41,7 @@ function TaskItem(props) {
             />
               <StarsRating
                 defaultValue={props.priority}
-                onChange={(event, value) => props.handleTaskFieldChanged(props.id, "priority", value)}
+                onChange={(event, value) => props.onTaskFieldChanged(props.id, "priority", value)}
                 max={3}
                 size="small"
               />

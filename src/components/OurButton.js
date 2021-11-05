@@ -4,7 +4,7 @@ import { styled } from '@mui/system';
 
 const CustomButtonRoot = styled('button')`
   background-color: #1565c0;
-  padding: 10px 15px;
+  padding: 5px 12px;
   border-radius: 5px;
   color: #fff;
   font-weight: 500;
@@ -37,5 +37,5 @@ const CustomButtonRoot = styled('button')`
 `;
 
 export default function OurButton(props) {
-  return <ButtonUnstyled onClick={props.onClick} {...props} component={CustomButtonRoot}/>;
+  return <ButtonUnstyled {...props} component={CustomButtonRoot}/>;
 }

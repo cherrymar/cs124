@@ -52,7 +52,6 @@ const Header = styled.div`
 const Body = styled.div`
   height: 75vh;
   z-index: 1;
-  overflow: scroll;
   ::-webkit-scrollbar {
     display: none;
   }
@@ -72,7 +71,14 @@ function App() {
   let hasCompleted = false
 
   // Retrieve data from Firebase
-  const query = db.collection(collection).orderBy(view);
+  let query;
+  if (view === "priority") {
+    query = db.collection(collection).orderBy(view, "desc");
+  } else {
+    query = db.collection(collection).orderBy(view);
+
+  }
+  
   const [value, loading, error] = useCollection(query);
 
   const sortByOptions = {
@@ -123,28 +129,6 @@ function App() {
   } else if (value) {
       let data = value.docs.map((doc) => doc.data())
       hasCompleted = data.filter(task => task.completed).length !== 0
-
-      // appContent = <> 
-      //               <TaskList 
-      //                 data={data} 
-      //                 onDeleteTask={handleDeleteTask}
-      //                 onTaskFieldChanged={handleTaskFieldChanged}
-      //                 view={view}
-      //               /> 
-      //               </>
-      // if (hasCompleted) {
-      //   appContent = <> 
-      //                 <TaskList 
-      //                   data={data} 
-      //                   onDeleteTask={handleDeleteTask}
-      //                   onTaskFieldChanged={handleTaskFieldChanged}
-      //                   view={view}
-      //                 /> 
-      //                 <DeleteAllCompletedButton disabled={view === 2} onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}/>
-      //                 </> 
-      // }
-  } else {
-      // appContent = <h1>{error.message}</h1>
   }
 
 
@@ -154,7 +138,6 @@ function App() {
           <Header>
             <Title>Tasks</Title>
             <CustomDropdown onSelectView={setView} sortByOptions={sortByOptions}/>
-            {/* <ViewSelector onSelectView={setView} sx={{width: "100px"}} sortByOptions={sortByOptions}/> */}
           </Header>
 
           <Body>

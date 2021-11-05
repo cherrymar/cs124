@@ -12,6 +12,9 @@ border: none;
   border: none;
   border-bottom: 2px solid gray;
 }
+::-webkit-scrollbar {
+  display: none;
+}
 `;
 
 export default function AutoResizeTextArea(props) {

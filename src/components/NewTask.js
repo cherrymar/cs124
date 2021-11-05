@@ -31,21 +31,23 @@ function NewTask(props) {
   const [taskPriority, setTaskPriority] = useState(0);
   
   function handleSubmit() {
-    props.onAddTask(taskDescription, taskPriority)
-    setTaskDescription("")
+    props.onAddTask(taskDescription, taskPriority);
+    setTaskDescription("");
+    setTaskPriority(0);
   }
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      props.onAddTask(taskDescription, taskPriority)
-      setTaskDescription("")
+      props.onAddTask(taskDescription, taskPriority);
+      setTaskDescription("");
+      setTaskPriority(0);
     }
   }
 
   return (
     <>
       <Container>
-        <AutoResizeTextArea completed={"false"} placeholder="New task" value={taskDescription} onChange={event => setTaskDescription(event.target.value)} onKeyDown={(handleKeyDown)}/> 
+        <AutoResizeTextArea completed={false} placeholder="New task" value={taskDescription} onChange={event => setTaskDescription(event.target.value)} onKeyDown={(handleKeyDown)}/> 
         
         <SubmitButtonContainer>
           <StarsRating

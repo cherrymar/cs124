@@ -13,35 +13,33 @@ const Container = styled.div`
   justify-content: flex-end;
   font-size: 4px;
   height: 10%;
-  background-color: black;
-  color: white;
 `;
 
 const ModalText = styled.div`
-  
-  // color: black;
-  font-size: 30px;
+  color: white;
+  font-size: 20px;
+  padding: 20px;
+  opacity: 100%;
 `;
 
 
 function DeleteAllCompletedButton(props) {
   const [showAlert, setShowAlert] = useState(false);
-  console.log("modal state: ", showAlert);
+
   function toggleModal(modalState) {
-    console.log("modal state: ", showAlert);
-    setShowAlert(modalState)
+    setShowAlert(modalState);
   }
 
   function handleAlertOK() {
-    toggleModal(false)
-    props.onDeleteAllCompletedTasks()
+    props.onDeleteAllCompletedTasks();
+    toggleModal(false);
   }
 
   return (
     <>
-      <Container>
-        <OurButton disabled={props.disabled} onClick={() => toggleModal(!showAlert)}>Delete Completed</OurButton>
-        {showAlert && 
+      <Container> 
+        <OurButton disabled={props.disabled} onClick={() => toggleModal(true)}>Delete Completed</OurButton>
+        {showAlert &&
           <Alert onClose={() => toggleModal(false)} onOK={() => handleAlertOK()} cancelText="Cancel" OKText="Delete" >
             <ModalText>
               Are you sure you want to delete all completed tasks?
