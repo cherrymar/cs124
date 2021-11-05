@@ -24,7 +24,6 @@ const Modal = styled.div`
     background-color: rgb(46, 46, 46, 1);
     background: rgb(46, 46, 46);
     
-    
     border-radius: 5px;
     border-color: transparent;
     border-style: none;
