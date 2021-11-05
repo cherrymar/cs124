@@ -103,7 +103,7 @@ On the other hand, some features that were easy to use and understand include:
 <!-- Bullet 4 -->
 |                         |                         |                         |
 |:-----------------------:|:-----------------------:|:-----------------------:|
-| <img width= "500" src="./firestore/bullet5after.png"> | <img width= "500" src="./firestore/bullet4during.png"> | <img width= "500" src="./firestore/bullet4after.png"> |
+| <img width= "500" src="./firestore/bullet4before.png"> | <img width= "500" src="./firestore/bullet4during.png"> | <img width= "500" src="./firestore/bullet4after.png"> |
 
 |                         |                         |                         |
 |:-----------------------:|:-----------------------:|:-----------------------:|
@@ -112,7 +112,7 @@ On the other hand, some features that were easy to use and understand include:
 <!-- Bullet 5 -->
 |                         |                         |                         |
 |:-----------------------:|:-----------------------:|:-----------------------:|
-| <img width= "500" src="./firestore/bullet5before.png"> | <img width= "500" src="./firestore/bullet5after2.png"> | <img width= "500" src="./firestore/bullet5after.png"> |
+| <img width= "500" src="./firestore/bullet4before.png"> | <img width= "500" src="./firestore/bullet5after.png"> | <img width= "500" src="./firestore/bullet5after2.png"> |
 
 |                         |                         |                         |
 |:-----------------------:|:-----------------------:|:-----------------------:|
@@ -121,7 +121,7 @@ On the other hand, some features that were easy to use and understand include:
 <!-- Bullet 6 -->
 |                         |                         |                         |
 |:-----------------------:|:-----------------------:|:-----------------------:|
-| <img width= "500" src="./firestore/bullet5before.png"> | <img width= "500" src="./firestore/bullet6during.png"> | <img width= "500" src="./firestore/bullet6after.png"> |
+| <img width= "500" src="./firestore/bullet4before.png"> | <img width= "500" src="./firestore/bullet6during.png"> | <img width= "500" src="./firestore/bullet6after.png"> |
 
 |                         |                        |                         |
 |:-----------------------:|:-----------------------:|:-----------------------:|
