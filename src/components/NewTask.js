@@ -45,7 +45,7 @@ function NewTask(props) {
   return (
     <>
       <Container>
-        <AutoResizeTextArea completed={false} placeholder="New task" value={taskDescription} onChange={event => setTaskDescription(event.target.value)} onKeyDown={(handleKeyDown)}/> 
+        <AutoResizeTextArea completed={"false"} placeholder="New task" value={taskDescription} onChange={event => setTaskDescription(event.target.value)} onKeyDown={(handleKeyDown)}/> 
         
         <SubmitButtonContainer>
           <StarsRating

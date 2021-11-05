@@ -33,7 +33,7 @@ function TaskItem(props) {
                 checked={props.completed===true} 
                 onChange={event => props.onTaskFieldChanged(props.id, "completed", event.target.checked)}/> 
             <AutoResizeTextArea
-              completed={props.completed}
+              completed={props.completed ? "true" : "false"}
               id={props.id} 
               placeholder={props.description} 
               defaultValue={props.description} 

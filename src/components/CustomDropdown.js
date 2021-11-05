@@ -19,6 +19,7 @@ export default function CustomDropdown(props) {
       {
         Object.keys(props.sortByOptions).map((option) => (
           <Dropdown.Item 
+            key={"drop-down-item-" + option}
             className="drop-down-item"
             onClick={(event) => handleMenuItemClick(event, option, props.onSelectView)}
           >

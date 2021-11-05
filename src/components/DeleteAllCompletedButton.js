@@ -13,18 +13,22 @@ const Container = styled.div`
   justify-content: flex-end;
   font-size: 4px;
   height: 10%;
+  background-color: black;
+  color: white;
 `;
 
 const ModalText = styled.div`
-  color: black;
+  
+  // color: black;
   font-size: 30px;
 `;
 
 
 function DeleteAllCompletedButton(props) {
   const [showAlert, setShowAlert] = useState(false);
-
+  console.log("modal state: ", showAlert);
   function toggleModal(modalState) {
+    console.log("modal state: ", showAlert);
     setShowAlert(modalState)
   }
 
