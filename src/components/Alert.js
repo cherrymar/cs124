@@ -1,9 +1,7 @@
 import './DeleteAllCompletedButton';
 import './Alert.css';
-import react from 'react';
 
 function Alert(props) {
-
     return (
     <div className={"backdrop"}>
         <div className="modal">

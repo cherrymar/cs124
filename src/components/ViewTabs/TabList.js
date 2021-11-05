@@ -1,4 +1,3 @@
-import { AlignHorizontalLeft, ArrowLeft } from '@mui/icons-material';
 import {useState} from 'react'
 import {Tab} from "./Tab";
 

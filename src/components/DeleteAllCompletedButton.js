@@ -37,11 +37,13 @@ function DeleteAllCompletedButton(props) {
     <>
       <Container>
         <OurButton disabled={props.disabled} onClick={() => toggleModal(!showAlert)}>Delete Completed</OurButton>
-        {showAlert && <Alert onClose={() => toggleModal(false)} onOK={() => handleAlertOK()} cancelText="Cancel" OKText="Delete" >
-          <ModalText>
-            Are you sure you want to delete all completed tasks?
-          </ModalText>
-        </Alert>}
+        {showAlert && 
+          <Alert onClose={() => toggleModal(false)} onOK={() => handleAlertOK()} cancelText="Cancel" OKText="Delete" >
+            <ModalText>
+              Are you sure you want to delete all completed tasks?
+            </ModalText>
+          </Alert>
+        }
       </Container>
     </>
   );

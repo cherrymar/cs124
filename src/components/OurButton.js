@@ -37,14 +37,5 @@ const CustomButtonRoot = styled('button')`
 `;
 
 export default function OurButton(props) {
-  return <ButtonUnstyled {...props} component={CustomButtonRoot} />;
+  return <ButtonUnstyled {...props} component={CustomButtonRoot}/>;
 }
-
-// export default function UnstyledButtonsSimple() {
-//   return (
-//     <Stack spacing={2} direction="row">
-//       <CustomButton>Button</CustomButton>
-//       <CustomButton disabled>Disabled</CustomButton>
-//     </Stack>
-//   );
-// }
