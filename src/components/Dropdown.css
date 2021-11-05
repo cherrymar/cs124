@@ -1,8 +1,6 @@
 #dropdown-basic-button {
-    
-    
     background-color: #1565c0;
-    padding: 10px 15px;
+    padding: 5px 12px;
     border-radius: 5px;
     color: #fff;
     font-weight: 500;
@@ -22,6 +20,8 @@
 .drop-down-item {
     width: 120px;
 }
+
+
 
 body {
     background-color: black;

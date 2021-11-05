@@ -3,11 +3,7 @@ import TaskList from './TaskList';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  overflow: scroll;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  height: 80vh;
+  height: 55vh;
 `
 
 function TasksSortedList(props) {
@@ -16,7 +12,7 @@ function TasksSortedList(props) {
     if (props.loading) {
         appContent = <h1>Loading</h1>
     } else if (props.value) {
-        let data = props.value.docs.map((doc) => doc.data()) //props.query.orderBy(props.sortView).get().map((doc) => doc.data());
+        let data = props.value.docs.map((doc) => doc.data())
         if (props.view == "Complete") {
             data = data.filter((doc) => doc.completed);
         } else if (props.view == "Incomplete") {

@@ -16,8 +16,10 @@ const Container = styled.div`
 `;
 
 const ModalText = styled.div`
-  color: black;
-  font-size: 30px;
+  color: white;
+  font-size: 20px;
+  padding: 20px;
+  opacity: 100%;
 `;
 
 
@@ -25,23 +27,25 @@ function DeleteAllCompletedButton(props) {
   const [showAlert, setShowAlert] = useState(false);
 
   function toggleModal(modalState) {
-    setShowAlert(modalState)
+    setShowAlert(modalState);
   }
 
   function handleAlertOK() {
-    toggleModal(false)
-    props.onDeleteAllCompletedTasks()
+    props.onDeleteAllCompletedTasks();
+    toggleModal(false);
   }
 
   return (
     <>
-      <Container>
-        <OurButton disabled={props.disabled} onClick={() => toggleModal(!showAlert)}>Delete Completed</OurButton>
-        {showAlert && <Alert onClose={() => toggleModal(false)} onOK={() => handleAlertOK()} cancelText="Cancel" OKText="Delete" >
-          <ModalText>
-            Are you sure you want to delete all completed tasks?
-          </ModalText>
-        </Alert>}
+      <Container> 
+        <OurButton disabled={props.disabled} onClick={() => toggleModal(true)}>Delete Completed</OurButton>
+        {showAlert &&
+          <Alert onClose={() => toggleModal(false)} onOK={() => handleAlertOK()} cancelText="Cancel" OKText="Delete" >
+            <ModalText>
+              Are you sure you want to delete all completed tasks?
+            </ModalText>
+          </Alert>
+        }
       </Container>
     </>
   );

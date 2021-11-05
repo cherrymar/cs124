@@ -4,7 +4,7 @@ import { styled } from '@mui/system';
 
 const CustomButtonRoot = styled('button')`
   background-color: #1565c0;
-  padding: 10px 15px;
+  padding: 5px 12px;
   border-radius: 5px;
   color: #fff;
   font-weight: 500;
@@ -37,14 +37,5 @@ const CustomButtonRoot = styled('button')`
 `;
 
 export default function OurButton(props) {
-  return <ButtonUnstyled {...props} component={CustomButtonRoot} />;
+  return <ButtonUnstyled {...props} component={CustomButtonRoot}/>;
 }
-
-// export default function UnstyledButtonsSimple() {
-//   return (
-//     <Stack spacing={2} direction="row">
-//       <CustomButton>Button</CustomButton>
-//       <CustomButton disabled>Disabled</CustomButton>
-//     </Stack>
-//   );
-// }
