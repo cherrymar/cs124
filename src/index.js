@@ -5,29 +5,10 @@ import InMemoryApp from './InMemoryApp';
 import reportWebVitals from './reportWebVitals';
 
 
-let initialData = [
-  {
-    id: 1,
-    description: "Do laundry",
-    completed: false,
-  },
-  {
-    id: 2,
-    description: "Call mom",
-    completed: false,
-  },
-  {
-    id: 3,
-    description: "Call dad",
-    completed: true,
-  },
-]
-
-
 ReactDOM.render(
   <React.StrictMode>
     {/* <App initialData={initialData}/> */}
-    <InMemoryApp initialData={initialData}/>
+    <InMemoryApp/>
   </React.StrictMode>,
   document.getElementById('root')
 );

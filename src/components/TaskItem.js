@@ -3,43 +3,46 @@ import styled from 'styled-components';
 
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Rating from '@mui/material/Rating';
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+import { makeStyles } from "@material-ui/core/styles";
 
-const Item = styled.textarea`
-    outline: none;
-    width: 80%;
-    font-size: 4vw;
-    border: none;
-    border-bottom: 2px solid black;
-    padding: 0;
-    // margin: 50px 50px 50px 0;
-    margin: 2vw 2vw 2vw 0;
-    background-color: black;
-    color: lightgray;
-    &:focus {
-        border-bottom: 2px solid cornflowerblue;
-    }
-    overflow-wrap: break-word;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-`;
+// Local imports
+import AutoResizeTextArea from './AutoResizeTextArea';
+// import StarsRating from './StarsRating';
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+      // display: "flex",
+      // flexDirection: "column",
+      margin: "0 10px",
+      "& > * + *": {
+      marginTop: theme.spacing(1)
+      }
+  },
+  emptyStar: {
+      color: "gray"
+  }
+  }));
 
 const Container = styled.div`
-    padding: 0 10px;
+    padding: 5px 10px;
     display: flex;
-    width: 100%;
-    // border-bottom: 1px solid transparent;
-    // box-shadow: 0 3px lightgray;
+    justify-content: space-between;
+    align-items: flex-start;
+
 `;
 
 const CheckBox = styled.input`
     width: 4vw;
     height: 4vw;
-    // margin: 50px 50px 50px 0;
-    margin: 2vw 2vw 2vw 0;
+    margin: 0 2vw 2vw 0;
 `;
 
+
 function TaskItem(props) {
+  const classes = useStyles();
   return (
     <>
         <Container>
@@ -47,13 +50,29 @@ function TaskItem(props) {
                 type="checkbox" 
                 checked={props.completed===true} 
                 onChange={event => props.onTaskFieldChanged(props.id, "completed", event.target.checked)}/> 
-            <Item 
-                id={props.id} 
-                placeholder={props.description} 
-                defaultValue={props.description} 
-                onChange={event => props.onTaskFieldChanged(props.id, "description", event.target.value)}
-                /> 
-            <IconButton aria-label="delete" size="small" onClick={() => props.onDeleteTask(props.id)}>
+            <AutoResizeTextArea
+              completed={props.completed}
+              id={props.id} 
+              placeholder={props.description} 
+              defaultValue={props.description} 
+              onChange={event => props.onTaskFieldChanged(props.id, "description", event.target.value)}
+            />
+            <div className={classes.root}>
+              <Rating
+                  defaultValue={props.priority}
+                  max={3}
+                  size="small"
+                  emptyIcon={<StarBorderIcon fontSize="inherit" className={classes.emptyStar} />}
+                  onChange={(event, value) => props.onTaskFieldChanged(props.id, "priority", value)}
+              />
+              </div>
+              {/* <StarsRating
+                defaultValue={props.priority}
+                onChange={(event, value) => props.handleTaskFieldChanged(props.id, "priority", value)}
+                max={3}
+                size="small"
+              /> */}
+            <IconButton aria-label="delete" size="small" onClick={() => props.onDeleteTask(props.id)} sx={{padding: 0}}>
                 <DeleteIcon fontSize="small" sx={{color: "lightgray"}}/>
             </IconButton> 
         </Container>
