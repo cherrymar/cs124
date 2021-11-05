@@ -63,14 +63,14 @@ We tried different paddings, margins, font sizes, and placements until we got th
 look we wanted that was balanced and easy to use. We also tried different text field 
 and button styles. We also considered having three buttons instead of the dropdown menu, 
 but we found that the dropdown was cleaner and looked better. We changed our text field 
-components to text area components to allow for easy viewing of task descriptions. We 
+components to expandable text field components to allow for easy viewing of task descriptions. We 
 started with our own components, but we ended up using several components from Material 
 UI which gave our app a more cohesive and sophisticated look. 
 
 We also considered having two dropdown menus for sorting and filtering, but we found that
 that looked messy, so we opted to make one of them tabs. We also tried different placements
 for the stars, such as below that task, but we found that putting them next to the task 
-was clearer.
+was cleaner.
 
 ## User Testing
 <!-- any user testing you did -->
@@ -78,7 +78,6 @@ was clearer.
 We asked two people to test our app. Some issues they faced and some feedback for 
 improvement include:
 - unable to retrieve accidentally deleted tasks
-- the style of the warning alert doesn't match the style of the rest of the app
 
 On the other hand, some features that were easy to use and understand include:
 - the underline under New Task that indicates the user can start typing
@@ -87,8 +86,6 @@ On the other hand, some features that were easy to use and understand include:
 - delete all completed tasks
 - sorting
 - switching the filtered views
-
-
 
 
 ## Final Design
@@ -104,7 +101,7 @@ On the other hand, some features that were easy to use and understand include:
 
 |                         |                         |                         |
 |:-----------------------:|:-----------------------:|:-----------------------:|
-|Before: The screen starts with just the header, New Task field, blank star ratings, tab bar, dropdown menu, and disabled "Add". There is a disabled "Delete Completed" button on the bottm as well.| During: As the user is typing the new task, the "Add" button becomes active. | After: Once the user has added, the New Task field is cleared and the "Add" button is once again disabled. The new task is added into the task list below along with the selected priority. |
+|Before: The screen starts with just the header, New Task field, blank star ratings, tab bar, dropdown menu, and disabled "Add". There is a disabled "Delete Completed" button on the bottom as well.| During: As the user is typing the new task, the "Add" button becomes active. | After: Once the user has added, the New Task field is cleared and the "Add" button is once again disabled. The new task is added into the task list below along with the selected priority. |
 
 <!-- Bullet 2 -->
 |                         |                         |                         |
@@ -113,7 +110,7 @@ On the other hand, some features that were easy to use and understand include:
 
 |                         |                         |                         |
 |:-----------------------:|:-----------------------:|:-----------------------:|
-|Before: We start with a non empty list. The other features remain the same as the before version of the previous bullet. | During: The user starts typing the new task and the "Add" button is active. | After: We have an additional task added to the bottom of the task list. |
+|Before: We start with a non empty list. The other features remain the same as the after version of the previous bullet. | During: The user starts typing the new task and the "Add" button is active. | After: We have an additional task added to the bottom of the task list. The "Add" button is disabled again. |
 
 <!-- Bullet 3 -->
 |                         |                         |
@@ -188,4 +185,4 @@ before.
 
 We also think that this new iteration of the app is clearer and the icons are aligned 
 better. Another thing we are proud of is figuring out how to disable certain buttons that
-shouldn't be used at times.
+shouldn't be used at times and also implementing the stars to indicate priority levels.
