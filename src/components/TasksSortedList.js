@@ -27,7 +27,7 @@ function TasksSortedList(props) {
                       <TaskList
                         data={data} 
                         onDeleteTask={props.handleDeleteTask}
-                        onTaskFieldChanged={props.handleTaskFieldChanged}
+                        handleTaskFieldChanged={props.handleTaskFieldChanged}
                         view={props.view}
                       /> 
                     </Container>

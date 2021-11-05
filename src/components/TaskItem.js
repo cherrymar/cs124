@@ -41,7 +41,7 @@ function TaskItem(props) {
             />
               <StarsRating
                 defaultValue={props.priority}
-                onChange={(event, value) => props.onTaskFieldChanged(props.id, "priority", value)}
+                onChange={(event, value) => props.handleTaskFieldChanged(props.id, "priority", value)}
                 max={3}
                 size="small"
               />

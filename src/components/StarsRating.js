@@ -23,9 +23,8 @@ const StarsRating = (props) => {
         defaultValue={props.defaultValue}
         max={3}
         size="small"
-        emptyIcon={
-          <StarBorderIcon fontSize="inherit" className={classes.emptyStar} />
-        }
+        emptyIcon={<StarBorderIcon fontSize="inherit" className={classes.emptyStar} />}
+        onChange={props.onChange}
       />
     </div>
   );

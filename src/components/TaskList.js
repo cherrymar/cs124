@@ -17,7 +17,7 @@ function TaskList(props) {
       <TaskItem
         onRowClick={(id) =>
             setSelectedId(id)}
-        onTaskFieldChanged={props.onTaskFieldChanged}
+            handleTaskFieldChanged={props.handleTaskFieldChanged}
         onDeleteTask={props.onDeleteTask}
         selected={a.id === selectedId}
         key={a.id}
