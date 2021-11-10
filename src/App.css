@@ -1,3 +1,16 @@
+:root {
+  --blue: #1e90ff;
+  --white: #ffffff;
+  --mobileS: 320px;
+  --mobileM: 375px;
+  --mobileL: 425px;
+  --tablet: 768px;
+  --laptop: 1024px;
+  --laptopL: 1440px;
+  --desktop: 2560px;
+};
+
+
 .App {
   text-align: center;
 }

@@ -4,7 +4,6 @@ import {Tab} from "./Tab";
 function TabList(props) {
     const [activeTab, setActiveTab] = useState("All");
     return (
-        
         <div className="tabs">
             <ol className="tab-list">
                 {
@@ -16,12 +15,7 @@ function TabList(props) {
                     )
                 }
             </ol>
-            {
-                
-                props.children.map((child) => 
-                    activeTab === child.key && child
-                )
-            }
+            {props.children.map((child) => activeTab === child.key && child)}
         </div>
     );
 }

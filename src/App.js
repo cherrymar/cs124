@@ -8,16 +8,16 @@ import firebase from "firebase/compat";
 import {useCollection} from "react-firebase-hooks/firestore";
 
 // Local imports
-import TaskList from './components/TaskList';
-import NewTask from './components/NewTask';
+// import TaskList from './components/TaskList';
+import NewTask from './components/Tasks/NewTask';
 import DeleteAllCompletedButton from './components/DeleteAllCompletedButton';
-import ViewSelector from './components/ViewSelector';
-import TabList from './components/ViewTabs/TabList';
-import TasksSortedList from './components/TasksSortedList';
+// import ViewSelector from './components/ViewSelector';
+import TabList from './components/Tabs/TabList';
+import TasksSortedList from './components/Tasks/TasksSortedList';
 import CustomDropdown from './components/CustomDropdown';
 
 import './App.css';
-
+import { devices } from './components/Design';
 
 // Set up Firebase
 const firebaseConfig = {
@@ -36,9 +36,22 @@ const collection = "cherrymar-tasks";
 
 // Create custom styled components
 const Container = styled.div`
-  height: 90%;
-  width: 90%;
-  margin: 5%;
+
+  // @media ${devices.mobileS} { 
+  //   max-width: 90vw;
+  // }
+
+  // @media ${devices.laptop} { 
+  //   max-width: 1000px;
+  // }
+
+  // @media ${devices.desktop} { 
+  //   max-width: 2000px;
+  // }
+
+  max-width: 90vw;
+  margin: 5% auto;
+
 `
 
 const Header = styled.div`
@@ -50,6 +63,18 @@ const Header = styled.div`
 `;
 
 const Body = styled.div`
+// vertical-align: top;
+  @media ${devices.mobileS} { 
+    // font-size: 10vw;
+  }
+
+  @media ${devices.laptop} { 
+    font-size: 2vw;
+  }
+
+  @media ${devices.desktop} { 
+    font-size: 3vw;
+  }
   height: 75vh;
   z-index: 1;
   ::-webkit-scrollbar {
@@ -58,7 +83,18 @@ const Body = styled.div`
   margin: 10px 0;
 `
 const Title = styled.div`
-  font-size: 10vw;
+  @media ${devices.mobileS} { 
+    font-size: 10vw;
+  }
+
+  @media ${devices.laptop} { 
+    font-size: 5vw;
+  }
+
+  @media ${devices.desktop} { 
+    font-size: 5vw;
+  }
+  // font-size: 10vw;
   font-weight: 700;
   text-align: left;
 `;
@@ -93,7 +129,7 @@ function App() {
     db.collection(collection).doc(taskId).delete();
   }
 
-  function handleAddTask(description, priority) {
+  function handleAddTask(description, priority, dueDate) {
     const id = generateUniqueID();
     db.collection(collection).doc(id).set(
       {
@@ -102,6 +138,7 @@ function App() {
         completed: false,
         priority: priority, 
         dateCreated: firebase.firestore.Timestamp.now(),
+        // dateDue: dueDate
       }
     )
   }
@@ -122,11 +159,7 @@ function App() {
   }
 
 
-  let appContent;
-
-  if (loading) {
-      appContent = <h1>Loading</h1>
-  } else if (value) {
+  if (!loading && value) {
       let data = value.docs.map((doc) => doc.data())
       hasCompleted = data.filter(task => task.completed).length !== 0
   }
@@ -145,16 +178,44 @@ function App() {
           
             <TabList>
               <div key="All">
-                <TasksSortedList sortView={view} query={query} loading={loading} value={value} view={"All"} error={error} handleTaskFieldChanged={handleTaskFieldChanged} handleDeleteTask={handleDeleteTask}/>
+                <TasksSortedList 
+                  sortView={view} 
+                  query={query} 
+                  loading={loading} 
+                  value={value} 
+                  view={"All"} 
+                  error={error} 
+                  handleTaskFieldChanged={handleTaskFieldChanged} 
+                  handleDeleteTask={handleDeleteTask}
+                />
               </div>
               <div key="Done">
-                <TasksSortedList sortView={view} query={query} loading={loading} value={value} view={"Complete"} error={error} handleTaskFieldChanged={handleTaskFieldChanged} handleDeleteTask={handleDeleteTask}/>
+                <TasksSortedList 
+                  sortView={view} 
+                  query={query} 
+                  loading={loading} 
+                  value={value} 
+                  view={"Complete"} 
+                  error={error} 
+                  handleTaskFieldChanged={handleTaskFieldChanged} 
+                  handleDeleteTask={handleDeleteTask}
+                />
               </div>
               <div key="In Progress">
-                <TasksSortedList sortView={view} query={query} loading={loading} value={value} view={"Incomplete"} error={error} handleTaskFieldChanged={handleTaskFieldChanged} handleDeleteTask={handleDeleteTask}/>
+                <TasksSortedList 
+                  sortView={view} 
+                  query={query} 
+                  loading={loading} 
+                  value={value} 
+                  view={"Incomplete"} 
+                  error={error} 
+                  handleTaskFieldChanged={handleTaskFieldChanged} 
+                  handleDeleteTask={handleDeleteTask}
+                />
               </div>
             </TabList>
           </Body>
+
           <DeleteAllCompletedButton disabled={!hasCompleted} onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}/>
         </Container>  
     </>

@@ -1,10 +1,11 @@
 import React from 'react';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import './Dropdown.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
+
+import '../css/Dropdown.css';
 
 export default function CustomDropdown(props) {
   const [sortView, setSortView] = React.useState("dateCreated");

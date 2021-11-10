@@ -5,8 +5,9 @@ export function Tab(props) {
     if (props.activeTab === props.label) {
         classNames.push("tab-list-active");
     }
-    return <li className={classNames.join(" ")}
-               onClick={() => props.onClickTab(props.label)}>
-        {props.label}
-    </li>
+    return (
+        <li className={classNames.join(" ")} onClick={() => props.onClickTab(props.label)}>
+                {props.label}
+        </li>
+    )
 }

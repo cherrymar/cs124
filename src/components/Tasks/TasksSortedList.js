@@ -8,14 +8,14 @@ const Container = styled.div`
 
 function TasksSortedList(props) {
     let appContent;
-
+    // Pass in a filtered prop
     if (props.loading) {
         appContent = <h1>Loading</h1>
     } else if (props.value) {
         let data = props.value.docs.map((doc) => doc.data())
-        if (props.view == "Complete") {
+        if (props.view === "Complete") {
             data = data.filter((doc) => doc.completed);
-        } else if (props.view == "Incomplete") {
+        } else if (props.view === "Incomplete") {
             data = data.filter((doc) => !doc.completed);
         }
         
