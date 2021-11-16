@@ -7,6 +7,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 
 import '../css/Dropdown.css';
 
+
 export default function CustomDropdown(props) {
   const [sortView, setSortView] = React.useState("dateCreated");
 
@@ -20,6 +21,7 @@ export default function CustomDropdown(props) {
       {
         Object.keys(props.sortByOptions).map((option) => (
           <Dropdown.Item
+            aria-label={props.sortByOptions[option]}
             key={"drop-down-item-" + option}
             className="drop-down-item"
             onClick={(event) => handleMenuItemClick(event, option, props.onSelectView)}

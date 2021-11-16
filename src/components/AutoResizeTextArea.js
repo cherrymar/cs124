@@ -6,7 +6,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 const StyledTextAreaAutosize = styled(TextareaAutosize)`
   outline: none;  
   background-color: black;
-  color: ${props => props.completed ? '#555555' : 'lightgray'};
+  color: ${prop => prop.completed === "true" ? '#555555' : 'lightgray'};
   border: none;
   width: 60%;
   &:focus {

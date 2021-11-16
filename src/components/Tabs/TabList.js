@@ -3,6 +3,12 @@ import {Tab} from "./Tab";
 
 function TabList(props) {
     const [activeTab, setActiveTab] = useState("All");
+
+    function onTabChange(tab) {
+        props.onTabChange(tab)
+        setActiveTab(tab)
+    }
+
     return (
         <div className="tabs">
             <ol className="tab-list">
@@ -11,7 +17,7 @@ function TabList(props) {
                         <Tab key={child.key}
                         label={child.key}
                         activeTab={activeTab}
-                        onClickTab={() => setActiveTab(child.key)}/>
+                        onClickTab={() => onTabChange(child.key)}/>
                     )
                 }
             </ol>

@@ -41,17 +41,17 @@ const Container = styled.div`
   //   max-width: 90vw;
   // }
 
-  // @media ${devices.laptop} { 
-  //   max-width: 1000px;
-  // }
+  @media ${devices.laptop} { 
+    max-width: 1000px;
+  }
 
-  // @media ${devices.desktop} { 
-  //   max-width: 2000px;
-  // }
+  @media ${devices.desktop} { 
+    max-width: 2000px;
+  }
 
   max-width: 90vw;
   margin: 5% auto;
-
+  height: 100vh;
 `
 
 const Header = styled.div`
@@ -59,7 +59,7 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   z-index: 2;
-  height: 10vh;
+  height: 10%;
 `;
 
 const Body = styled.div`
@@ -81,6 +81,7 @@ const Body = styled.div`
     display: none;
   }
   margin: 10px 0;
+  height: 80%;
 `
 const Title = styled.div`
   @media ${devices.mobileS} { 
@@ -102,17 +103,17 @@ const Title = styled.div`
 
 function App() {
   // Hooks for managing view state
-  const [view, setView] = useState("dateCreated");
+  const [sortView, setSortView] = useState("dateCreated");
+  const [filterView, setFilterView] = useState("dateCreated");
 
   let hasCompleted = false
 
   // Retrieve data from Firebase
   let query;
-  if (view === "priority") {
-    query = db.collection(collection).orderBy(view, "desc");
+  if (sortView === "priority") {
+    query = db.collection(collection).orderBy(sortView, "desc");
   } else {
-    query = db.collection(collection).orderBy(view);
-
+    query = db.collection(collection).orderBy(sortView);
   }
   
   const [value, loading, error] = useCollection(query);
@@ -122,7 +123,6 @@ function App() {
     "priority" : "Priority", 
     "description" : "Description",
   }
-  const options = ['dateCreated', 'priority', 'description'];
   
   // Helper functions
   function handleDeleteTask(taskId) {
@@ -159,9 +159,19 @@ function App() {
   }
 
 
+  let data;
   if (!loading && value) {
-      let data = value.docs.map((doc) => doc.data())
+      data = value.docs.map((doc) => doc.data())
       hasCompleted = data.filter(task => task.completed).length !== 0
+
+      // let data = props.value.docs.map((doc) => doc.data())
+      if (filterView === "Done") {
+          data = data.filter((doc) => doc.completed);
+      } else if (filterView === "In Progress") {
+          data = data.filter((doc) => !doc.completed);
+      }
+  } else {
+    data = []
   }
 
 
@@ -169,46 +179,34 @@ function App() {
     <>
         <Container className="App">
           <Header>
-            <Title>Tasks</Title>
-            <CustomDropdown onSelectView={setView} sortByOptions={sortByOptions}/>
+            <Title aria-label="Tasks" >Tasks</Title>
+            <CustomDropdown aria-label="Sort View Dropdown" onSelectView={setSortView} sortByOptions={sortByOptions}/>
           </Header>
 
           <Body>
-            <NewTask onAddTask={handleAddTask}/>
+            <NewTask aria-label="Add a new task" onAddTask={handleAddTask}/>
           
-            <TabList>
+            <TabList aria-label="Filter view options tab" onTabChange={setFilterView}>
               <div key="All">
-                <TasksSortedList 
-                  sortView={view} 
-                  query={query} 
-                  loading={loading} 
-                  value={value} 
-                  view={"All"} 
-                  error={error} 
+                <TasksSortedList
+                  aria-label="View all tasks"
+                  data={data}
                   handleTaskFieldChanged={handleTaskFieldChanged} 
                   handleDeleteTask={handleDeleteTask}
                 />
               </div>
               <div key="Done">
-                <TasksSortedList 
-                  sortView={view} 
-                  query={query} 
-                  loading={loading} 
-                  value={value} 
-                  view={"Complete"} 
-                  error={error} 
+                <TasksSortedList
+                  aria-label="View done tasks"
+                  data={data}
                   handleTaskFieldChanged={handleTaskFieldChanged} 
                   handleDeleteTask={handleDeleteTask}
                 />
               </div>
               <div key="In Progress">
-                <TasksSortedList 
-                  sortView={view} 
-                  query={query} 
-                  loading={loading} 
-                  value={value} 
-                  view={"Incomplete"} 
-                  error={error} 
+                <TasksSortedList
+                  aria-label="View in progress tasks"
+                  data={data}
                   handleTaskFieldChanged={handleTaskFieldChanged} 
                   handleDeleteTask={handleDeleteTask}
                 />
@@ -216,7 +214,10 @@ function App() {
             </TabList>
           </Body>
 
-          <DeleteAllCompletedButton disabled={!hasCompleted} onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}/>
+          <DeleteAllCompletedButton 
+            disabled={!hasCompleted} 
+            onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}
+          />
         </Container>  
     </>
     

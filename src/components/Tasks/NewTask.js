@@ -52,7 +52,7 @@ function NewTask(props) {
     <>
       <Container>
         <AutoResizeTextArea 
-          completed={false} 
+          completed={"false"} 
           placeholder="New task" 
           value={taskDescription} 
           onChange={event => setTaskDescription(event.target.value)} 

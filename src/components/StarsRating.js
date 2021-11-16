@@ -19,7 +19,8 @@ const StarsRating = (props) => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-        <Rating
+        <Rating 
+            aria-label="Priority rating"
             value={props.value}
             defaultValue={props.defaultValue}
             max={3}

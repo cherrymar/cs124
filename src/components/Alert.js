@@ -52,10 +52,12 @@ function Alert(props) {
             {props.children}
                 <ButtonContainer>
                     <OurButton
+                        aria-label={props.cancelText ? props.cancelText : "Cancel"}
                         onClick={props.onClose}>
                         {props.cancelText ? props.cancelText : "Cancel"}
                     </OurButton>
                     <OurButton
+                        aria-label= {props.OKText ? props.OKText : "Ok"}
                         onClick={props.onOK}>
                         {props.OKText ? props.OKText : "Ok"}
                     </OurButton>

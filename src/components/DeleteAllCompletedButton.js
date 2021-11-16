@@ -38,7 +38,7 @@ function DeleteAllCompletedButton(props) {
   return (
     <>
       <Container> 
-        <OurButton disabled={props.disabled} onClick={() => toggleModal(true)}>Delete Completed</OurButton>
+        <OurButton aria-label="Delete all completed tasks" disabled={props.disabled} onClick={() => toggleModal(true)}>Delete Completed</OurButton>
         {showAlert &&
           <Alert onClose={() => toggleModal(false)} onOK={() => handleAlertOK()} cancelText="Cancel" OKText="Delete" >
             <ModalText>

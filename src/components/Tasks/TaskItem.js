@@ -11,6 +11,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AutoResizeTextArea from '../AutoResizeTextArea';
 import StarsRating from '../StarsRating';
 
+import { devices } from '../Design';
 
 const Container = styled.div`
     padding: 5px 10px;
@@ -21,9 +22,27 @@ const Container = styled.div`
 `;
 
 const CheckBox = styled.input`
+  @media ${devices.mobileS} { 
     width: 4vw;
     height: 4vw;
     margin: 0 2vw 2vw 0;
+  }
+
+  @media ${devices.laptop} { 
+    width: 3vw;
+    height: 3vw;
+    margin: 0 1vw 1vw 0;
+  }
+
+  @media ${devices.desktop} { 
+    width: 3vw;
+    height: 3vw;
+    margin: 0 2vw 2vw 0;
+  }
+
+    // width: 4vw;
+    // height: 4vw;
+    // margin: 0 2vw 2vw 0;
 `;
 
 
@@ -36,7 +55,7 @@ function TaskItem(props) {
                 checked={props.completed===true} 
                 onChange={event => props.onTaskFieldChanged(props.id, "completed", event.target.checked)}/> 
             <AutoResizeTextArea
-              completed={props.completed}
+              completed={props.completed.toString()}
               id={props.id} 
               placeholder={props.description} 
               defaultValue={props.description} 
@@ -48,7 +67,7 @@ function TaskItem(props) {
                 max={3}
                 size="small"
               />
-            <IconButton aria-label="delete" size="small" onClick={() => props.onDeleteTask(props.id)} sx={{padding: 0}}>
+            <IconButton aria-label="Delete task" size="small" onClick={() => props.onDeleteTask(props.id)} sx={{padding: 0}}>
                 <DeleteIcon fontSize="small" sx={{color: "lightgray"}}/>
             </IconButton> 
         </Container>
