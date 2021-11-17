@@ -17,6 +17,8 @@ const StyledTextAreaAutosize = styled(TextareaAutosize)`
     display: none;
   }
   resize: none;
+  margin: 0;
+  padding: 0;
 `;
 
 export default function AutoResizeTextArea(props) {

@@ -8,13 +8,18 @@ import firebase from "firebase/compat";
 import {useCollection} from "react-firebase-hooks/firestore";
 
 // Local imports
-// import TaskList from './components/TaskList';
 import NewTask from './components/Tasks/NewTask';
 import DeleteAllCompletedButton from './components/DeleteAllCompletedButton';
-// import ViewSelector from './components/ViewSelector';
 import TabList from './components/Tabs/TabList';
 import TasksSortedList from './components/Tasks/TasksSortedList';
 import CustomDropdown from './components/CustomDropdown';
+import Menu from './components/MultiList/Menu';
+
+import SelectListMenu from './components/MultiList/SelectListMenu';
+import SelectList from './components/MultiList/SelectList';
+import TaskDetailView from './TaskDetailView';
+// import useWindowDimensions from './UseWindowDimensions';
+
 
 import './App.css';
 import { devices } from './components/Design';
@@ -37,9 +42,9 @@ const collection = "cherrymar-tasks";
 // Create custom styled components
 const Container = styled.div`
 
-  // @media ${devices.mobileS} { 
-  //   max-width: 90vw;
-  // }
+  @media ${devices.mobileS} { 
+    max-width: 90vw;
+  }
 
   @media ${devices.laptop} { 
     max-width: 1000px;
@@ -49,9 +54,10 @@ const Container = styled.div`
     max-width: 2000px;
   }
 
-  max-width: 90vw;
-  margin: 5% auto;
-  height: 100vh;
+  // max-width: 90vw;
+  height: 95vh;
+  margin: auto auto;
+  
 `
 
 const Header = styled.div`
@@ -63,26 +69,60 @@ const Header = styled.div`
 `;
 
 const Body = styled.div`
-// vertical-align: top;
   @media ${devices.mobileS} { 
     // font-size: 10vw;
+    margin: 5px;
   }
 
   @media ${devices.laptop} { 
     font-size: 2vw;
+    margin: 10px;
   }
 
   @media ${devices.desktop} { 
     font-size: 3vw;
+    margin: 10px;
   }
-  height: 75vh;
+
+
+  height: 75%;
   z-index: 1;
+
   ::-webkit-scrollbar {
     display: none;
   }
-  margin: 10px 0;
-  height: 80%;
+  // margin: 10px 0;
+  // height: 80%;
 `
+
+const Footer = styled.div`
+  @media ${devices.mobileS} { 
+    // font-size: 10vw;
+    margin: 5px;
+  }
+
+  @media ${devices.laptop} { 
+    font-size: 2vw;
+    margin: 10px;
+  }
+
+  @media ${devices.desktop} { 
+    font-size: 3vw;
+    margin: 10px;
+  }
+
+
+  height: 75%;
+  z-index: 1;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  // margin: 10px 0;
+  // height: 80%;
+`
+
+
 const Title = styled.div`
   @media ${devices.mobileS} { 
     font-size: 10vw;
@@ -101,12 +141,22 @@ const Title = styled.div`
 `;
 
 
+const TasksLists = ["Tasks", "Birthday", "Homework", "Chores"];
+
+
 function App() {
+  // console.log(useWindowDimensions())
+  // const { height, width } = useWindowDimensions();
   // Hooks for managing view state
   const [sortView, setSortView] = useState("dateCreated");
   const [filterView, setFilterView] = useState("dateCreated");
+  const [listView, setListView] = useState("Tasks"); // tracks which list user is viewing
+  const [onModalView, setOnModalView] = useState(window.innerWidth > 800); // Menu on left if true, menu bar on bottom  if false
+  const [onMenuView, setOnMenuView] = useState(true); // On left tab if true, on right tab if false
 
+  // console.log(onModalView)
   let hasCompleted = false
+  
 
   // Retrieve data from Firebase
   let query;
@@ -129,7 +179,7 @@ function App() {
     db.collection(collection).doc(taskId).delete();
   }
 
-  function handleAddTask(description, priority, dueDate) {
+  function handleAddTask(description, priority) {
     const id = generateUniqueID();
     db.collection(collection).doc(id).set(
       {
@@ -138,6 +188,7 @@ function App() {
         completed: false,
         priority: priority, 
         dateCreated: firebase.firestore.Timestamp.now(),
+        list: listView,
         // dateDue: dueDate
       }
     )
@@ -174,17 +225,30 @@ function App() {
     data = []
   }
 
+  // console.log(window.innerHeight);
+  // console.log(window.innerWidth);
 
   return (
     <>
-        <Container className="App">
-          <Header>
+        <Container className="App" aria-hidden={true}>
+          <TaskDetailView 
+            onSelectView={setSortView} 
+            sortByOptions={sortByOptions}
+            onAddTask={handleAddTask}
+            onTabChange={setFilterView}
+            data={data}
+            handleTaskFieldChanged={handleTaskFieldChanged} 
+            handleDeleteTask={handleDeleteTask}
+            disabled={!hasCompleted} 
+            onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}
+          />
+          {/* <Header>
             <Title aria-label="Tasks" >Tasks</Title>
             <CustomDropdown aria-label="Sort View Dropdown" onSelectView={setSortView} sortByOptions={sortByOptions}/>
           </Header>
 
-          <Body>
-            <NewTask aria-label="Add a new task" onAddTask={handleAddTask}/>
+          <Body> */}
+            {/* <NewTask aria-label="Add a new task" onAddTask={handleAddTask}/>
           
             <TabList aria-label="Filter view options tab" onTabChange={setFilterView}>
               <div key="All">
@@ -211,13 +275,25 @@ function App() {
                   handleDeleteTask={handleDeleteTask}
                 />
               </div>
-            </TabList>
-          </Body>
+            </TabList> */}
+          {/* </Body> */}
 
-          <DeleteAllCompletedButton 
+          
+
+          {/* <DeleteAllCompletedButton 
             disabled={!hasCompleted} 
             onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}
-          />
+          /> */}
+          {
+            onModalView ? 
+              <SelectList tasksLists={TasksLists} onSetListView={setListView}/>
+              :
+              <Menu onSelectListView={setListView} />
+          }
+
+          
+
+          
         </Container>  
     </>
     
