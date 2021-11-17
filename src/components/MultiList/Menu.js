@@ -39,12 +39,12 @@ function Menu(props) {
     return (
       <>
         <Container>
-            <MenuItem onClick={props.onSelectListView(true)}>
-                <ListAltIcon fontSize="small" sx={{color: "lightgray"}}/>
-            </MenuItem>
-            <MenuItem onClick={props.onSelectListView(false)} >
-                <AssignmentIcon fontSize="small" sx={{color: "lightgray"}}/>
-            </MenuItem>
+          <IconButton aria-label={props.label} size="small" onClick={() => props.onSetOnMenuView(true)} sx={{padding: 0}}>
+            <ListAltIcon fontSize="small" sx={{color: "lightgray"}}/>
+          </IconButton> 
+            <IconButton aria-label={props.label} size="small" onClick={() => props.onSetOnMenuView(false)} sx={{padding: 0}}>
+              <AssignmentIcon fontSize="small" sx={{color: "lightgray"}}/>
+          </IconButton> 
         </Container>
         
 

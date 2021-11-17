@@ -16,7 +16,7 @@ export default function MenuItem(props) {
     return(
         <>
             <Container>
-                <IconButton aria-label={props.label} size="small" onClick={() => props.onClick()} sx={{padding: 0}}>
+                <IconButton aria-label={props.label} size="small" onClick={() => props.onClick} sx={{padding: 0}}>
                     {props.children}
                 </IconButton> 
             </Container>

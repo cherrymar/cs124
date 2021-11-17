@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
 import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 
 // Firebase imports 
 import firebase from "firebase/compat";
@@ -151,7 +152,7 @@ function App() {
   const [sortView, setSortView] = useState("dateCreated");
   const [filterView, setFilterView] = useState("dateCreated");
   const [listView, setListView] = useState("Tasks"); // tracks which list user is viewing
-  const [onModalView, setOnModalView] = useState(window.innerWidth > 800); // Menu on left if true, menu bar on bottom  if false
+  const isMobile = useMediaQuery({maxWidth: 600})
   const [onMenuView, setOnMenuView] = useState(true); // On left tab if true, on right tab if false
 
   // console.log(onModalView)
@@ -230,7 +231,7 @@ function App() {
 
   return (
     <>
-        <Container className="App" aria-hidden={true}>
+        {/* <Container className="App" aria-hidden={true}>
           <TaskDetailView 
             onSelectView={setSortView} 
             sortByOptions={sortByOptions}
@@ -241,7 +242,7 @@ function App() {
             handleDeleteTask={handleDeleteTask}
             disabled={!hasCompleted} 
             onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}
-          />
+          /> */}
           {/* <Header>
             <Title aria-label="Tasks" >Tasks</Title>
             <CustomDropdown aria-label="Sort View Dropdown" onSelectView={setSortView} sortByOptions={sortByOptions}/>
@@ -285,16 +286,50 @@ function App() {
             onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}
           /> */}
           {
-            onModalView ? 
-              <SelectList tasksLists={TasksLists} onSetListView={setListView}/>
+            isMobile ? 
+              onMenuView ? 
+              
+              <>
+                "// list setListView"
+                <Menu onSetOnMenuView={setOnMenuView} /> 
+              </>
               :
-              <Menu onSelectListView={setListView} />
+              <>
+                <TaskDetailView 
+                  onSelectView={setSortView} 
+                  sortByOptions={sortByOptions}
+                  onAddTask={handleAddTask}
+                  onTabChange={setFilterView}
+                  data={data}
+                  handleTaskFieldChanged={handleTaskFieldChanged} 
+                  handleDeleteTask={handleDeleteTask}
+                  disabled={!hasCompleted} 
+                  onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}
+                />
+                <Menu onSetOnMenuView={setOnMenuView} /> 
+              </>
+              :
+              <Container className="App" aria-hidden={true}>
+                <TaskDetailView 
+                  onSelectView={setSortView} 
+                  sortByOptions={sortByOptions}
+                  onAddTask={handleAddTask}
+                  onTabChange={setFilterView}
+                  data={data}
+                  handleTaskFieldChanged={handleTaskFieldChanged} 
+                  handleDeleteTask={handleDeleteTask}
+                  disabled={!hasCompleted} 
+                  onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}
+                />
+                <SelectList tasksLists={TasksLists} onSetListView={setListView}/>
+              </Container>  
+
           }
 
           
-
+        {/* </Container>  */}
           
-        </Container>  
+        
     </>
     
   );
