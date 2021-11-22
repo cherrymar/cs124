@@ -42,9 +42,7 @@ function NewTask(props) {
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      props.onAddTask(taskDescription, taskPriority);
-      setTaskDescription("");
-      setTaskPriority(0);
+      handleSubmit();
     }
   }
 

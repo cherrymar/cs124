@@ -4,9 +4,13 @@ import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
 
+
 // Firebase imports 
 import firebase from "firebase/compat";
 import {useCollection} from "react-firebase-hooks/firestore";
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// const {  Timestamp, FieldValue } = require('firebase-admin/firestore');
 
 // Local imports
 import NewTask from './components/Tasks/NewTask';
@@ -14,10 +18,11 @@ import DeleteAllCompletedButton from './components/DeleteAllCompletedButton';
 import TabList from './components/Tabs/TabList';
 import TasksSortedList from './components/Tasks/TasksSortedList';
 import CustomDropdown from './components/CustomDropdown';
-import Menu from './components/MultiList/Menu';
+import BackButton from './components/MultiList/BackButton';
 
-import SelectListMenu from './components/MultiList/SelectListMenu';
-import SelectList from './components/MultiList/SelectList';
+// import SelectListMenu from './components/MultiList/SelectListMenu';
+import SelectListDesktop from './components/MultiList/SelectListDesktop';
+import SelectListMobile from './components/MultiList/SelectListMobile';
 import TaskDetailView from './TaskDetailView';
 // import useWindowDimensions from './UseWindowDimensions';
 
@@ -33,11 +38,24 @@ const firebaseConfig = {
   storageBucket: "hmc-cs124-fa21-labs.appspot.com",
   messagingSenderId: "949410042946",
   appId: "1:949410042946:web:0113b139a7e3cd1cc709db"
+
+  // apiKey: "AIzaSyBQ-L6YGO4GE_XdNapz4M7VC7j4TM4Mwqc",
+  // authDomain: "tasks-24209.firebaseapp.com",
+  // projectId: "tasks-24209",
+  // storageBucket: "tasks-24209.appspot.com",
+  // messagingSenderId: "178699163025",
+  // appId: "1:178699163025:web:d99e91b297b2b8ef2b7630",
+  // measurementId: "G-FY6X078NY7"
 };
 firebase.initializeApp(firebaseConfig);
 
+// Initialize Firebase
+// const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
+
 const db = firebase.firestore();
-const collection = "cherrymar-tasks";
+const allTasksCollection = "cherrymar-tasks";
+const allTaskListsCollection = "cherrymar-tasks-lists";
 
 
 // Create custom styled components
@@ -48,11 +66,17 @@ const Container = styled.div`
   }
 
   @media ${devices.laptop} { 
-    max-width: 1000px;
+    // max-width: 1000px;
+    width: 90%;
+    grid-column-start: 2;
+    grid-column-end: 2;
   }
 
   @media ${devices.desktop} { 
-    max-width: 2000px;
+    // max-width: 2000px;
+    width: 90%;
+    grid-column-start: 2;
+    grid-column-end: 2;
   }
 
   // max-width: 90vw;
@@ -60,6 +84,34 @@ const Container = styled.div`
   margin: auto auto;
   
 `
+
+const DestkopContainer = styled.div`
+
+  @media ${devices.laptop} { 
+    // max-width: 1000px;
+  }
+
+  @media ${devices.desktop} { 
+    // max-width: 2000px;
+  }
+  
+  display: grid;
+  grid-template-columns: 20% 80%;
+  grid-template-rows: 1;
+`
+
+const ListContainer = styled.div`
+  grid-column-start: 1;
+  grid-column-end: 1;
+  // background: lightgray;
+  border-right: solid;
+  height: 100%;
+`;
+
+const ContentContainer = styled.div`
+  grid-column-start: 2;
+  grid-column-end: 2;
+`;
 
 const Header = styled.div`
   display: flex;
@@ -142,7 +194,7 @@ const Title = styled.div`
 `;
 
 
-const TasksLists = ["Tasks", "Birthday", "Homework", "Chores"];
+const TasksLists = ["Tasks", "Birthday"];
 
 
 function App() {
@@ -152,68 +204,93 @@ function App() {
   const [sortView, setSortView] = useState("dateCreated");
   const [filterView, setFilterView] = useState("dateCreated");
   const [listView, setListView] = useState("Tasks"); // tracks which list user is viewing
-  const isMobile = useMediaQuery({maxWidth: 600})
   const [onMenuView, setOnMenuView] = useState(true); // On left tab if true, on right tab if false
+
+  const isMobile = useMediaQuery({maxWidth: 600})
 
   // console.log(onModalView)
   let hasCompleted = false
+  // let collection;
+  // collection = collection + listView;
   
 
   // Retrieve data from Firebase
-  let query;
+  let allTasksQuery;
   if (sortView === "priority") {
-    query = db.collection(collection).orderBy(sortView, "desc");
+    allTasksQuery = db.collection(allTasksCollection).orderBy(sortView, "desc");
   } else {
-    query = db.collection(collection).orderBy(sortView);
+    allTasksQuery = db.collection(allTasksCollection).orderBy(sortView);
   }
-  
-  const [value, loading, error] = useCollection(query);
+  const [allTasksValue, allTasksLoading, allTasksError] = useCollection(allTasksQuery);
 
+
+  let allTaskListsQuery;
+  allTaskListsQuery = db.collection(allTaskListsCollection).orderBy("listName", "desc");
+  const [allTaskListsValue, allTaskListsLoading, allTaskListsError] = useCollection(allTaskListsQuery);
+  console.log(allTaskListsValue);
+  // Options for sorting the task list
   const sortByOptions = {
     "dateCreated" : "Date Created", 
     "priority" : "Priority", 
     "description" : "Description",
   }
   
+
   // Helper functions
   function handleDeleteTask(taskId) {
-    db.collection(collection).doc(taskId).delete();
+    db.collection(allTasksCollection).doc(taskId).delete();
+    db.collection(allTaskListsCollection).doc(listView).update({["ids"]: []});
   }
 
   function handleAddTask(description, priority) {
     const id = generateUniqueID();
-    db.collection(collection).doc(id).set(
+    db.collection(allTasksCollection).doc(id).set(
       {
         id: id,
         description: description,
         completed: false,
         priority: priority, 
         dateCreated: firebase.firestore.Timestamp.now(),
-        list: listView,
         // dateDue: dueDate
       }
-    )
+    );
+    db.collection(allTaskListsCollection).doc(listView).update({["ids"]: firebase.firestore.FieldValue.arrayUnion(id)});
+  }
+
+  function handleAddTaskList(name) {
+    const id = generateUniqueID();
+    db.collection(allTaskListsCollection).doc(id).set(
+      {
+        id: id,
+        ids: [],
+        name: name,
+      }
+    );
   }
 
   function handleTaskFieldChanged(taskId, field, value) {
-    db.collection(collection).doc(taskId).update({[field]: value});
+    db.collection(allTasksCollection).doc(taskId).update({[field]: value});
   }
 
   async function handleDeleteAllCompletedTasks() {
-    const tasksRef = db.collection(collection);
-    const snapshot = await tasksRef.where('completed', '==', true).get();
+    // const tasksRef = db.collection(allTasksCollection);
+    const snapshot = await allTasksQuery.where('completed', '==', true).get();
     snapshot.forEach(doc => {
-      db.collection(collection).doc(doc.id).delete();
+      db.collection(allTasksCollection).doc(doc.id).delete();
+      db.collection(allTaskListsCollection).doc(listView).update({["ids"]: firebase.firestore.FieldValue.arrayRemove(doc.id)});
     });
-
-    // Just deleted all completed tasks
-    hasCompleted = false;
   }
 
 
   let data;
-  if (!loading && value) {
-      data = value.docs.map((doc) => doc.data())
+  let taskLists;
+
+  if (!allTasksLoading && allTasksValue && !allTaskListsLoading && allTaskListsValue) {
+
+
+      let taskIds = allTaskListsValue.docs.map((doc) => doc.data())//.filter((doc) => doc.name == listView).ids;
+      console.log(taskIds)
+      data = allTasksValue.docs.map((doc) => doc.data())//.filter((doc) => taskIds.contains(doc.id));
       hasCompleted = data.filter(task => task.completed).length !== 0
 
       // let data = props.value.docs.map((doc) => doc.data())
@@ -290,11 +367,12 @@ function App() {
               onMenuView ? 
               
               <>
-                "// list setListView"
-                <Menu onSetOnMenuView={setOnMenuView} /> 
+                <SelectListMobile tasksLists={TasksLists} onSetListView={setListView} onSetOnMenuView={setOnMenuView}/>
+                {/* <Menu onSetOnMenuView={setOnMenuView} />  */}
               </>
               :
               <>
+                <BackButton onSetOnMenuView={setOnMenuView}/> 
                 <TaskDetailView 
                   onSelectView={setSortView} 
                   sortByOptions={sortByOptions}
@@ -306,23 +384,28 @@ function App() {
                   disabled={!hasCompleted} 
                   onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}
                 />
-                <Menu onSetOnMenuView={setOnMenuView} /> 
+                
               </>
               :
-              <Container className="App" aria-hidden={true}>
-                <TaskDetailView 
-                  onSelectView={setSortView} 
-                  sortByOptions={sortByOptions}
-                  onAddTask={handleAddTask}
-                  onTabChange={setFilterView}
-                  data={data}
-                  handleTaskFieldChanged={handleTaskFieldChanged} 
-                  handleDeleteTask={handleDeleteTask}
-                  disabled={!hasCompleted} 
-                  onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}
-                />
-                <SelectList tasksLists={TasksLists} onSetListView={setListView}/>
-              </Container>  
+              <DestkopContainer>
+                <ListContainer>
+                  <SelectListDesktop tasksLists={TasksLists} onSetListView={setListView} onHandleAddTaskList={handleAddTaskList}/>
+                </ListContainer>
+                <Container className="App" aria-hidden={true}>
+                  <TaskDetailView 
+                    onSelectView={setSortView} 
+                    sortByOptions={sortByOptions}
+                    onAddTask={handleAddTask}
+                    onTabChange={setFilterView}
+                    data={data}
+                    handleTaskFieldChanged={handleTaskFieldChanged} 
+                    handleDeleteTask={handleDeleteTask}
+                    disabled={!hasCompleted} 
+                    onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}
+                  />
+                </Container>  
+                
+              </DestkopContainer>
 
           }
 

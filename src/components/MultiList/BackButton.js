@@ -8,8 +8,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import IconButton from '@mui/material/IconButton';
 
-import ListAltIcon from '@mui/icons-material/ListAlt';
-import AssignmentIcon from '@mui/icons-material/Assignment';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';import AssignmentIcon from '@mui/icons-material/Assignment';
 
 
 // import CustomDropdown from './components/CustomDropdown';
@@ -20,31 +19,26 @@ import MenuItem from './MenuItem';
 
 
 const Container = styled.div`
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    padding: 5px;
-    display: flex;
-    justify-content: space-around;
-    background: gray;
-    margin: auto;
-    width: 100vw;
+    // position: absolute;
+    // left: 0;
+    // bottom: 0;
+    margin: 10px 0 0 10px;
+    // padding: 5px;
+    // display: flex;
+    // justify-content: space-around;
+    // background: gray;
+    // margin: auto;
+    // width: 100vw;
 `;
 
-function Menu(props) {
-    function handleMenuItemClick() {
-
-    }
+function BackButton(props) {
 
     return (
       <>
         <Container>
           <IconButton aria-label={props.label} size="small" onClick={() => props.onSetOnMenuView(true)} sx={{padding: 0}}>
-            <ListAltIcon fontSize="small" sx={{color: "lightgray"}}/>
-          </IconButton> 
-            <IconButton aria-label={props.label} size="small" onClick={() => props.onSetOnMenuView(false)} sx={{padding: 0}}>
-              <AssignmentIcon fontSize="small" sx={{color: "lightgray"}}/>
-          </IconButton> 
+            <ArrowBackIosNewIcon fontSize="small" sx={{color: "lightgray"}}/>
+          </IconButton>
         </Container>
         
 
@@ -78,7 +72,7 @@ function Menu(props) {
     );
   }
   
-  export default Menu;
+  export default BackButton;
   
   
   
