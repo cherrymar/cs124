@@ -14,7 +14,8 @@ function TabList(props) {
             <ol className="tab-list">
                 {
                     props.children.map((child) => 
-                        <Tab key={child.key}
+                        <Tab 
+                        key={child.key}
                         label={child.key}
                         activeTab={activeTab}
                         onClickTab={() => onTabChange(child.key)}/>

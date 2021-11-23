@@ -68,10 +68,21 @@ const COLLECTION = "cherrymar-tasks-lists";
 
 
 // Create custom styled components
+const Container = styled.div`
+
+
+`;
+
+
 const ContentContainer = styled.div`
+  // max-width: 90vw;
+  height: 95vh;
+  margin: auto auto;
 
   @media ${devices.mobileS} { 
+    height: 95vh;
     max-width: 90vw;
+    margin: 5vw;
   }
 
   @media ${devices.laptop} { 
@@ -88,22 +99,20 @@ const ContentContainer = styled.div`
     grid-column-end: 2;
   }
 
-  // max-width: 90vw;
-  height: 95vh;
-  margin: auto auto;
+  
   
 `
 
 const DestkopContainer = styled.div`
 
-  @media ${devices.laptop} { 
-    // max-width: 1000px;
-  }
+  // @media ${devices.laptop} { 
+  //   margin: 5em;
+  // }
 
-  @media ${devices.desktop} { 
-    // max-width: 2000px;
-  }
-  
+  // @media ${devices.desktop} { 
+  //   margin: 2em;
+  // }
+  // padding: 5em;
   display: grid;
   grid-template-columns: 20% 80%;
   grid-template-rows: 1;
@@ -115,6 +124,7 @@ const ListContainer = styled.div`
   // background: lightgray;
   border-right: solid;
   height: 100%;
+  // margin: 0 -5em;
 `;
 
 
@@ -210,36 +220,15 @@ const sortByOptions = {
 }
 
 function App() {
-  // console.log(useWindowDimensions())
-  // const { height, width } = useWindowDimensions();
   // Hooks for managing view state
-
   const [listId, setListId] = useState(null); // tracks which list user is viewing
   const [listName, setListName] = useState(null);
   const [onMenuView, setOnMenuView] = useState(true); // On left tab if true, on right tab if false
+  const [sortView, setSortView] = useState("dateCreated");
 
   const isMobile = useMediaQuery({maxWidth: 600})
 
   let hasCompleted = FamilyRestroomOutlined
-  
-
-
-
-
-
-  // let allTasksQuery;
-  // if (sortView === "priority") {
-  //   allTasksQuery = db.collection(allTasksCollection).orderBy(sortView, "desc");
-  // } else {
-  //   allTasksQuery = db.collection(allTasksCollection).orderBy(sortView);
-  // }
-  // const [allTasksValue, allTasksLoading, allTasksError] = useCollection(allTasksQuery);
-
-
-  // let allTaskListsQuery;
-  // allTaskListsQuery = db.collection(allTaskListsCollection).orderBy("listName", "desc");
-  // const [allTaskListsValue, allTaskListsLoading, allTaskListsError] = useCollection(allTaskListsQuery);
-  // console.log(allTaskListsValue);
 
   let taskListQuery = db.collection(COLLECTION).orderBy("name");
   const [allTaskListsValue, allTaskListsLoading, allTaskListsError] = useCollection(taskListQuery);
@@ -250,11 +239,8 @@ function App() {
   }
 
 
-
   // Helper functions
   function handleAddTaskList(name, id) {
-    // setListName(name);
-    // setListId(id);
     db.collection(COLLECTION).doc(id).set(
       {
         id: id,
@@ -263,96 +249,13 @@ function App() {
     );
   }
 
-  // let data;
-  // let taskLists;
-
-
-  // collection(COLLECTION).doc(id of list).collection(SUBCOLLECTION).doc(id of task)
-
-  // Retrieve data from Firebase
-  // Get all lists
-
-  // Determine selected list
-
-  // Grab tasks from that list
-
-
-  
-  // if (!allTasksLoading && allTasksValue && !allTaskListsLoading && allTaskListsValue) {
-
-
-  //     let taskIds = allTaskListsValue.docs.map((doc) => doc.data())//.filter((doc) => doc.name == listView).ids;
-  //     console.log(taskIds)
-  //     data = allTasksValue.docs.map((doc) => doc.data())//.filter((doc) => taskIds.contains(doc.id));
-  //     hasCompleted = data.filter(task => task.completed).length !== 0
-
-  //     // let data = props.value.docs.map((doc) => doc.data())
-  //     if (filterView === "Done") {
-  //         data = data.filter((doc) => doc.completed);
-  //     } else if (filterView === "In Progress") {
-  //         data = data.filter((doc) => !doc.completed);
-  //     }
-  // } else {
-  //   data = []
-  // }
+  function handleDeleteTaskList(id) {
+    db.collection(COLLECTION).doc(id).delete();
+  }
 
 
   return (
-    <>
-        {/* <Container className="App" aria-hidden={true}>
-          <TaskDetailView 
-            onSelectView={setSortView} 
-            sortByOptions={sortByOptions}
-            onAddTask={handleAddTask}
-            onTabChange={setFilterView}
-            data={data}
-            handleTaskFieldChanged={handleTaskFieldChanged} 
-            handleDeleteTask={handleDeleteTask}
-            disabled={!hasCompleted} 
-            onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}
-          /> */}
-          {/* <Header>
-            <Title aria-label="Tasks" >Tasks</Title>
-            <CustomDropdown aria-label="Sort View Dropdown" onSelectView={setSortView} sortByOptions={sortByOptions}/>
-          </Header>
-
-          <Body> */}
-            {/* <NewTask aria-label="Add a new task" onAddTask={handleAddTask}/>
-          
-            <TabList aria-label="Filter view options tab" onTabChange={setFilterView}>
-              <div key="All">
-                <TasksSortedList
-                  aria-label="View all tasks"
-                  data={data}
-                  handleTaskFieldChanged={handleTaskFieldChanged} 
-                  handleDeleteTask={handleDeleteTask}
-                />
-              </div>
-              <div key="Done">
-                <TasksSortedList
-                  aria-label="View done tasks"
-                  data={data}
-                  handleTaskFieldChanged={handleTaskFieldChanged} 
-                  handleDeleteTask={handleDeleteTask}
-                />
-              </div>
-              <div key="In Progress">
-                <TasksSortedList
-                  aria-label="View in progress tasks"
-                  data={data}
-                  handleTaskFieldChanged={handleTaskFieldChanged} 
-                  handleDeleteTask={handleDeleteTask}
-                />
-              </div>
-            </TabList> */}
-          {/* </Body> */}
-
-          
-
-          {/* <DeleteAllCompletedButton 
-            disabled={!hasCompleted} 
-            onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}
-          /> */}
+    <div className="App">
           {
             isMobile ? 
               onMenuView ? 
@@ -363,37 +266,51 @@ function App() {
                   onSetListId={setListId} 
                   onSetOnMenuView={setOnMenuView} 
                   onHandleAddTaskList={handleAddTaskList}
+                  onHandleDeleteTaskList={handleDeleteTaskList}
                   onSetListName={setListName}
                 />
-                {/* <Menu onSetOnMenuView={setOnMenuView} />  */}
               </>
               :
               <>
-                <BackButton onSetOnMenuView={setOnMenuView}/> 
-                <TaskDetailView 
-                  sortByOptions={sortByOptions}
+                
+                <ContentContainer>
+                <Header>
+                  <BackButton onSetOnMenuView={setOnMenuView}/> 
+                  <CustomDropdown aria-label="Sort View Dropdown" onSelectView={setSortView} sortByOptions={sortByOptions}/>
+                </Header>
+                <Title aria-label="Tasks">{listName}</Title>
+                <TaskDetailView
                   listId={listId}
                   listName={listName}
                   disabled={!hasCompleted} 
+                  sortView={sortView} 
                   db={db}
                 />
+                </ContentContainer>
                 
               </>
               :
               <DestkopContainer>
                 <ListContainer>
-                  <SelectListMobile 
+                  <SelectListDesktop
                     tasksLists={taskListData} 
                     onSetListId={setListId} 
                     onSetOnMenuView={setOnMenuView} 
                     onHandleAddTaskList={handleAddTaskList}
+                    onHandleDeleteTaskList={handleDeleteTaskList}
                     onSetListName={setListName}
                   />
                 </ListContainer>
-                <ContentContainer className="App" aria-hidden={true}>
+                <ContentContainer>
+                  <Header>
+                      <Title aria-label="Tasks">{listName}</Title>
+                      <CustomDropdown aria-label="Sort View Dropdown" onSelectView={setSortView} sortByOptions={sortByOptions}/>
+                  </Header>
+                
                   {listId &&
-                    <TaskDetailView 
-                    sortByOptions={sortByOptions}
+                
+                    <TaskDetailView
+                    sortView={sortView} 
                     listId={listId}
                     listName={listName}
                     disabled={!hasCompleted} 
@@ -406,12 +323,7 @@ function App() {
               </DestkopContainer>
 
           }
-
-          
-        {/* </Container>  */}
-          
-        
-    </>
+    </div>
     
   );
 }

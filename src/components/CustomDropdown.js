@@ -16,16 +16,17 @@ const Container = styled.div`
 `;
 
 const Text = styled.div`
+  // margin: auto;
   @media ${devices.mobileS} { 
-    margin: 0 5px;
+    margin: auto 5px;
   }
 
   @media ${devices.laptop} { 
-    margin: 0 10px;
+    margin: auto 10px;
   }
 
   @media ${devices.desktop} { 
-    margin: 0 10px;
+    margin: auto 10px;
   }
 `;
 

@@ -25,13 +25,6 @@ import { devices } from './components/Design';
 const SUBCOLLECTION = "cherrymar-tasks";
 const COLLECTION = "cherrymar-tasks-lists";
 
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 2;
-  height: 10%;
-`;
 
 const Body = styled.div`
   @media ${devices.mobileS} { 
@@ -61,33 +54,18 @@ const Body = styled.div`
 `
 
 
-const Title = styled.div`
-  @media ${devices.mobileS} { 
-    font-size: 10vw;
-  }
-
-  @media ${devices.laptop} { 
-    font-size: 5vw;
-  }
-
-//   @media ${devices.desktop} { 
-//     font-size: 5vw;
-//   }
-  // font-size: 10vw;
-  font-weight: 700;
-  text-align: left;
-`;
 
 export default function TaskDetailView(props){
-  const [sortView, setSortView] = useState("dateCreated");
+  
   const [filterView, setFilterView] = useState("dateCreated");
   let hasCompleted = false;
 
+
   let tasksQuery;
-  if (sortView === "priority") {
-    tasksQuery = props.db.collection(COLLECTION).doc(props.listId).collection(SUBCOLLECTION).orderBy(sortView, "desc");
+  if (props.sortView === "priority") {
+    tasksQuery = props.db.collection(COLLECTION).doc(props.listId).collection(SUBCOLLECTION).orderBy(props.sortView, "desc");
   } else {
-    tasksQuery = props.db.collection(COLLECTION).doc(props.listId).collection(SUBCOLLECTION).orderBy(sortView);
+    tasksQuery = props.db.collection(COLLECTION).doc(props.listId).collection(SUBCOLLECTION).orderBy(props.sortView);
   }
   const [allTasksValue, allTasksLoading, allTasksError] = useCollection(tasksQuery);
 
@@ -136,10 +114,10 @@ export default function TaskDetailView(props){
 
     return (
         <>
-            <Header>
+            {/* <Header>
                 <Title aria-label="Tasks">{props.listName}</Title>
                 <CustomDropdown aria-label="Sort View Dropdown" onSelectView={setSortView} sortByOptions={props.sortByOptions}/>
-            </Header>
+            </Header> */}
             
             <Body>
                 <NewTask aria-label="Add a new task" onAddTask={handleAddTask}/>
