@@ -109,7 +109,7 @@ export default function SelectListMobile(props) {
                         {value.name}
                       </CustomButton>
 
-                      <IconButton aria-label="Delete task" size="small" onClick={() => props.onHandleDeleteTaskList(value.id)} sx={{padding: 0}}>
+                      <IconButton aria-label={"Delete " + value.name + " list"} size="small" onClick={() => props.onHandleDeleteTaskList(value.id)} sx={{padding: 0}}>
                         <DeleteIcon fontSize="small" sx={{color: "lightgray"}}/>
                       </IconButton>   
                     </ListContainer>

@@ -8,7 +8,7 @@ export function Tab(props) {
     }
 
     const handleKeyDown = (event) => {
-        if (event.key === ' ') {
+        if (event.key === ' ' || event.key === "Enter") {
             props.onClickTab(props.label)
         }
     }

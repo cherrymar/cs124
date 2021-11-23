@@ -240,10 +240,10 @@ function App() {
                 
                 <ContentContainer>
                 <Header>
-                  <BackButton onSetOnMenuView={setOnMenuView}/> 
+                  <BackButton aria-label="Return to task lists" onSetOnMenuView={setOnMenuView}/> 
                   <CustomDropdown aria-label="Sort View Dropdown" onSelectView={setSortView} sortByOptions={sortByOptions}/>
                 </Header>
-                <Title aria-label="Tasks">{listName}</Title>
+                <Title aria-label={listName}>{listName}</Title>
                 <TaskDetailView
                   listId={listId}
                   listName={listName}
