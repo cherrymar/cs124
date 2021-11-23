@@ -15,21 +15,6 @@ import AutoResizeTextArea from '../AutoResizeTextArea';
 
 
 const AddContainer = styled.div`
-    // @media ${devices.mobileS} { 
-    //     // font-size: 10vw;
-    //     margin: 5px;
-    // }
-
-    // @media ${devices.laptop} { 
-    //     font-size: 2vw;
-    //     margin: 10px;
-    // }
-
-    // @media ${devices.desktop} { 
-    //     font-size: 3vw;
-    //     margin: 10px;
-    // }
-
     width: 100%;
     display: flex;
     align-items: flex-start;
@@ -57,22 +42,6 @@ const ListContainer = styled.div`
   justify-content: space-evenly;
   // align-content: stretch;
 `;
-
-// const SubmitButtonContainer = styled.div`
-//   display: flex;
-//   justify-content: flex-end;
-//   align-items: center;
-//   // width: 100%;
-// `;
-
-// const Container = styled.div`
-//   width: 100%;
-//   display: flex;
-//   align-items: flex-start;
-//   margin: 5vw 0 8vw 0;
-//   justify-content: space-between;
-//   z-index: -1;
-// `;
 
 
 export default function SelectListMobile(props) {

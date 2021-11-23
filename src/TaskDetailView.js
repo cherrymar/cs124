@@ -6,15 +6,11 @@ import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
 // Firebase imports 
 import firebase from "firebase/compat";
 import {useCollection} from "react-firebase-hooks/firestore";
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-
 
 
 import NewTask from './components/Tasks/NewTask';
 import TabList from './components/Tabs/TabList';
 import TasksSortedList from './components/Tasks/TasksSortedList';
-import CustomDropdown from './components/CustomDropdown';
 import DeleteAllCompletedButton from './components/DeleteAllCompletedButton';
 
 
@@ -104,21 +100,15 @@ export default function TaskDetailView(props){
   }
 
   async function handleDeleteAllCompletedTasks() {
-    // const tasksRef = props.db.collection(allTasksCollection);
-    const snapshot = await tasksQuery.where('completed', '==', true).get();
+    const snapshot = await props.db.collection(COLLECTION).doc(props.listId).collection(SUBCOLLECTION).where('completed', '==', true).get();
     snapshot.forEach(doc => {
-      props.db.collection(COLLECTION).doc(props.listId).collection(SUBCOLLECTION).doc(doc.id);
+      props.db.collection(COLLECTION).doc(props.listId).collection(SUBCOLLECTION).doc(doc.id).delete();
     });
   }
 
 
     return (
         <>
-            {/* <Header>
-                <Title aria-label="Tasks">{props.listName}</Title>
-                <CustomDropdown aria-label="Sort View Dropdown" onSelectView={setSortView} sortByOptions={props.sortByOptions}/>
-            </Header> */}
-            
             <Body>
                 <NewTask aria-label="Add a new task" onAddTask={handleAddTask}/>
                 

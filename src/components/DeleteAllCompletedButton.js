@@ -4,7 +4,6 @@ import styled from 'styled-components';
 // Local imports
 import Alert from './Alert.js';
 import OurButton from './OurButton';
-// import './Alert.css';
 
 
 const Container = styled.div`

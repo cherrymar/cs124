@@ -1,6 +1,5 @@
 // React imports
 import { useState } from 'react';
-import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
 
@@ -8,23 +7,14 @@ import { useMediaQuery } from 'react-responsive';
 // Firebase imports 
 import firebase from "firebase/compat";
 import {useCollection} from "react-firebase-hooks/firestore";
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// const {  Timestamp, FieldValue } = require('firebase-admin/firestore');
 
 // Local imports
-import NewTask from './components/Tasks/NewTask';
-import DeleteAllCompletedButton from './components/DeleteAllCompletedButton';
-import TabList from './components/Tabs/TabList';
-import TasksSortedList from './components/Tasks/TasksSortedList';
 import CustomDropdown from './components/CustomDropdown';
 import BackButton from './components/MultiList/BackButton';
 
-// import SelectListMenu from './components/MultiList/SelectListMenu';
 import SelectListDesktop from './components/MultiList/SelectListDesktop';
 import SelectListMobile from './components/MultiList/SelectListMobile';
 import TaskDetailView from './TaskDetailView';
-// import useWindowDimensions from './UseWindowDimensions';
 
 
 import './App.css';
@@ -39,14 +29,6 @@ const firebaseConfig = {
   // storageBucket: "hmc-cs124-fa21-labs.appspot.com",
   // messagingSenderId: "949410042946",
   // appId: "1:949410042946:web:0113b139a7e3cd1cc709db"
-
-  // apiKey: "AIzaSyBQ-L6YGO4GE_XdNapz4M7VC7j4TM4Mwqc",
-  // authDomain: "tasks-24209.firebaseapp.com",
-  // projectId: "tasks-24209",
-  // storageBucket: "tasks-24209.appspot.com",
-  // messagingSenderId: "178699163025",
-  // appId: "1:178699163025:web:d99e91b297b2b8ef2b7630",
-  // measurementId: "G-FY6X078NY7"
 
   apiKey: "AIzaSyBHZdLi79neEirMDn9HeYqOIO_7D7CMMxk",
   authDomain: "tasks-dce66.firebaseapp.com",
@@ -104,15 +86,6 @@ const ContentContainer = styled.div`
 `
 
 const DestkopContainer = styled.div`
-
-  // @media ${devices.laptop} { 
-  //   margin: 5em;
-  // }
-
-  // @media ${devices.desktop} { 
-  //   margin: 2em;
-  // }
-  // padding: 5em;
   display: grid;
   grid-template-columns: 20% 80%;
   grid-template-rows: 1;
@@ -121,10 +94,8 @@ const DestkopContainer = styled.div`
 const ListContainer = styled.div`
   grid-column-start: 1;
   grid-column-end: 1;
-  // background: lightgray;
   border-right: solid;
   height: 100%;
-  // margin: 0 -5em;
 `;
 
 
@@ -160,8 +131,6 @@ const Body = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
-  // margin: 10px 0;
-  // height: 80%;
 `
 
 const Footer = styled.div`
@@ -187,8 +156,6 @@ const Footer = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
-  // margin: 10px 0;
-  // height: 80%;
 `
 
 
@@ -204,13 +171,11 @@ const Title = styled.div`
   @media ${devices.desktop} { 
     font-size: 5vw;
   }
-  // font-size: 10vw;
   font-weight: 700;
   text-align: left;
 `;
 
 
-const TasksLists = ["Tasks", "Birthday"];
 
 // Options for sorting the task list
 const sortByOptions = {

@@ -5,8 +5,6 @@ import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
 
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-// import DeleteIcon from '@mui/icons-material/Delete';
-
 
 
 // Local imports
@@ -46,24 +44,6 @@ const ListContainer = styled.div`
   justify-content: space-evenly;
   // align-content: stretch;
 `;
-
-
-
-// const SubmitButtonContainer = styled.div`
-//   display: flex;
-//   justify-content: flex-end;
-//   align-items: center;
-//   // width: 100%;
-// `;
-
-// const Container = styled.div`
-//   width: 100%;
-//   display: flex;
-//   align-items: flex-start;
-//   margin: 5vw 0 8vw 0;
-//   justify-content: space-between;
-//   z-index: -1;
-// `;
 
 
 export default function SelectListMobile(props) {
@@ -142,85 +122,3 @@ export default function SelectListMobile(props) {
 
   )
 }
-
-
-/*
-// Local imports
-import '../../App.css';
-import OurButton from '../OurButton';
-import AutoResizeTextArea from '../AutoResizeTextArea';
-import StarsRating from '../StarsRating';
-
-
-const SubmitButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  // width: 100%;
-`;
-
-const Container = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  margin: 5vw 0 8vw 0;
-  justify-content: space-between;
-  z-index: -1;
-`;
-
-
-function NewTask(props) {
-  const [taskDescription, setTaskDescription] = useState("");
-  const [taskPriority, setTaskPriority] = useState(0);
-
-  
-  function handleSubmit() {
-    props.onAddTask(taskDescription, taskPriority);
-    setTaskDescription("");
-    setTaskPriority(0);
-  }
-
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      props.onAddTask(taskDescription, taskPriority);
-      setTaskDescription("");
-      setTaskPriority(0);
-    }
-  }
-
-  return (
-    <>
-      <Container>
-        <AutoResizeTextArea 
-          completed={"false"} 
-          placeholder="New task" 
-          value={taskDescription} 
-          onChange={event => setTaskDescription(event.target.value)} 
-          onKeyDown={(handleKeyDown)}
-        /> 
-        
-        <SubmitButtonContainer>
-          <StarsRating
-            name="customized-color"
-            defaultValue={0}
-            value={taskPriority}
-            onChange={(event, value) => setTaskPriority(value)}
-            // onPriorityChange={setTaskPriority}
-            max={3}
-            size="small"
-          />
-          
-          <OurButton 
-            className="submitButton" 
-            disabled={taskDescription===""} 
-            variant="contained" 
-            onClick={handleSubmit}
-          >
-            Add
-          </OurButton>
-        </SubmitButtonContainer>
-      </Container>
-    </>
-  );
-}
-*/

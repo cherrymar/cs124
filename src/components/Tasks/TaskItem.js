@@ -3,9 +3,6 @@ import styled from 'styled-components';
 
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-// import Rating from '@mui/material/Rating';
-// import StarBorderIcon from "@material-ui/icons/StarBorder";
-// import { makeStyles } from "@material-ui/core/styles";
 
 // Local imports
 import AutoResizeTextArea from '../AutoResizeTextArea';
@@ -39,10 +36,6 @@ const CheckBox = styled.input`
     height: 3vw;
     margin: 0 2vw 2vw 0;
   }
-
-    // width: 4vw;
-    // height: 4vw;
-    // margin: 0 2vw 2vw 0;
 `;
 
 

@@ -1,10 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 
-// import Rating from '@mui/material/Rating';
-// import StarBorderIcon from "@material-ui/icons/StarBorder";
-// import { makeStyles } from "@material-ui/core/styles";
-
 // Local imports
 import '../../App.css';
 import OurButton from '../OurButton';
@@ -63,7 +59,6 @@ function NewTask(props) {
             defaultValue={0}
             value={taskPriority}
             onChange={(event, value) => setTaskPriority(value)}
-            // onPriorityChange={setTaskPriority}
             max={3}
             size="small"
           />
