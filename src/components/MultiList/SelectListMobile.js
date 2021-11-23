@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
+
 
 import IconButton from '@mui/material/IconButton';
 // import DeleteIcon from '@mui/icons-material/Delete';
@@ -32,14 +34,20 @@ const AddContainer = styled.div`
     display: flex;
     align-items: flex-start;
     margin: 5vw 0 8vw 0;
-    justify-content: space-evenly;
-    z-index: -1;
+    justify-content: space-between;
+    // z-index: -1;
+    padding: 5px 12px;
 
 `;
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
+    margin: 10px;
+`;
+
+const CustomButton = styled(OurButton)`
+  margin: 5px;
 `;
 
 
@@ -65,148 +73,58 @@ export default function SelectListMobile(props) {
 
   
     function handleSubmit() {
-        props.onSetListView(taskListName);
-        props.onHandleAddTaskList(taskListName);
-        setNewTaskList("");
-        handleClick(taskListName);
+      let id = generateUniqueID();
+      props.onHandleAddTaskList(taskListName, id);
+      props.onSetListName(taskListName)
+      setNewTaskList("");
+      handleClick(id);
 
     }
    
-    function handleClick(list) {
-        props.onSetOnMenuView(false)
-        props.onSetListView(list)
+    function handleClick(listId, name) {
+      props.onSetListName(name)
+      props.onSetOnMenuView(false)
+      props.onSetListId(listId)
     }
 
     const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            handleSubmit()
-        }
+      if (event.key === 'Enter') {
+          handleSubmit()
+      }
     }
 
-    return(
-        <>
-            <Container>
-                <AddContainer>
-                    <AutoResizeTextArea 
-                    completed={"false"} 
-                    placeholder="New task list" 
-                    value={taskListName} 
-                    onChange={event => setNewTaskList(event.target.value)} 
-                    onKeyDown={(handleKeyDown)}
-                    /> 
-                    
-                    {/* <SubmitButtonContainer> */}
-                    
-                    <OurButton 
-                        className="submitButton" 
-                        disabled={taskListName===""} 
-                        variant="contained" 
-                        onClick={() => handleSubmit()}
-                    >
-                        Add
-                    </OurButton>
-                </AddContainer>
-                    {
-                        props.tasksLists.map((value, index) => 
-                            <OurButton
-                                onClick={() => handleClick(value)}
-                                key={value}
-                                // {...a} 
-                            >{value}</OurButton>)
-                    }
-
-                    {/* </SubmitButtonContainer> */}
-            
-                
-            
-                {/* <IconButton aria-label="Delete task" size="small" onClick={() => props.onDeleteTask(props.id)} sx={{padding: 0}}>
-                    <AssignmentIcon fontSize="small" sx={{color: "lightgray"}}/>
-                </IconButton>  */}
-            </Container>
-
-        </>
-
-    )
-}
-
-
-/*
-// Local imports
-import '../../App.css';
-import OurButton from '../OurButton';
-import AutoResizeTextArea from '../AutoResizeTextArea';
-import StarsRating from '../StarsRating';
-
-
-const SubmitButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  // width: 100%;
-`;
-
-const Container = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  margin: 5vw 0 8vw 0;
-  justify-content: space-between;
-  z-index: -1;
-`;
-
-
-function NewTask(props) {
-  const [taskDescription, setTaskDescription] = useState("");
-  const [taskPriority, setTaskPriority] = useState(0);
-
-  
-  function handleSubmit() {
-    props.onAddTask(taskDescription, taskPriority);
-    setTaskDescription("");
-    setTaskPriority(0);
-  }
-
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      props.onAddTask(taskDescription, taskPriority);
-      setTaskDescription("");
-      setTaskPriority(0);
-    }
-  }
-
-  return (
+  return(
     <>
-      <Container>
-        <AutoResizeTextArea 
-          completed={"false"} 
-          placeholder="New task" 
-          value={taskDescription} 
-          onChange={event => setTaskDescription(event.target.value)} 
-          onKeyDown={(handleKeyDown)}
-        /> 
-        
-        <SubmitButtonContainer>
-          <StarsRating
-            name="customized-color"
-            defaultValue={0}
-            value={taskPriority}
-            onChange={(event, value) => setTaskPriority(value)}
-            // onPriorityChange={setTaskPriority}
-            max={3}
-            size="small"
-          />
-          
-          <OurButton 
-            className="submitButton" 
-            disabled={taskDescription===""} 
-            variant="contained" 
-            onClick={handleSubmit}
-          >
-            Add
-          </OurButton>
-        </SubmitButtonContainer>
-      </Container>
+        <Container>
+            <AddContainer>
+                <AutoResizeTextArea 
+                completed={"false"} 
+                placeholder="New task list" 
+                value={taskListName} 
+                onChange={event => setNewTaskList(event.target.value)} 
+                onKeyDown={(handleKeyDown)}
+                /> 
+                <OurButton 
+                    className="submitButton" 
+                    disabled={taskListName===""} 
+                    variant="contained" 
+                    onClick={() => handleSubmit()}
+                >
+                    Add
+                </OurButton>
+            </AddContainer>
+                {
+                    props.tasksLists.map((value, index) => 
+                        <CustomButton
+                            onClick={() => handleClick(value.id, value.name)}
+                            key={value.id}
+                        >
+                          {value.name}
+                        </CustomButton>)
+                }
+        </Container>
+
     </>
-  );
+
+  )
 }
-*/

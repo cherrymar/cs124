@@ -29,15 +29,16 @@ import TaskDetailView from './TaskDetailView';
 
 import './App.css';
 import { devices } from './components/Design';
+import { FamilyRestroomOutlined } from '@mui/icons-material';
 
 // Set up Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyCd9qqxvMpEKpBzwfWcc2tlRFa6ICaLH_s",
-  authDomain: "hmc-cs124-fa21-labs.firebaseapp.com",
-  projectId: "hmc-cs124-fa21-labs",
-  storageBucket: "hmc-cs124-fa21-labs.appspot.com",
-  messagingSenderId: "949410042946",
-  appId: "1:949410042946:web:0113b139a7e3cd1cc709db"
+  // apiKey: "AIzaSyCd9qqxvMpEKpBzwfWcc2tlRFa6ICaLH_s",
+  // authDomain: "hmc-cs124-fa21-labs.firebaseapp.com",
+  // projectId: "hmc-cs124-fa21-labs",
+  // storageBucket: "hmc-cs124-fa21-labs.appspot.com",
+  // messagingSenderId: "949410042946",
+  // appId: "1:949410042946:web:0113b139a7e3cd1cc709db"
 
   // apiKey: "AIzaSyBQ-L6YGO4GE_XdNapz4M7VC7j4TM4Mwqc",
   // authDomain: "tasks-24209.firebaseapp.com",
@@ -46,6 +47,14 @@ const firebaseConfig = {
   // messagingSenderId: "178699163025",
   // appId: "1:178699163025:web:d99e91b297b2b8ef2b7630",
   // measurementId: "G-FY6X078NY7"
+
+  apiKey: "AIzaSyBHZdLi79neEirMDn9HeYqOIO_7D7CMMxk",
+  authDomain: "tasks-dce66.firebaseapp.com",
+  projectId: "tasks-dce66",
+  storageBucket: "tasks-dce66.appspot.com",
+  messagingSenderId: "630175576796",
+  appId: "1:630175576796:web:0ba0f2ad21deee6c723a19",
+  measurementId: "G-TGMZJRZF5Y"
 };
 firebase.initializeApp(firebaseConfig);
 
@@ -54,12 +63,12 @@ firebase.initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 
 const db = firebase.firestore();
-const allTasksCollection = "cherrymar-tasks";
-const allTaskListsCollection = "cherrymar-tasks-lists";
+const SUBCOLLECTION = "cherrymar-tasks";
+const COLLECTION = "cherrymar-tasks-lists";
 
 
 // Create custom styled components
-const Container = styled.div`
+const ContentContainer = styled.div`
 
   @media ${devices.mobileS} { 
     max-width: 90vw;
@@ -108,10 +117,7 @@ const ListContainer = styled.div`
   height: 100%;
 `;
 
-const ContentContainer = styled.div`
-  grid-column-start: 2;
-  grid-column-end: 2;
-`;
+
 
 const Header = styled.div`
   display: flex;
@@ -196,115 +202,100 @@ const Title = styled.div`
 
 const TasksLists = ["Tasks", "Birthday"];
 
+// Options for sorting the task list
+const sortByOptions = {
+  "dateCreated" : "Date Created", 
+  "priority" : "Priority", 
+  "description" : "Description",
+}
 
 function App() {
   // console.log(useWindowDimensions())
   // const { height, width } = useWindowDimensions();
   // Hooks for managing view state
-  const [sortView, setSortView] = useState("dateCreated");
-  const [filterView, setFilterView] = useState("dateCreated");
-  const [listView, setListView] = useState("Tasks"); // tracks which list user is viewing
+
+  const [listId, setListId] = useState(null); // tracks which list user is viewing
+  const [listName, setListName] = useState(null);
   const [onMenuView, setOnMenuView] = useState(true); // On left tab if true, on right tab if false
 
   const isMobile = useMediaQuery({maxWidth: 600})
 
-  // console.log(onModalView)
-  let hasCompleted = false
-  // let collection;
-  // collection = collection + listView;
+  let hasCompleted = FamilyRestroomOutlined
   
 
-  // Retrieve data from Firebase
-  let allTasksQuery;
-  if (sortView === "priority") {
-    allTasksQuery = db.collection(allTasksCollection).orderBy(sortView, "desc");
-  } else {
-    allTasksQuery = db.collection(allTasksCollection).orderBy(sortView);
-  }
-  const [allTasksValue, allTasksLoading, allTasksError] = useCollection(allTasksQuery);
 
 
-  let allTaskListsQuery;
-  allTaskListsQuery = db.collection(allTaskListsCollection).orderBy("listName", "desc");
-  const [allTaskListsValue, allTaskListsLoading, allTaskListsError] = useCollection(allTaskListsQuery);
-  console.log(allTaskListsValue);
-  // Options for sorting the task list
-  const sortByOptions = {
-    "dateCreated" : "Date Created", 
-    "priority" : "Priority", 
-    "description" : "Description",
+
+
+  // let allTasksQuery;
+  // if (sortView === "priority") {
+  //   allTasksQuery = db.collection(allTasksCollection).orderBy(sortView, "desc");
+  // } else {
+  //   allTasksQuery = db.collection(allTasksCollection).orderBy(sortView);
+  // }
+  // const [allTasksValue, allTasksLoading, allTasksError] = useCollection(allTasksQuery);
+
+
+  // let allTaskListsQuery;
+  // allTaskListsQuery = db.collection(allTaskListsCollection).orderBy("listName", "desc");
+  // const [allTaskListsValue, allTaskListsLoading, allTaskListsError] = useCollection(allTaskListsQuery);
+  // console.log(allTaskListsValue);
+
+  let taskListQuery = db.collection(COLLECTION).orderBy("name");
+  const [allTaskListsValue, allTaskListsLoading, allTaskListsError] = useCollection(taskListQuery);
+
+  let taskListData = [];
+  if (!allTaskListsLoading && allTaskListsValue) {
+    taskListData = allTaskListsValue.docs.map((doc) => doc.data());
   }
-  
+
+
 
   // Helper functions
-  function handleDeleteTask(taskId) {
-    db.collection(allTasksCollection).doc(taskId).delete();
-    db.collection(allTaskListsCollection).doc(listView).update({["ids"]: []});
-  }
-
-  function handleAddTask(description, priority) {
-    const id = generateUniqueID();
-    db.collection(allTasksCollection).doc(id).set(
+  function handleAddTaskList(name, id) {
+    // setListName(name);
+    // setListId(id);
+    db.collection(COLLECTION).doc(id).set(
       {
         id: id,
-        description: description,
-        completed: false,
-        priority: priority, 
-        dateCreated: firebase.firestore.Timestamp.now(),
-        // dateDue: dueDate
-      }
-    );
-    db.collection(allTaskListsCollection).doc(listView).update({["ids"]: firebase.firestore.FieldValue.arrayUnion(id)});
-  }
-
-  function handleAddTaskList(name) {
-    const id = generateUniqueID();
-    db.collection(allTaskListsCollection).doc(id).set(
-      {
-        id: id,
-        ids: [],
         name: name,
       }
     );
   }
 
-  function handleTaskFieldChanged(taskId, field, value) {
-    db.collection(allTasksCollection).doc(taskId).update({[field]: value});
-  }
-
-  async function handleDeleteAllCompletedTasks() {
-    // const tasksRef = db.collection(allTasksCollection);
-    const snapshot = await allTasksQuery.where('completed', '==', true).get();
-    snapshot.forEach(doc => {
-      db.collection(allTasksCollection).doc(doc.id).delete();
-      db.collection(allTaskListsCollection).doc(listView).update({["ids"]: firebase.firestore.FieldValue.arrayRemove(doc.id)});
-    });
-  }
+  // let data;
+  // let taskLists;
 
 
-  let data;
-  let taskLists;
+  // collection(COLLECTION).doc(id of list).collection(SUBCOLLECTION).doc(id of task)
 
-  if (!allTasksLoading && allTasksValue && !allTaskListsLoading && allTaskListsValue) {
+  // Retrieve data from Firebase
+  // Get all lists
+
+  // Determine selected list
+
+  // Grab tasks from that list
 
 
-      let taskIds = allTaskListsValue.docs.map((doc) => doc.data())//.filter((doc) => doc.name == listView).ids;
-      console.log(taskIds)
-      data = allTasksValue.docs.map((doc) => doc.data())//.filter((doc) => taskIds.contains(doc.id));
-      hasCompleted = data.filter(task => task.completed).length !== 0
+  
+  // if (!allTasksLoading && allTasksValue && !allTaskListsLoading && allTaskListsValue) {
 
-      // let data = props.value.docs.map((doc) => doc.data())
-      if (filterView === "Done") {
-          data = data.filter((doc) => doc.completed);
-      } else if (filterView === "In Progress") {
-          data = data.filter((doc) => !doc.completed);
-      }
-  } else {
-    data = []
-  }
 
-  // console.log(window.innerHeight);
-  // console.log(window.innerWidth);
+  //     let taskIds = allTaskListsValue.docs.map((doc) => doc.data())//.filter((doc) => doc.name == listView).ids;
+  //     console.log(taskIds)
+  //     data = allTasksValue.docs.map((doc) => doc.data())//.filter((doc) => taskIds.contains(doc.id));
+  //     hasCompleted = data.filter(task => task.completed).length !== 0
+
+  //     // let data = props.value.docs.map((doc) => doc.data())
+  //     if (filterView === "Done") {
+  //         data = data.filter((doc) => doc.completed);
+  //     } else if (filterView === "In Progress") {
+  //         data = data.filter((doc) => !doc.completed);
+  //     }
+  // } else {
+  //   data = []
+  // }
+
 
   return (
     <>
@@ -367,43 +358,50 @@ function App() {
               onMenuView ? 
               
               <>
-                <SelectListMobile tasksLists={TasksLists} onSetListView={setListView} onSetOnMenuView={setOnMenuView}/>
+                <SelectListMobile 
+                  tasksLists={taskListData} 
+                  onSetListId={setListId} 
+                  onSetOnMenuView={setOnMenuView} 
+                  onHandleAddTaskList={handleAddTaskList}
+                  onSetListName={setListName}
+                />
                 {/* <Menu onSetOnMenuView={setOnMenuView} />  */}
               </>
               :
               <>
                 <BackButton onSetOnMenuView={setOnMenuView}/> 
                 <TaskDetailView 
-                  onSelectView={setSortView} 
                   sortByOptions={sortByOptions}
-                  onAddTask={handleAddTask}
-                  onTabChange={setFilterView}
-                  data={data}
-                  handleTaskFieldChanged={handleTaskFieldChanged} 
-                  handleDeleteTask={handleDeleteTask}
+                  listId={listId}
+                  listName={listName}
                   disabled={!hasCompleted} 
-                  onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}
+                  db={db}
                 />
                 
               </>
               :
               <DestkopContainer>
                 <ListContainer>
-                  <SelectListDesktop tasksLists={TasksLists} onSetListView={setListView} onHandleAddTaskList={handleAddTaskList}/>
-                </ListContainer>
-                <Container className="App" aria-hidden={true}>
-                  <TaskDetailView 
-                    onSelectView={setSortView} 
-                    sortByOptions={sortByOptions}
-                    onAddTask={handleAddTask}
-                    onTabChange={setFilterView}
-                    data={data}
-                    handleTaskFieldChanged={handleTaskFieldChanged} 
-                    handleDeleteTask={handleDeleteTask}
-                    disabled={!hasCompleted} 
-                    onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}
+                  <SelectListMobile 
+                    tasksLists={taskListData} 
+                    onSetListId={setListId} 
+                    onSetOnMenuView={setOnMenuView} 
+                    onHandleAddTaskList={handleAddTaskList}
+                    onSetListName={setListName}
                   />
-                </Container>  
+                </ListContainer>
+                <ContentContainer className="App" aria-hidden={true}>
+                  {listId &&
+                    <TaskDetailView 
+                    sortByOptions={sortByOptions}
+                    listId={listId}
+                    listName={listName}
+                    disabled={!hasCompleted} 
+                    db={db}
+                  />
+                  }
+                  
+                </ContentContainer>  
                 
               </DestkopContainer>
 

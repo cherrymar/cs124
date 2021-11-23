@@ -1,15 +1,18 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
+
 
 import IconButton from '@mui/material/IconButton';
 // import DeleteIcon from '@mui/icons-material/Delete';
-import { devices } from '../Design';
+
 
 
 // Local imports
 import '../../App.css';
 import OurButton from '../OurButton';
 import AutoResizeTextArea from '../AutoResizeTextArea';
+import { devices } from '../Design';
 
 
 const AddContainer = styled.div`
@@ -32,15 +35,26 @@ const AddContainer = styled.div`
     display: flex;
     align-items: flex-start;
     margin: 5vw 0 8vw 0;
-    justify-content: space-evenly;
-    z-index: -1;
+    justify-content: space-between;
+    // z-index: -1;
+    padding: 12px 5px;
+    
 
 `;
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
+    margin: 20px;
+    // align-items: flex-start;
+    // justify-content: flex-start;
+    // flex-wrap: wrap;
 `;
+
+const CustomButton = styled(OurButton)`
+  margin: 5px;
+`;
+
 
 
 // const SubmitButtonContainer = styled.div`
@@ -61,72 +75,65 @@ const Container = styled.div`
 
 
 export default function SelectListMobile(props) {
-    const [taskListName, setNewTaskList] = useState("");
+  const [taskListName, setNewTaskList] = useState("");
 
   
-    function handleSubmit() {
-        props.onSetListView(taskListName);
-        props.onHandleAddTaskList(taskListName);
-        setNewTaskList("");
-        handleClick(taskListName);
+  function handleSubmit() {
+    let id = generateUniqueID();
+    props.onHandleAddTaskList(taskListName, id);
+    setNewTaskList("");
+    handleClick(id);
 
-    }
-   
-    function handleClick(list) {
-        props.onSetOnMenuView(false)
-        props.onSetListView(list)
-    }
+  }
+ 
+  function handleClick(listId) {
+    props.onSetOnMenuView(false)
+    props.onSetListId(listId)
+  }
 
-    const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            handleSubmit()
-        }
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+        handleSubmit()
     }
+  }
 
-    return(
-        <>
-            <Container>
-                <AddContainer>
-                    <AutoResizeTextArea 
+
+  return(
+      <>
+          <Container>
+              <AddContainer>
+                  <AutoResizeTextArea 
                     completed={"false"} 
                     placeholder="New task list" 
                     value={taskListName} 
                     onChange={event => setNewTaskList(event.target.value)} 
                     onKeyDown={(handleKeyDown)}
-                    /> 
-                    
-                    {/* <SubmitButtonContainer> */}
-                    
-                    <OurButton 
-                        className="submitButton" 
-                        disabled={taskListName===""} 
-                        variant="contained" 
-                        onClick={() => handleSubmit()}
-                    >
-                        Add
-                    </OurButton>
-                </AddContainer>
-                    {
-                        props.tasksLists.map((value, index) => 
-                            <OurButton
-                                onClick={() => handleClick(value)}
-                                key={value}
-                                // {...a} 
-                            >{value}</OurButton>)
-                    }
+                  /> 
+                  
+                  
+                  <OurButton 
+                      className="submitButton" 
+                      disabled={taskListName===""} 
+                      variant="contained" 
+                      onClick={() => handleSubmit()}
+                  >
+                      Add
+                  </OurButton>
+              </AddContainer>
+                  {
+                      props.tasksLists.map((value, index) => 
+                          <CustomButton
+                            onClick={() => handleClick(value.id)}
+                            key={value.id}
+                          >
+                            {value.name}
+                          </CustomButton>)
+                  }
+          </Container>
 
-                    {/* </SubmitButtonContainer> */}
-            
-                
-            
-                {/* <IconButton aria-label="Delete task" size="small" onClick={() => props.onDeleteTask(props.id)} sx={{padding: 0}}>
-                    <AssignmentIcon fontSize="small" sx={{color: "lightgray"}}/>
-                </IconButton>  */}
-            </Container>
+      </>
 
-        </>
-
-    )
+  )
 }
 
 

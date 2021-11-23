@@ -51,6 +51,7 @@ function TaskItem(props) {
     <>
         <Container>
             <CheckBox 
+                aria-label={true ? "Mark task as incomplete" : "Mark task as complete"}
                 type="checkbox" 
                 checked={props.completed===true} 
                 onChange={event => props.onTaskFieldChanged(props.id, "completed", event.target.checked)}/> 

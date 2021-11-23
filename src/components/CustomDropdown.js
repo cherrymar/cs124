@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -6,6 +7,27 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 
 
 import '../css/Dropdown.css';
+import { devices } from './Design';
+
+
+const Container = styled.div`
+  display: flex;
+  justify-content: flex-end:
+`;
+
+const Text = styled.div`
+  @media ${devices.mobileS} { 
+    margin: 0 5px;
+  }
+
+  @media ${devices.laptop} { 
+    margin: 0 10px;
+  }
+
+  @media ${devices.desktop} { 
+    margin: 0 10px;
+  }
+`;
 
 
 export default function CustomDropdown(props) {
@@ -17,6 +39,8 @@ export default function CustomDropdown(props) {
   };
 
   return (
+    <Container>
+    <Text>Sort by</Text>
     <DropdownButton id="dropdown-basic-button" title={props.sortByOptions[sortView]}>
       {
         Object.keys(props.sortByOptions).map((option) => (
@@ -31,6 +55,7 @@ export default function CustomDropdown(props) {
         ))
       }
     </DropdownButton>
+    </Container>
 
   );
 }
