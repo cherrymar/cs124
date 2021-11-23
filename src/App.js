@@ -69,16 +69,18 @@ const ContentContainer = styled.div`
 
   @media ${devices.laptop} { 
     // max-width: 1000px;
-    width: 90%;
+    height: 95vh;
     grid-column-start: 2;
     grid-column-end: 2;
+    margin: 3vw;
   }
 
   @media ${devices.desktop} { 
     // max-width: 2000px;
-    width: 90%;
+    height: 95vh;
     grid-column-start: 2;
     grid-column-end: 2;
+    margin: 3vw;
   }
 
   
@@ -108,55 +110,6 @@ const Header = styled.div`
   height: 10%;
 `;
 
-const Body = styled.div`
-  @media ${devices.mobileS} { 
-    // font-size: 10vw;
-    margin: 5px;
-  }
-
-  @media ${devices.laptop} { 
-    font-size: 2vw;
-    margin: 10px;
-  }
-
-  @media ${devices.desktop} { 
-    font-size: 3vw;
-    margin: 10px;
-  }
-
-
-  height: 75%;
-  z-index: 1;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`
-
-const Footer = styled.div`
-  @media ${devices.mobileS} { 
-    // font-size: 10vw;
-    margin: 5px;
-  }
-
-  @media ${devices.laptop} { 
-    font-size: 2vw;
-    margin: 10px;
-  }
-
-  @media ${devices.desktop} { 
-    font-size: 3vw;
-    margin: 10px;
-  }
-
-
-  height: 75%;
-  z-index: 1;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`
 
 
 const Title = styled.div`

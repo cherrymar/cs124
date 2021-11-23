@@ -7,6 +7,7 @@ import OurButton from '../OurButton';
 import AutoResizeTextArea from '../AutoResizeTextArea';
 import StarsRating from '../StarsRating';
 
+import { devices } from '../Design';
 
 const SubmitButtonContainer = styled.div`
   display: flex;
@@ -19,9 +20,21 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   align-items: flex-start;
-  margin: 5vw 0 8vw 0;
+  
   justify-content: space-between;
   z-index: -1;
+
+  @media ${devices.mobileS} { 
+    margin: 5vw 0 8vw 0;
+  }
+
+  @media ${devices.laptop} { 
+    margin: 2vw 0 4vw 0;
+  }
+
+  @media ${devices.desktop} { 
+    margin: 2vw 0 4vw 0;
+  }
 `;
 
 
