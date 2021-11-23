@@ -4,7 +4,6 @@ import styled from 'styled-components';
 // Local imports
 import Alert from './Alert.js';
 import OurButton from './OurButton';
-import './Alert.css';
 
 
 const Container = styled.div`
@@ -38,10 +37,10 @@ function DeleteAllCompletedButton(props) {
   return (
     <>
       <Container> 
-        <OurButton disabled={props.disabled} onClick={() => toggleModal(true)}>Delete Completed</OurButton>
+        <OurButton aria-label="Delete all completed tasks" disabled={props.disabled} onClick={() => toggleModal(true)}>Delete Completed</OurButton>
         {showAlert &&
           <Alert onClose={() => toggleModal(false)} onOK={() => handleAlertOK()} cancelText="Cancel" OKText="Delete" >
-            <ModalText>
+            <ModalText tabIndex="0" aria-label="Are you sure you want to delete all completed tasks?">
               Are you sure you want to delete all completed tasks?
             </ModalText>
           </Alert>

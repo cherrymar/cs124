@@ -13,17 +13,10 @@ const Container = styled.div`
 
 function TaskList(props) {
   const [selectedId, setSelectedId] = useState(null);
-  let displayData = props.data
   
-  if (props.view === 1) 
-    displayData = displayData.filter(a => a.completed)
-  else if (props.view === 2)
-    displayData = displayData.filter(a => !a.completed)
-
-
   return (
     <Container>
-      {displayData.map(a => 
+      {props.data.map(a => 
       <TaskItem
         onRowClick={(id) =>
             setSelectedId(id)}

@@ -3,20 +3,24 @@ import styled from 'styled-components';
 
 import TextareaAutosize from 'react-textarea-autosize';
 
-const StyledTextareaAutosize = styled(TextareaAutosize)`
-outline: none;  
-background-color: black;
-color: ${prop => prop.completed ? '#555555' : 'lightgray'};
-border: none;
-&:focus {
+const StyledTextAreaAutosize = styled(TextareaAutosize)`
+  outline: none;  
+  background-color: black;
+  color: ${prop => prop.completed === "true" ? '#555555' : 'lightgray'};
   border: none;
-  border-bottom: 2px solid gray;
-}
-::-webkit-scrollbar {
-  display: none;
-}
+  width: 60%;
+  &:focus {
+    border: none;
+    border-bottom: 2px solid gray;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  resize: none;
+  margin: 0;
+  padding: 0;
 `;
 
 export default function AutoResizeTextArea(props) {
-	return <StyledTextareaAutosize {...props} />;
+	return <StyledTextAreaAutosize {...props} />;
   }

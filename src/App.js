@@ -1,163 +1,247 @@
 // React imports
 import { useState } from 'react';
-import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
 import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
+
 
 // Firebase imports 
 import firebase from "firebase/compat";
 import {useCollection} from "react-firebase-hooks/firestore";
 
 // Local imports
-import TaskList from './components/TaskList';
-import NewTask from './components/NewTask';
-import DeleteAllCompletedButton from './components/DeleteAllCompletedButton';
-import ViewSelector from './components/ViewSelector';
-import TabList from './components/ViewTabs/TabList';
-import TasksSortedList from './components/TasksSortedList';
 import CustomDropdown from './components/CustomDropdown';
+import BackButton from './components/MultiList/BackButton';
+
+import SelectListDesktop from './components/MultiList/SelectListDesktop';
+import SelectListMobile from './components/MultiList/SelectListMobile';
+import TaskDetailView from './TaskDetailView';
+
 
 import './App.css';
-
+import { devices } from './components/Design';
+import { FamilyRestroomOutlined } from '@mui/icons-material';
 
 // Set up Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyCd9qqxvMpEKpBzwfWcc2tlRFa6ICaLH_s",
-  authDomain: "hmc-cs124-fa21-labs.firebaseapp.com",
-  projectId: "hmc-cs124-fa21-labs",
-  storageBucket: "hmc-cs124-fa21-labs.appspot.com",
-  messagingSenderId: "949410042946",
-  appId: "1:949410042946:web:0113b139a7e3cd1cc709db"
+  // apiKey: "AIzaSyCd9qqxvMpEKpBzwfWcc2tlRFa6ICaLH_s",
+  // authDomain: "hmc-cs124-fa21-labs.firebaseapp.com",
+  // projectId: "hmc-cs124-fa21-labs",
+  // storageBucket: "hmc-cs124-fa21-labs.appspot.com",
+  // messagingSenderId: "949410042946",
+  // appId: "1:949410042946:web:0113b139a7e3cd1cc709db"
+
+  apiKey: "AIzaSyBHZdLi79neEirMDn9HeYqOIO_7D7CMMxk",
+  authDomain: "tasks-dce66.firebaseapp.com",
+  projectId: "tasks-dce66",
+  storageBucket: "tasks-dce66.appspot.com",
+  messagingSenderId: "630175576796",
+  appId: "1:630175576796:web:0ba0f2ad21deee6c723a19",
+  measurementId: "G-TGMZJRZF5Y"
 };
 firebase.initializeApp(firebaseConfig);
 
+// Initialize Firebase
+// const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
+
 const db = firebase.firestore();
-const collection = "cherrymar-tasks";
+const SUBCOLLECTION = "cherrymar-tasks";
+const COLLECTION = "cherrymar-tasks-lists";
 
 
 // Create custom styled components
 const Container = styled.div`
-  height: 90%;
-  width: 90%;
-  margin: 5%;
+
+
+`;
+
+
+const ContentContainer = styled.div`
+  // max-width: 90vw;
+  height: 95vh;
+  margin: auto auto;
+
+  @media ${devices.mobileS} { 
+    height: 95vh;
+    max-width: 90vw;
+    margin: 5vw;
+  }
+
+  @media ${devices.laptop} { 
+    // max-width: 1000px;
+    height: 95vh;
+    grid-column-start: 2;
+    grid-column-end: 2;
+    margin: 3vw;
+  }
+
+  @media ${devices.desktop} { 
+    // max-width: 2000px;
+    height: 95vh;
+    grid-column-start: 2;
+    grid-column-end: 2;
+    margin: 3vw;
+  }
+
+  
+  
 `
+
+const DestkopContainer = styled.div`
+  display: grid;
+  grid-template-columns: 20% 80%;
+  grid-template-rows: 1;
+`
+
+const ListContainer = styled.div`
+  grid-column-start: 1;
+  grid-column-end: 1;
+  border-right: solid;
+  height: 100%;
+`;
+
+
 
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 2;
-  height: 10vh;
+  height: 10%;
 `;
 
-const Body = styled.div`
-  height: 75vh;
-  z-index: 1;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  margin: 10px 0;
-`
+
+
 const Title = styled.div`
-  font-size: 10vw;
+  @media ${devices.mobileS} { 
+    font-size: 10vw;
+  }
+
+  @media ${devices.laptop} { 
+    font-size: 5vw;
+  }
+
+  @media ${devices.desktop} { 
+    font-size: 5vw;
+  }
   font-weight: 700;
   text-align: left;
 `;
 
 
+
+// Options for sorting the task list
+const sortByOptions = {
+  "dateCreated" : "Date Created", 
+  "priority" : "Priority", 
+  "description" : "Description",
+}
+
 function App() {
   // Hooks for managing view state
-  const [view, setView] = useState("dateCreated");
+  const [listId, setListId] = useState(null); // tracks which list user is viewing
+  const [listName, setListName] = useState(null);
+  const [onMenuView, setOnMenuView] = useState(true); // On left tab if true, on right tab if false
+  const [sortView, setSortView] = useState("dateCreated");
 
-  let hasCompleted = false
+  const isMobile = useMediaQuery({maxWidth: 600})
 
-  // Retrieve data from Firebase
-  let query;
-  if (view === "priority") {
-    query = db.collection(collection).orderBy(view, "desc");
-  } else {
-    query = db.collection(collection).orderBy(view);
+  let hasCompleted = FamilyRestroomOutlined
 
+  let taskListQuery = db.collection(COLLECTION).orderBy("name");
+  const [allTaskListsValue, allTaskListsLoading, allTaskListsError] = useCollection(taskListQuery);
+
+  let taskListData = [];
+  if (!allTaskListsLoading && allTaskListsValue) {
+    taskListData = allTaskListsValue.docs.map((doc) => doc.data());
   }
-  
-  const [value, loading, error] = useCollection(query);
 
-  const sortByOptions = {
-    "dateCreated" : "Date Created", 
-    "priority" : "Priority", 
-    "description" : "Description",
-  }
-  const options = ['dateCreated', 'priority', 'description'];
-  
+
   // Helper functions
-  function handleDeleteTask(taskId) {
-    db.collection(collection).doc(taskId).delete();
-  }
-
-  function handleAddTask(description, priority) {
-    const id = generateUniqueID();
-    db.collection(collection).doc(id).set(
+  function handleAddTaskList(name, id) {
+    db.collection(COLLECTION).doc(id).set(
       {
         id: id,
-        description: description,
-        completed: false,
-        priority: priority, 
-        dateCreated: firebase.firestore.Timestamp.now(),
+        name: name,
       }
-    )
+    );
   }
 
-  function handleTaskFieldChanged(taskId, field, value) {
-    db.collection(collection).doc(taskId).update({[field]: value});
-  }
-
-  async function handleDeleteAllCompletedTasks() {
-    const tasksRef = db.collection(collection);
-    const snapshot = await tasksRef.where('completed', '==', true).get();
-    snapshot.forEach(doc => {
-      db.collection(collection).doc(doc.id).delete();
-    });
-
-    // Just deleted all completed tasks
-    hasCompleted = false;
-  }
-
-
-  let appContent;
-
-  if (loading) {
-      appContent = <h1>Loading</h1>
-  } else if (value) {
-      let data = value.docs.map((doc) => doc.data())
-      hasCompleted = data.filter(task => task.completed).length !== 0
+  function handleDeleteTaskList(id) {
+    db.collection(COLLECTION).doc(id).delete();
   }
 
 
   return (
-    <>
-        <Container className="App">
-          <Header>
-            <Title>Tasks</Title>
-            <CustomDropdown onSelectView={setView} sortByOptions={sortByOptions}/>
-          </Header>
+    <div className="App">
+          {
+            isMobile ? 
+              onMenuView ? 
+              
+              <>
+                <SelectListMobile 
+                  tasksLists={taskListData} 
+                  onSetListId={setListId} 
+                  onSetOnMenuView={setOnMenuView} 
+                  onHandleAddTaskList={handleAddTaskList}
+                  onHandleDeleteTaskList={handleDeleteTaskList}
+                  onSetListName={setListName}
+                />
+              </>
+              :
+              <>
+                
+                <ContentContainer>
+                <Header>
+                  <BackButton aria-label="Return to task lists" onSetOnMenuView={setOnMenuView}/> 
+                  <CustomDropdown aria-label="Sort View Dropdown" onSelectView={setSortView} sortByOptions={sortByOptions}/>
+                </Header>
+                <Title aria-label={listName}>{listName}</Title>
+                <TaskDetailView
+                  listId={listId}
+                  listName={listName}
+                  disabled={!hasCompleted} 
+                  sortView={sortView} 
+                  db={db}
+                />
+                </ContentContainer>
+                
+              </>
+              :
+              <DestkopContainer>
+                <ListContainer>
+                  <SelectListDesktop
+                    tasksLists={taskListData} 
+                    onSetListId={setListId} 
+                    onSetOnMenuView={setOnMenuView} 
+                    onHandleAddTaskList={handleAddTaskList}
+                    onHandleDeleteTaskList={handleDeleteTaskList}
+                    onSetListName={setListName}
+                  />
+                </ListContainer>
+                <ContentContainer>
+                  <Header>
+                      <Title aria-label="Tasks">{listName}</Title>
+                      <CustomDropdown aria-label="Sort View Dropdown" onSelectView={setSortView} sortByOptions={sortByOptions}/>
+                  </Header>
+                
+                  {listId &&
+                
+                    <TaskDetailView
+                    sortView={sortView} 
+                    listId={listId}
+                    listName={listName}
+                    disabled={!hasCompleted} 
+                    db={db}
+                  />
+                  }
+                  
+                </ContentContainer>  
+                
+              </DestkopContainer>
 
-          <Body>
-            <NewTask onAddTask={handleAddTask}/>
-          
-            <TabList>
-              <div key="All">
-                <TasksSortedList sortView={view} query={query} loading={loading} value={value} view={"All"} error={error} handleTaskFieldChanged={handleTaskFieldChanged} handleDeleteTask={handleDeleteTask}/>
-              </div>
-              <div key="Done">
-                <TasksSortedList sortView={view} query={query} loading={loading} value={value} view={"Complete"} error={error} handleTaskFieldChanged={handleTaskFieldChanged} handleDeleteTask={handleDeleteTask}/>
-              </div>
-              <div key="In Progress">
-                <TasksSortedList sortView={view} query={query} loading={loading} value={value} view={"Incomplete"} error={error} handleTaskFieldChanged={handleTaskFieldChanged} handleDeleteTask={handleDeleteTask}/>
-              </div>
-            </TabList>
-          </Body>
-          <DeleteAllCompletedButton disabled={!hasCompleted} onDeleteAllCompletedTasks={handleDeleteAllCompletedTasks}/>
-        </Container>  
-    </>
+          }
+    </div>
     
   );
 }

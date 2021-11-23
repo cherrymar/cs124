@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 // Local imports
 import './DeleteAllCompletedButton';
-import './Alert.css';
 import OurButton from './OurButton';
 
 
+// Create custom styled components
 const Backdrop = styled.div`
     position: fixed;
     top: 0;
@@ -21,7 +21,7 @@ const Backdrop = styled.div`
 const Modal = styled.div`
     opacity: none;
     opacity: 1;
-    background-color: rgb(46, 46, 46, 1);
+    background-color: rgb(46, 46, 46, 100);
     background: rgb(46, 46, 46);
     
     border-radius: 5px;
@@ -41,7 +41,6 @@ const ButtonContainer = styled.div`
     width: 70%;
     display: flex;
     justify-content: space-evenly;
-    // align-items: center;
     margin: auto;
 `;
 
@@ -53,10 +52,12 @@ function Alert(props) {
             {props.children}
                 <ButtonContainer>
                     <OurButton
+                        aria-label={props.cancelText ? props.cancelText : "Cancel"}
                         onClick={props.onClose}>
                         {props.cancelText ? props.cancelText : "Cancel"}
                     </OurButton>
                     <OurButton
+                        aria-label= {props.OKText ? props.OKText : "Ok"}
                         onClick={props.onOK}>
                         {props.OKText ? props.OKText : "Ok"}
                     </OurButton>
