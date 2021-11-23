@@ -1,6 +1,6 @@
-# Lab 3
+# Lab 4
 
-Interaction Design Lab 03
+Interaction Design Lab 04
 
 Cher Ma and Emily Chin
 
@@ -11,11 +11,16 @@ View website here: https://cherrymar.github.io/cs124/
 
 ## Design Decisions
 <!-- your design decisions, including their rationale (include images) -->
-
+We went for a clean and minimalistic approach for the design. We added a menu that lists all the different task lists the user has. On the mobile view, the menu is displayed as the starting screen. On the desktop view, the menu is shown on the side. Once the desired task list is selected, on the mobile view, the screen shifts over to the task list. On the desktop view, the task list appears next to the menu. On the task list and the menu, here is a text field at the top of the page, above any existing tasks or lists. There is a placeholder "New Task" or "New Task List" to indicate where the user can input. Next to the "New Task" field, there are also stars that the user can select 0-3 of in order to indicate priority levels. Once there is text in the field, the "Add" button becomes enabled and the user can add to the list. This also prevents the user from accidentally adding an empty text field. In the menu, when a new list is added, a new button with the corresponding name is added under the existing lists. In the task list, each existing task is also put in a text field to be easily edited, along with the initial priority rating that can be edited as well, and has a trashcan next to it, as a simple indicator for deleting the task. We opted for an automatically expanding text area (depending on how many lines of text there are) rather than a scrollable text area that is difficult to see. Each of the tasks also feature a checkbox to indicate completion and there is a button at the end of the list to delete all the completed tasks. This button is disabled when there are no tasks that are completed. There is also a warning alert when the "Delete Completed" button is pressed to ensure that the user actually meant to press that button. Above all the existing tasks, there are tabs that easily switch the views between all tasks, completed tasks, and tasks that are not yet completed. Lastly, we also included a dropdown menu, so that the user can easily choose between three available sort options: date created, name of the task, and priority. We also added aria-labels to certain features to make the screen-reader functionality better.
 
 ## Alternative Designs
 <!-- alternative designs you considered, including images -->
+We tried different paddings, margins, font sizes, and placements until we got the clean look we wanted that was balanced and easy to use. We also tried different text field and button styles. We also considered having three buttons instead of the dropdown menu, but we found that the dropdown was cleaner and looked better. We changed our text field components to expandable text field components to allow for easy viewing of task descriptions. We 
+started with our own components, but we ended up using several components from Material UI which gave our app a more cohesive and sophisticated look. 
 
+We also considered having two dropdown menus for sorting and filtering, but we found that that looked messy, so we opted to make one of them tabs. We also tried different placementsfor the stars, such as below that task, but we found that putting them next to the task was cleaner.
+
+When designing the placement of the menu, we considered having two tabs where one is the menu and one is the current list, but that did not seem to be necessary since we could just use the back button instead. We also considered having the menu be a pop up, but we felt that this design made more sense and was easier to use.
 
 ## User Testing
 <!-- any user testing you did -->
