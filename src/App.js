@@ -2,11 +2,16 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
-
+import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
 
 // Firebase imports 
 import firebase from "firebase/compat";
 import {useCollection} from "react-firebase-hooks/firestore";
+import {
+  useAuthState,
+  useCreateUserWithEmailAndPassword,
+  useSignInWithEmailAndPassword
+} from 'react-firebase-hooks/auth';
 
 // Local imports
 import CustomDropdown from './components/CustomDropdown';
@@ -14,22 +19,16 @@ import BackButton from './components/MultiList/BackButton';
 
 import SelectListDesktop from './components/MultiList/SelectListDesktop';
 import SelectListMobile from './components/MultiList/SelectListMobile';
-import TaskDetailView from './TaskDetailView';
-
+import TaskDetailView from './components/TaskDetailView';
+import TabList from './components/Tabs/TabList';
+import LandingPage from './components/LandingPage';
 
 import './App.css';
 import { devices } from './components/Design';
-import { FamilyRestroomOutlined } from '@mui/icons-material';
+
 
 // Set up Firebase
 const firebaseConfig = {
-  // apiKey: "AIzaSyCd9qqxvMpEKpBzwfWcc2tlRFa6ICaLH_s",
-  // authDomain: "hmc-cs124-fa21-labs.firebaseapp.com",
-  // projectId: "hmc-cs124-fa21-labs",
-  // storageBucket: "hmc-cs124-fa21-labs.appspot.com",
-  // messagingSenderId: "949410042946",
-  // appId: "1:949410042946:web:0113b139a7e3cd1cc709db"
-
   apiKey: "AIzaSyBHZdLi79neEirMDn9HeYqOIO_7D7CMMxk",
   authDomain: "tasks-dce66.firebaseapp.com",
   projectId: "tasks-dce66",
@@ -38,15 +37,15 @@ const firebaseConfig = {
   appId: "1:630175576796:web:0ba0f2ad21deee6c723a19",
   measurementId: "G-TGMZJRZF5Y"
 };
-firebase.initializeApp(firebaseConfig);
 
 // Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
-
+firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
-const SUBCOLLECTION = "cherrymar-tasks";
-const COLLECTION = "cherrymar-tasks-lists";
+// const SUBCOLLECTION = "cherrymar-tasks-authentication";
+// const COLLECTION = "cherrymar-tasks-lists-authentication";
+
+const auth = firebase.auth();
+const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 
 // Create custom styled components
@@ -81,10 +80,7 @@ const ContentContainer = styled.div`
     grid-column-start: 2;
     grid-column-end: 2;
     margin: 3vw;
-  }
-
-  
-  
+  }  
 `
 
 const DestkopContainer = styled.div`
@@ -137,113 +133,168 @@ const sortByOptions = {
   "description" : "Description",
 }
 
-function App() {
-  // Hooks for managing view state
-  const [listId, setListId] = useState(null); // tracks which list user is viewing
-  const [listName, setListName] = useState(null);
-  const [onMenuView, setOnMenuView] = useState(true); // On left tab if true, on right tab if false
-  const [sortView, setSortView] = useState("dateCreated");
+ // const SUBCOLLECTION = "cherrymar-tasks-authentication";
+// const COLLECTION = "cherrymar-tasks-lists-authentication";
+const COLLECTION = "People";
 
-  const isMobile = useMediaQuery({maxWidth: 600})
-
-  let hasCompleted = FamilyRestroomOutlined
-
-  let taskListQuery = db.collection(COLLECTION).orderBy("name");
-  const [allTaskListsValue, allTaskListsLoading, allTaskListsError] = useCollection(taskListQuery);
-
-  let taskListData = [];
-  if (!allTaskListsLoading && allTaskListsValue) {
-    taskListData = allTaskListsValue.docs.map((doc) => doc.data());
-  }
-
-
+function App(props) {
   // Helper functions
   function handleAddTaskList(name, id) {
-    db.collection(COLLECTION).doc(id).set(
-      {
-        id: id,
-        name: name,
-      }
-    );
+    // db.collection(COLLECTION).doc(id).set(
+    //   {
+    //     id: id,
+    //     name: name,
+    //   }
+    // );
   }
 
-  function handleDeleteTaskList(id) {
-    db.collection(COLLECTION).doc(id).delete();
+  async function handleDeleteTaskList(id) {
+    // const snapshot = await db.collection(COLLECTION).doc(id).collection(SUBCOLLECTION).get();
+    // snapshot.forEach(doc => {
+    //   db.collection(COLLECTION).doc(id).collection(SUBCOLLECTION).doc(doc.id).delete();
+    // });
+    // db.collection(COLLECTION).doc(id).delete();
   }
 
 
-  return (
-    <div className="App">
-          {
-            isMobile ? 
-              onMenuView ? 
-              
-              <>
-                <SelectListMobile 
-                  tasksLists={taskListData} 
-                  onSetListId={setListId} 
-                  onSetOnMenuView={setOnMenuView} 
-                  onHandleAddTaskList={handleAddTaskList}
-                  onHandleDeleteTaskList={handleDeleteTaskList}
-                  onSetListName={setListName}
-                />
-              </>
-              :
-              <>
-                
-                <ContentContainer>
-                <Header>
-                  <BackButton aria-label="Return to task lists" onSetOnMenuView={setOnMenuView}/> 
-                  <CustomDropdown aria-label="Sort View Dropdown" onSelectView={setSortView} sortByOptions={sortByOptions}/>
-                </Header>
-                <Title aria-label={listName}>{listName}</Title>
-                <TaskDetailView
-                  listId={listId}
-                  listName={listName}
-                  disabled={!hasCompleted} 
-                  sortView={sortView} 
-                  db={db}
-                />
-                </ContentContainer>
-                
-              </>
-              :
-              <DestkopContainer>
-                <ListContainer>
-                  <SelectListDesktop
-                    tasksLists={taskListData} 
-                    onSetListId={setListId} 
-                    onSetOnMenuView={setOnMenuView} 
-                    onHandleAddTaskList={handleAddTaskList}
-                    onHandleDeleteTaskList={handleDeleteTaskList}
-                    onSetListName={setListName}
-                  />
-                </ListContainer>
-                <ContentContainer>
-                  <Header>
-                      <Title aria-label="Tasks">{listName}</Title>
-                      <CustomDropdown aria-label="Sort View Dropdown" onSelectView={setSortView} sortByOptions={sortByOptions}/>
-                  </Header>
-                
-                  {listId &&
-                
-                    <TaskDetailView
-                    sortView={sortView} 
-                    listId={listId}
-                    listName={listName}
-                    disabled={!hasCompleted} 
-                    db={db}
-                  />
-                  }
-                  
-                </ContentContainer>  
-                
-              </DestkopContainer>
+  // Login
+  const [user, loading, error] = useAuthState(auth);
 
-          }
-    </div>
-    
-  );
+  function verifyEmail() {
+      auth.currentUser.sendEmailVerification();
+  }
+
+  if (loading) {
+      return <p>Checking...</p>;
+  } else if (user) {
+      return <div>
+          {user.displayName || user.email}
+          <SignedInApp {...props} user={user}/>
+          <button type="button" onClick={() => auth.signOut()}>Logout</button>
+          {!user.emailVerified && <button type="button" onClick={verifyEmail}>Verify email</button>}
+      </div>
+  } else {
+      return <>
+          {error && <p>Error App: {error.message}</p>}
+          <TabList>
+              <SignIn key="Sign In"/>
+              <SignUp key="Sign Up"/>
+          </TabList>
+      </>
+  }
+}
+
+const FAKE_EMAIL = 'foo@bar.com';
+const FAKE_PASSWORD = 'xyzzyxx';
+
+
+function SignIn() {
+  const [
+    signInWithEmailAndPassword,
+    userCredential, loading, error
+  ] = useSignInWithEmailAndPassword(auth);
+
+  if (userCredential) {
+    // Shouldn't happen because App should see that
+    // we are signed in.
+    return <div>Unexpectedly signed in already</div>
+  } else if (loading) {
+    return <p>Logging in…</p>
+  }
+  return <div>
+    {error && <p>"Error logging in: " {error.message}</p>}
+    <button onClick={() =>
+      signInWithEmailAndPassword(FAKE_EMAIL, FAKE_PASSWORD)}>Login with test user Email/PW
+    </button>
+    <button onClick={() =>
+      auth.signInWithPopup(googleProvider)}>Login with Google
+    </button>
+  </div>
+}
+
+function SignUp() {
+  const [
+    createUserWithEmailAndPassword,
+    userCredential, loading, error
+  ] = useCreateUserWithEmailAndPassword(auth);
+
+  if (userCredential) {
+    // Shouldn't happen because App should see that
+    // we are signed in.
+    return <div>Unexpectedly signed in already</div>
+  } else if (loading) {
+    return <p>Signing up…</p>
+  }
+  return <div>
+    {error && <p>"Error signing up: " {error.message}</p>}
+    <button onClick={() =>
+      createUserWithEmailAndPassword(FAKE_EMAIL, FAKE_PASSWORD)}>
+      Create test user
+    </button>
+  </div>
+}
+
+
+
+function SignedInApp(props) {
+  
+  const query = db.collection(COLLECTION).where('owner', "==", props.user.uid);
+  const [value, loading, error] = useCollection(query);
+
+  function handleDeletePerson(personId) {
+    db.collection(COLLECTION).doc(personId).delete().catch((error) => {
+      console.error("Error deleting document: ", error);
+    });
+  }
+
+  function handleAddPerson() {
+    const newId = generateUniqueID();
+    db.collection(COLLECTION).doc(newId).set({
+      id: newId,
+      firstName: "",
+      lastName: "",
+      email: "",
+      owner: props.user.uid
+    }).catch((error) => {
+      console.error("Error writing document: ", error);
+    })
+  }
+
+  function handlePersonFieldChanged (personId, field, value) {
+    // const person = people.find(p => p.id === personId);
+    // if (person) {
+    //     person[field] = value;
+    // }
+    // const doc = db.collection(collectionName).doc(personId);
+    // doc.update({
+    //     [field]: value,
+    // }).catch((error) => {
+    //     console.error("Error updating document: ", error);
+    // })
+  }
+
+  let people = null;
+  if (error) {
+    return <p>error useCollection: {error.message}</p>
+  }
+  if (value) {
+    people = value.docs.map((doc) => {
+      return {...doc.data()}
+    });
+  }
+
+  return <div>
+    {loading && <h1>Loading</h1>}
+    {people && <div>Yay</div>
+    // <People list={people}
+    //                    onDeletePerson={handleDeletePerson}
+    //                    onAddPerson={handleAddPerson}
+    //                    onPersonFieldChanged={handlePersonFieldChanged}
+    // />
+    }
+  </div>;
+  
+  
 }
 
 export default App;

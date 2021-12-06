@@ -8,18 +8,18 @@ import firebase from "firebase/compat";
 import {useCollection} from "react-firebase-hooks/firestore";
 
 
-import NewTask from './components/Tasks/NewTask';
-import TabList from './components/Tabs/TabList';
-import TasksSortedList from './components/Tasks/TasksSortedList';
-import DeleteAllCompletedButton from './components/DeleteAllCompletedButton';
+import NewTask from './Tasks/NewTask';
+import TabList from './Tabs/TabList';
+import TasksSortedList from './Tasks/TasksSortedList';
+import DeleteAllCompletedButton from './DeleteAllCompletedButton';
 
 
-import { devices } from './components/Design';
+import { devices } from './Design';
 
 
 // const db = firebase.firestore();
-const SUBCOLLECTION = "cherrymar-tasks";
-const COLLECTION = "cherrymar-tasks-lists";
+const SUBCOLLECTION = "cherrymar-tasks-authentication";
+const COLLECTION = "cherrymar-tasks-lists-authentication";
 
 
 const Body = styled.div`
