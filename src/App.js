@@ -1,249 +1,136 @@
-// React imports
-import { useState } from 'react';
-import styled from 'styled-components';
-import { useMediaQuery } from 'react-responsive';
+import React from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom'
+import * as ROUTES from './constants/routes'
+import { connect } from 'react-redux'
+import * as actions from './backend/store/actions'
 
+import Landing from './components/Landing/Landing';
+// import SignUp from '../SignUp'
+import LogOut from './components/LogOut/LogOut';
+// import LogInForm from './components/LogIn/LogInForm';
+import SignUpPage from './components/SignUp/SignUpPage';
+import TaskPage from './components/Tasks/TaskPage';
+// import Home from '../Home'
+// import Menu from '../Menu'
+// import PasswordRecovery from '../Profile/PasswordRecovery.js'
+// import ProfileEdit from '../Profile/ProfileEdit.js'
+// import Restaurants from '../Restaurants'
+// import About from '../About'
+// import Navbar from '../Navigation'
+// import Backdrop from '../Navigation/Backdrop.js'
+// import Friends from '../Friends/Friend'
+// import EmailVerification from '../EmailVerification'
+// import AddFriends from '../Friends/AddFriends'
+// import EditFriends from '../Friends/EditFriends'
+// import PickFood from '../Food/PickFood'
 
-// Firebase imports 
-import firebase from "firebase/compat";
-import {useCollection} from "react-firebase-hooks/firestore";
+// import '../../stylesheets/Landing.css'
+// import '../../stylesheets/SignUp.css'
+// import '../../stylesheets/Restaurants.css'
+// import '../../stylesheets/Menu.css'
+// import '../../stylesheets/Home.css'
+// import '../../stylesheets/SearchBar.css'
+// import '../../stylesheets/Backdrop.css'
+// import '../../stylesheets/DrawerToggleButton.css'
+// import '../../stylesheets/CheatingToolbar.css'
+// import '../../stylesheets/Loader.css'
+// import '../../stylesheets/Navbar.css'
+// import '../../stylesheets/Friends.css'
+// import '../../stylesheets/EmailVerification.css'
+// import '../../stylesheets/ProfileChange.css'
+import './stylesheets/main-logo.css';
+import './stylesheets/selectSortView.css';
+import './stylesheets/tabs.css';
 
-// Local imports
-import CustomDropdown from './components/CustomDropdown';
-import BackButton from './components/MultiList/BackButton';
+// import '../../stylesheets/titles.css'
+// import '../../stylesheets/button.css'
+// import '../../stylesheets/form.css'
+// import '../../stylesheets/about.css'
+// import '../../stylesheets/PasswordChange.css'
 
-import SelectListDesktop from './components/MultiList/SelectListDesktop';
-import SelectListMobile from './components/MultiList/SelectListMobile';
-import TaskDetailView from './TaskDetailView';
-
-
-import './App.css';
-import { devices } from './components/Design';
-import { FamilyRestroomOutlined } from '@mui/icons-material';
-
-// Set up Firebase
-const firebaseConfig = {
-  // apiKey: "AIzaSyCd9qqxvMpEKpBzwfWcc2tlRFa6ICaLH_s",
-  // authDomain: "hmc-cs124-fa21-labs.firebaseapp.com",
-  // projectId: "hmc-cs124-fa21-labs",
-  // storageBucket: "hmc-cs124-fa21-labs.appspot.com",
-  // messagingSenderId: "949410042946",
-  // appId: "1:949410042946:web:0113b139a7e3cd1cc709db"
-
-  apiKey: "AIzaSyBHZdLi79neEirMDn9HeYqOIO_7D7CMMxk",
-  authDomain: "tasks-dce66.firebaseapp.com",
-  projectId: "tasks-dce66",
-  storageBucket: "tasks-dce66.appspot.com",
-  messagingSenderId: "630175576796",
-  appId: "1:630175576796:web:0ba0f2ad21deee6c723a19",
-  measurementId: "G-TGMZJRZF5Y"
-};
-firebase.initializeApp(firebaseConfig);
-
-// Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
-
-const db = firebase.firestore();
-const SUBCOLLECTION = "cherrymar-tasks";
-const COLLECTION = "cherrymar-tasks-lists";
-
-
-// Create custom styled components
-const Container = styled.div`
-
-
-`;
-
-
-const ContentContainer = styled.div`
-  // max-width: 90vw;
-  height: 95vh;
-  margin: auto auto;
-
-  @media ${devices.mobileS} { 
-    height: 95vh;
-    max-width: 90vw;
-    margin: 5vw;
-  }
-
-  @media ${devices.laptop} { 
-    // max-width: 1000px;
-    height: 95vh;
-    grid-column-start: 2;
-    grid-column-end: 2;
-    margin: 3vw;
-  }
-
-  @media ${devices.desktop} { 
-    // max-width: 2000px;
-    height: 95vh;
-    grid-column-start: 2;
-    grid-column-end: 2;
-    margin: 3vw;
-  }
-
-  
-  
-`
-
-const DestkopContainer = styled.div`
-  display: grid;
-  grid-template-columns: 20% 80%;
-  grid-template-rows: 1;
-`
-
-const ListContainer = styled.div`
-  grid-column-start: 1;
-  grid-column-end: 1;
-  border-right: solid;
-  height: 100%;
-`;
-
-
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 2;
-  height: 10%;
-`;
-
-
-
-const Title = styled.div`
-  @media ${devices.mobileS} { 
-    font-size: 10vw;
-  }
-
-  @media ${devices.laptop} { 
-    font-size: 5vw;
-  }
-
-  @media ${devices.desktop} { 
-    font-size: 5vw;
-  }
-  font-weight: 700;
-  text-align: left;
-`;
-
-
-
-// Options for sorting the task list
-const sortByOptions = {
-  "dateCreated" : "Date Created", 
-  "priority" : "Priority", 
-  "description" : "Description",
-}
-
-function App() {
-  // Hooks for managing view state
-  const [listId, setListId] = useState(null); // tracks which list user is viewing
-  const [listName, setListName] = useState(null);
-  const [onMenuView, setOnMenuView] = useState(true); // On left tab if true, on right tab if false
-  const [sortView, setSortView] = useState("dateCreated");
-
-  const isMobile = useMediaQuery({maxWidth: 600})
-
-  let hasCompleted = FamilyRestroomOutlined
-
-  let taskListQuery = db.collection(COLLECTION).orderBy("name");
-  const [allTaskListsValue, allTaskListsLoading, allTaskListsError] = useCollection(taskListQuery);
-
-  let taskListData = [];
-  if (!allTaskListsLoading && allTaskListsValue) {
-    taskListData = allTaskListsValue.docs.map((doc) => doc.data());
-  }
-
-
-  // Helper functions
-  function handleAddTaskList(name, id) {
-    db.collection(COLLECTION).doc(id).set(
-      {
-        id: id,
-        name: name,
-      }
-    );
-  }
-
-  function handleDeleteTaskList(id) {
-    db.collection(COLLECTION).doc(id).delete();
-  }
-
-
-  return (
-    <div className="App">
-          {
-            isMobile ? 
-              onMenuView ? 
-              
-              <>
-                <SelectListMobile 
-                  tasksLists={taskListData} 
-                  onSetListId={setListId} 
-                  onSetOnMenuView={setOnMenuView} 
-                  onHandleAddTaskList={handleAddTaskList}
-                  onHandleDeleteTaskList={handleDeleteTaskList}
-                  onSetListName={setListName}
-                />
-              </>
-              :
-              <>
-                
-                <ContentContainer>
-                <Header>
-                  <BackButton aria-label="Return to task lists" onSetOnMenuView={setOnMenuView}/> 
-                  <CustomDropdown aria-label="Sort View Dropdown" onSelectView={setSortView} sortByOptions={sortByOptions}/>
-                </Header>
-                <Title aria-label={listName}>{listName}</Title>
-                <TaskDetailView
-                  listId={listId}
-                  listName={listName}
-                  disabled={!hasCompleted} 
-                  sortView={sortView} 
-                  db={db}
-                />
-                </ContentContainer>
-                
-              </>
-              :
-              <DestkopContainer>
-                <ListContainer>
-                  <SelectListDesktop
-                    tasksLists={taskListData} 
-                    onSetListId={setListId} 
-                    onSetOnMenuView={setOnMenuView} 
-                    onHandleAddTaskList={handleAddTaskList}
-                    onHandleDeleteTaskList={handleDeleteTaskList}
-                    onSetListName={setListName}
-                  />
-                </ListContainer>
-                <ContentContainer>
-                  <Header>
-                      <Title aria-label="Tasks">{listName}</Title>
-                      <CustomDropdown aria-label="Sort View Dropdown" onSelectView={setSortView} sortByOptions={sortByOptions}/>
-                  </Header>
-                
-                  {listId &&
-                
-                    <TaskDetailView
-                    sortView={sortView} 
-                    listId={listId}
-                    listName={listName}
-                    disabled={!hasCompleted} 
-                    db={db}
-                  />
-                  }
-                  
-                </ContentContainer>  
-                
-              </DestkopContainer>
-
-          }
-    </div>
+const App = ({ getLists, userId, sideDrawer, emailVerified, sortView, filterView }) => {
     
-  );
+    let routes;
+    let backdrop;
+
+    if (sideDrawer) {
+        backdrop = <div>backdrop</div> //<Backdrop click = {close}/>
+    }
+
+    if (userId && !emailVerified) {
+        routes = (
+        <>
+            <button>Resend email verification</button>
+            {/* <Navbar drawerClickHandler = {open}/>
+            <Menu show = {sideDrawer} />
+            {backdrop} */}
+            <Switch> 
+                {/* <Route exact path={ROUTES.EMAIL_VERIFICATION} component={EmailVerification} /> */}
+                <Route exact path={ROUTES.LOG_OUT} component={LogOut} />
+                {/* <Redirect to={ROUTES.EMAIL_VERIFICATION} /> */}
+            </Switch>
+        </>
+        )
+    } else if (userId && emailVerified) {
+        getLists({sortView: sortView, filterView: filterView});
+        routes = (
+        <>
+            {/* <div>App</div>
+           <LogOut/> */}
+            {/* <Navbar drawerClickHandler = {open}/>
+            <Menu show = {sideDrawer} />
+            {backdrop} */}
+
+            <Switch>
+                {/* <Route exact path={ROUTES.HOME} component={Home} /> */}
+                <Route exact path={ROUTES.TASKS} component={TaskPage} />
+                <Route exact path={ROUTES.LOG_OUT} component={LogOut} />
+                {/* <Route exact path={ROUTES.MENU} component={Menu} />
+                <Route exact path={ROUTES.PASSWORD_RECOVERY} component={PasswordRecovery} />
+                <Route exact path={ROUTES.PROFILE_EDIT} component={ProfileEdit} />
+                <Route exact path={ROUTES.RESTAURANTS} component={Restaurants} />
+                <Route exact path={ROUTES.ABOUT} component={About} />
+                <Route exact path={ROUTES.ADD_FRIENDS} component={AddFriends} />
+                <Route exact path={ROUTES.EDIT_FRIENDS} component={EditFriends} />
+                <Route exact path={ROUTES.PICK_FOOD} component={PickFood} /> */}
+                {/* <Redirect to={ROUTES.HOME} /> */}
+                {/* <Redirect to={ROUTES.LOG_OUT} /> */}
+                <Redirect to={ROUTES.TASKS} />
+
+            </Switch>
+        </>
+        )
+    } else {
+        routes = (
+        // <>
+        //     <div>Login Page</div>
+        //     <LogIn></LogIn>
+        //     <SignUp></SignUp>
+        //     {/* <button><SignUp></SignUp></button> */}
+        // </>
+        <Switch>
+            <Route exact path={ROUTES.LANDING} component={Landing} />
+            <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
+            {/* <Route exact path={ROUTES.ABOUT} component={About} />
+            <Route exact path={ROUTES.PASSWORD_RECOVERY} component={PasswordRecovery} /> */}
+            <Redirect to={ROUTES.LANDING} />
+        </Switch>
+        )
+    }
+
+    return  <main> {routes} </main>
 }
 
-export default App;
+const mapStateToProps = ({ firebase, app}) => ({
+    userId: firebase.auth.uid,
+    emailVerified: firebase.auth.emailVerified,
+    
+    sortView: app.sortView,
+    filterView: app.filterView,
+})
+
+const mapDispatchToProps = {
+    getLists: actions.getLists,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
