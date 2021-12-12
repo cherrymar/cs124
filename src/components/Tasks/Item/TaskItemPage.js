@@ -25,7 +25,7 @@ export default function TaskItemPage() {
     console.log("made it to task item page");
     return (
         <div className="items-container">
-            <AddTaskItem/>
+            {/* <AddTaskItem/> */}
             <div className="item-list-container-size">
                 <TaskItemList/>
             </div>

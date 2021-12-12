@@ -15,6 +15,7 @@ import TaskListPage from './List/TaskListPage';
 import TaskItemPage from './Item/TaskItemPage';
 import AddTaskItem from './Item/AddTaskItem';
 import Button from '../Misc/Button';
+import ShareTaskList from './List/ShareTaskList';
 
 import LogOut from '../LogOut/LogOut';
 
@@ -51,9 +52,11 @@ const TaskPage = ({ listId, listName }) => {
                         <div className="item-list-header">
                             <div className="item-list-title" aria-label={listName}>{listName}</div>
                             <SelectSortView />
+                            <ShareTaskList />
                         </div>
 
                         <div className="items-list-body">
+                            <AddTaskItem />
                             <TabList aria-label="Filter view options tab">
                                 <div key="All">
                                     <TaskItemPage aria-label="View all tasks" />

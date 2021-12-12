@@ -28,7 +28,6 @@ const LogOut = ({ logout, appCleanUp }) => {
 
 const mapDispatchToProps = {
   logout: actions.logOut,
-  close: actions.closeSideDrawer,
   appCleanUp: actions.appCleanUp,
 }
 

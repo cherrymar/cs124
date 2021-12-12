@@ -28,7 +28,7 @@ const DeleteTaskList = ({ deleteTaskList, selectList, loading, error, cleanUp, c
   
     function handleDelete() {
         if (currentListId === listId) {
-            selectList({listId: null, name: null, onListSelected: false, sortView: sortView, filterView: filterView})
+            selectList({listId: null, listName: null, onListSelected: false, sortView: sortView, filterView: filterView})
         }
         deleteTaskList({listId: listId, sortView: sortView, filterView: filterView})
     }

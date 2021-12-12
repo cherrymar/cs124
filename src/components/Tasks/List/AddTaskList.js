@@ -29,7 +29,7 @@ const AddTaskList = ({ selectList, addTaskList, loading, error, cleanUp, sortVie
   
     function handleSubmit() {
         let id = generateUniqueID();
-        selectList({listId: id, name: listName, onListSelected: true, sortView: sortView, filterView: filterView})
+        selectList({listId: id, listName: listName, onListSelected: true, sortView: sortView, filterView: filterView})
         addTaskList({name: listName, listId: id, sortView: sortView, filterView: filterView})
         setStateListName("");
     }

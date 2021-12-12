@@ -7,4 +7,3 @@ export {    addTaskList, editTaskList, deleteTaskList, shareTaskList, unshareTas
             setSortByView, setFilterByView,
             appCleanUp
         } from './appActions.js'
-export { closeSideDrawer, openSideDrawer } from './uiActions.js'

@@ -22,7 +22,7 @@ export const addTaskList = data => async (dispatch, getState, { getFirebase, get
         await firestore.collection(TASKS_LISTS_COLLECTION).doc(data.listId).set({
             id: data.listId,
             name: data.name,
-            owner: user.uid,
+            owner: user.email,
             sharedWith: [user.uid],
         });
 
@@ -74,31 +74,52 @@ export const deleteTaskList = data => async (dispatch, getState, { getFirebase, 
 }
 
 export const shareTaskList = data => async (dispatch, getState, { getFirebase, getFirestore }) => {
-    // const firebase = getFirebase();
-    // const firestore = getFirestore();
-    // dispatch({ type: actions.SHARE_TASKS_LIST_START });
-    // try {
-    //     const user = firebase.auth().currentUser;
-    //     let owner = firestore.collection(TASKS_LISTS_COLLECTION).doc(data.listId).collection(TASKS_ITEMS_SUBCOLLECTION).doc(data.taskId).get("owner");
-    //     let sharedWith = firestore.collection(TASKS_LISTS_COLLECTION).doc(data.listId).collection(TASKS_ITEMS_SUBCOLLECTION).doc(data.taskId).get("sharedWith");
-    //     sharedWith.append(data.friendId);
+    const firebase = getFirebase();
+    const firestore = getFirestore();
+    dispatch({ type: actions.SHARE_TASKS_LIST_START });
+    try {
+        // console.log("sharing", data.listId, data.shareEmail);
+        const user = firebase.auth().currentUser;
+        let owner = "";
+        await firestore
+            .collection(TASKS_LISTS_COLLECTION)
+            .doc(data.listId)
+            .get()
+            .then((querySnapshot) => {
+                owner = querySnapshot.data().owner;
+            });
+        console.log("owner: ", owner);
+        let sharedWith = [];
+        await firestore
+        .collection(TASKS_LISTS_COLLECTION)
+        .doc(data.listId)
+        .get()
+        .then((querySnapshot) => {
+            sharedWith = querySnapshot.data().sharedWith;
+        });        
+        // console.log("original shared with: ", sharedWith);
+        // console.log(user, user.email);
 
-    //     if (owner == user.uid) {
-    //         await firestore.collection(TASKS_LISTS_COLLECTION).doc(data.id).update({
-    //             ["sharedWith"]: sharedWith
-    //         });
+        if (owner == user.email) {
+            sharedWith.push(data.shareEmail);
+            // console.log("added share: ", sharedWith);
+            await firestore.collection(TASKS_LISTS_COLLECTION).doc(data.listId).update({
+                ["sharedWith"]: sharedWith
+            });
             
-    //         const tasksList = firestore.collection(TASKS_LISTS_COLLECTION).where('sharedWith', "array-contains", user.uid).orderBy("name");
-    //         dispatch({ type: actions.SHARE_TASKS_LIST_SUCCESS, tasksLists: tasksList });
-    //     } else {
-    //         dispatch({ type: actions.SHARE_TASKS_LIST_FAIL, payload: "You do not own this task list." });
-    //     }
+            getTaskList(dispatch, getFirebase, getFirestore, data.sortView, data.filterView);
+            getTaskItems(dispatch, getFirebase, getFirestore, data.listId, data.sortView, data.filterView);
+            dispatch({ type: actions.SHARE_TASKS_LIST_SUCCESS });
+        } else {
+            dispatch({ type: actions.SHARE_TASKS_LIST_FAIL, payload: "You do not own this task list." });
+        }
 
         
         
-    // } catch(err) {
-    //     dispatch({ type: actions.SHARE_TASKS_LIST_FAIL, payload: err.message });
-    // }
+    } catch(err) {
+        console.log(err)
+        dispatch({ type: actions.SHARE_TASKS_LIST_FAIL, payload: err.message });
+    }
 }
 
 export const unshareTaskList = data => async (dispatch, getState, { getFirebase, getFirestore }) => {
@@ -203,88 +224,88 @@ export const deleteAllTaskItems = data => async (dispatch, getState, { getFireba
 
 // Friend Item
 export const addFriend = data => async (dispatch, getState, { getFirebase, getFirestore }) => {
-    const firebase = getFirebase();
-    const firestore = getFirestore();
-    dispatch({ type: actions.ADD_FRIEND_START });
-    try {
-        const user = firebase.auth().currentUser;
+    // const firebase = getFirebase();
+    // const firestore = getFirestore();
+    // dispatch({ type: actions.ADD_FRIEND_START });
+    // try {
+    //     const user = firebase.auth().currentUser;
 
-        let friendRequests = await firestore.collection(USER_COLLECTION).doc(data.friendId).get("friendRequests");
-        friendRequests.append(user.uid);
+    //     let friendRequests = await firestore.collection(USER_COLLECTION).doc(data.friendId).get("friendRequests");
+    //     friendRequests.append(user.uid);
 
-        firestore.collection(USER_COLLECTION).doc(data.friendId).update({
-            ["friendRequests"]: friendRequests
-        })
+    //     firestore.collection(USER_COLLECTION).doc(data.friendId).update({
+    //         ["friendRequests"]: friendRequests
+    //     })
 
-        dispatch({ type: actions.ADD_FRIEND_SUCCESS });
+    //     dispatch({ type: actions.ADD_FRIEND_SUCCESS });
 
-    } catch(err) {
-        dispatch({ type: actions.ADD_FRIEND_FAIL, payload: err.message });
-    }
+    // } catch(err) {
+    //     dispatch({ type: actions.ADD_FRIEND_FAIL, payload: err.message });
+    // }
 }
 
 export const deleteFriend = data => async (dispatch, getState, { getFirebase, getFirestore }) => {
-    const firebase = getFirebase();
-    const firestore = getFirestore();
-    dispatch({ type: actions.DELETE_FRIEND_START });
-    try {
-        const user = firebase.auth().currentUser;
+    // const firebase = getFirebase();
+    // const firestore = getFirestore();
+    // dispatch({ type: actions.DELETE_FRIEND_START });
+    // try {
+    //     const user = firebase.auth().currentUser;
 
-        let userFriends = await firestore.collection(USER_COLLECTION).doc(user.uid).get("friendRequests");
-        userFriends.filter(friendId => friendId != data.unfriendId);
-        firestore.collection(USER_COLLECTION).doc(user.uid).update({
-            ["friendRequests"]: userFriends
-        })
+    //     let userFriends = await firestore.collection(USER_COLLECTION).doc(user.uid).get("friendRequests");
+    //     userFriends.filter(friendId => friendId != data.unfriendId);
+    //     firestore.collection(USER_COLLECTION).doc(user.uid).update({
+    //         ["friendRequests"]: userFriends
+    //     })
 
-        let unfriendFriends = firestore.collection(USER_COLLECTION).doc(data.friendId).get("friendRequests");
-        unfriendFriends.filter(friendId => friendId != user.uid);
-        firestore.collection(USER_COLLECTION).doc(data.friendId).update({
-            ["friendRequests"]: unfriendFriends
-        })
+    //     let unfriendFriends = firestore.collection(USER_COLLECTION).doc(data.friendId).get("friendRequests");
+    //     unfriendFriends.filter(friendId => friendId != user.uid);
+    //     firestore.collection(USER_COLLECTION).doc(data.friendId).update({
+    //         ["friendRequests"]: unfriendFriends
+    //     })
 
-        dispatch({ type: actions.DELETE_FRIEND_SUCCESS });
+    //     dispatch({ type: actions.DELETE_FRIEND_SUCCESS });
 
-    } catch(err) {
-        dispatch({ type: actions.DELETE_FRIEND_FAIL, payload: err.message });
-    }
+    // } catch(err) {
+    //     dispatch({ type: actions.DELETE_FRIEND_FAIL, payload: err.message });
+    // }
 }
 
 export const acceptFriend = data => async (dispatch, getState, { getFirebase, getFirestore }) => {
-    const firebase = getFirebase();
-    const firestore = getFirestore();
-    dispatch({ type: actions.ACCEPT_FRIEND_START });
-    try {
-        const user = firebase.auth().currentUser;
+    // const firebase = getFirebase();
+    // const firestore = getFirestore();
+    // dispatch({ type: actions.ACCEPT_FRIEND_START });
+    // try {
+    //     const user = firebase.auth().currentUser;
 
-        let userFriends = await firestore.collection(USER_COLLECTION).doc(user.uid).get("friends");
-        userFriends.append(data.friendId);
-        firestore.collection(USER_COLLECTION).doc(user.uid).update({
-            ["friends"]: userFriends
-        })
+    //     let userFriends = await firestore.collection(USER_COLLECTION).doc(user.uid).get("friends");
+    //     userFriends.append(data.friendId);
+    //     firestore.collection(USER_COLLECTION).doc(user.uid).update({
+    //         ["friends"]: userFriends
+    //     })
 
-        let friendFriends = firestore.collection(USER_COLLECTION).doc(data.friendId).get("friends");
-        friendFriends.append(user.uid);
-        firestore.collection(USER_COLLECTION).doc(data.friendId).update({
-            ["friends"]: friendFriends
-        })
+    //     let friendFriends = firestore.collection(USER_COLLECTION).doc(data.friendId).get("friends");
+    //     friendFriends.append(user.uid);
+    //     firestore.collection(USER_COLLECTION).doc(data.friendId).update({
+    //         ["friends"]: friendFriends
+    //     })
 
-        let requests = firestore.collection(USER_COLLECTION).doc(user.uid).get("friendRequests");
-        requests.filter(friendId => friendId != data.friendId);
-        firestore.collection(USER_COLLECTION).doc(user.uid).update({
-            ["friendRequests"]: requests
-        })
+    //     let requests = firestore.collection(USER_COLLECTION).doc(user.uid).get("friendRequests");
+    //     requests.filter(friendId => friendId != data.friendId);
+    //     firestore.collection(USER_COLLECTION).doc(user.uid).update({
+    //         ["friendRequests"]: requests
+    //     })
 
-        let invites = firestore.collection(USER_COLLECTION).doc(data.friendId).get("friendInvites");
-        invites.append(friendId => friendId != user.uid);
-        firestore.collection(USER_COLLECTION).doc(data.friendId).update({
-            ["friendInvites"]: invites
-        })
+    //     let invites = firestore.collection(USER_COLLECTION).doc(data.friendId).get("friendInvites");
+    //     invites.append(friendId => friendId != user.uid);
+    //     firestore.collection(USER_COLLECTION).doc(data.friendId).update({
+    //         ["friendInvites"]: invites
+    //     })
 
-        dispatch({ type: actions.ACCEPT_FRIEND_SUCCESS });
+    //     dispatch({ type: actions.ACCEPT_FRIEND_SUCCESS });
 
-    } catch(err) {
-        dispatch({ type: actions.ACCEPT_FRIEND_FAIL, payload: err.message });
-    }
+    // } catch(err) {
+    //     dispatch({ type: actions.ACCEPT_FRIEND_FAIL, payload: err.message });
+    // }
 }
 
 export const selectList = data => async (dispatch, getState, { getFirebase, getFirestore}) => {
@@ -345,7 +366,7 @@ async function getTaskList(dispatch, getFirebase, getFirestore) {
     let taskListData = [];
     await firestore
         .collection(TASKS_LISTS_COLLECTION)
-        .where('sharedWith', "array-contains", user.uid)
+        .where('sharedWith', "array-contains", user.email)
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {

@@ -39,10 +39,10 @@ const initialState = {
         loading: false,
     },
 
-    unshareTaskList: {
-        error: null,
-        loading: false,
-    },
+    // unshareTaskList: {
+    //     error: null,
+    //     loading: false,
+    // },
     
     addTaskItem: {
         error: null,
@@ -59,29 +59,29 @@ const initialState = {
         loading: false,
     },
 
-    addFriend: {
-        error: null,
-        loading: false,
-    },
+    // addFriend: {
+    //     error: null,
+    //     loading: false,
+    // },
 
-    deleteFriend: {
-        error: null,
-        loading: false,
-    },
+    // deleteFriend: {
+    //     error: null,
+    //     loading: false,
+    // },
 
-    acceptFriend: {
-        error: null,
-        loading: false,
-    },
+    // acceptFriend: {
+    //     error: null,
+    //     loading: false,
+    // },
 }
 
 export default (state = initialState, {
-    type, payload, 
-    tasksLists, tasksItems, 
-    listId, listName, onListSelected,
-    sortView, filterView,
-    hasCompleted
-}) => {
+        type, payload, 
+        tasksLists, tasksItems, 
+        listId, listName, onListSelected,
+        sortView, filterView,
+        hasCompleted
+    }) => {
 
 
     switch (type) {
@@ -98,8 +98,8 @@ export default (state = initialState, {
         case actions.ADD_TASKS_LIST_SUCCESS:
             return{
                 ...state,
-                tasksLists: tasksLists, 
-                tasksItems: tasksItems, 
+                // tasksLists: tasksLists, 
+                // tasksItems: tasksItems, 
                 addTaskList: { 
                     ...state.addTaskList, 
                     loading: false, 
@@ -120,8 +120,7 @@ export default (state = initialState, {
         case actions.EDIT_TASKS_LIST_SUCCESS:
             return{
                 ...state, 
-                tasksLists: tasksLists, 
-                // tasksItems: tasksItems, 
+                // tasksLists: tasksLists,
                 editTaskList: { 
                     ...state.editTaskList,
                     loading: false, 
@@ -142,8 +141,7 @@ export default (state = initialState, {
         case actions.DELETE_TASKS_LIST_SUCCESS:
             return{
                 ...state,
-                tasksLists: tasksLists, 
-                // tasksItems: tasksItems, 
+                // tasksLists: tasksLists, 
                 deleteTaskList: { 
                     ...state.deleteTaskList, 
                     loading: false, error: false,  
@@ -163,8 +161,8 @@ export default (state = initialState, {
         case actions.ADD_TASK_SUCCESS:
             return{
                 ...state,
-                tasksLists: tasksLists, 
-                tasksItems: tasksItems, 
+                // tasksLists: tasksLists, 
+                // tasksItems: tasksItems, 
                 addTaskItem: { 
                     ...state.addTaskItem, 
                     loading: false, 
@@ -185,8 +183,8 @@ export default (state = initialState, {
         case actions.EDIT_TASK_SUCCESS:
             return{
                 ...state, 
-                tasksLists: tasksLists, 
-                tasksItems: tasksItems, 
+                // tasksLists: tasksLists, 
+                // tasksItems: tasksItems, 
                 editTaskItem: { 
                     ...state.editTaskItem,
                     loading: false, 
@@ -207,61 +205,61 @@ export default (state = initialState, {
         case actions.DELETE_TASK_SUCCESS:
             return{
                 ...state,
-                tasksLists: tasksLists, 
-                tasksItems: tasksItems, 
+                // tasksLists: tasksLists, 
+                // tasksItems: tasksItems, 
                 deleteTaskItem: { 
                     ...state.deleteTaskItem,
                     loading: false, error: false,  
                 },
             };
 
-        case actions.ADD_FRIEND_START:
-            return{
-                ...state,
-                addFriend: { ...state.addFriend, loading: true },
-            };
-        case actions.ADD_FRIEND_FAIL:
-            return{
-                ...state,
-                addFriend: { ...state.addFriend, loading: false, error: payload, },
-            };
-        case actions.ADD_FRIEND_SUCCESS:
-            return{
-                ...state,
-                addFriend: { ...state.addFriend, loading: false, error: false,  },
-            };
+        // case actions.ADD_FRIEND_START:
+        //     return{
+        //         ...state,
+        //         addFriend: { ...state.addFriend, loading: true },
+        //     };
+        // case actions.ADD_FRIEND_FAIL:
+        //     return{
+        //         ...state,
+        //         addFriend: { ...state.addFriend, loading: false, error: payload, },
+        //     };
+        // case actions.ADD_FRIEND_SUCCESS:
+        //     return{
+        //         ...state,
+        //         addFriend: { ...state.addFriend, loading: false, error: false,  },
+        //     };
 
-        case actions.ACCEPT_FRIEND_START:
-            return{
-                ...state,
-                acceptFriend: { ...state.acceptFriend, loading: true },
-            };
-        case actions.ACCEPT_FRIEND_FAIL:
-            return{
-                ...state,
-                acceptFriend: { ...state.acceptFriend, loading: false, error: payload, },
-            };
-        case actions.ACCEPT_FRIEND_SUCCESS:
-            return{
-                ...state,
-                acceptFriend: { ...state.acceptFriend, loading: false, error: false,  },
-            };
+        // case actions.ACCEPT_FRIEND_START:
+        //     return{
+        //         ...state,
+        //         acceptFriend: { ...state.acceptFriend, loading: true },
+        //     };
+        // case actions.ACCEPT_FRIEND_FAIL:
+        //     return{
+        //         ...state,
+        //         acceptFriend: { ...state.acceptFriend, loading: false, error: payload, },
+        //     };
+        // case actions.ACCEPT_FRIEND_SUCCESS:
+        //     return{
+        //         ...state,
+        //         acceptFriend: { ...state.acceptFriend, loading: false, error: false,  },
+        //     };
 
-        case actions.DELETE_FRIEND_START:
-            return{
-                ...state,
-                deleteFriend: { ...state.deleteFriend, loading: true },
-            };
-        case actions.DELETE_FRIEND_FAIL:
-            return{
-                ...state,
-                deleteFriend: { ...state.deleteFriend, loading: false, error: payload, },
-            };
-        case actions.DELETE_FRIEND_SUCCESS:
-            return{
-                ...state,
-                deleteFriend: { ...state.deleteFriend, loading: false, error: false,  },
-            };
+        // case actions.DELETE_FRIEND_START:
+        //     return{
+        //         ...state,
+        //         deleteFriend: { ...state.deleteFriend, loading: true },
+        //     };
+        // case actions.DELETE_FRIEND_FAIL:
+        //     return{
+        //         ...state,
+        //         deleteFriend: { ...state.deleteFriend, loading: false, error: payload, },
+        //     };
+        // case actions.DELETE_FRIEND_SUCCESS:
+        //     return{
+        //         ...state,
+        //         deleteFriend: { ...state.deleteFriend, loading: false, error: false,  },
+        //     };
 
         case actions.SHARE_TASKS_LIST_START:
             return{
@@ -279,21 +277,21 @@ export default (state = initialState, {
                 shareTaskList: { ...state.shareTaskList, loading: false, error: false,  },
             };
         
-        case actions.UNSHARE_TASKS_LIST_START:
-            return{
-                ...state,
-                unshareTaskList: { ...state.unshareTaskList, loading: true },
-            };
-        case actions.UNSHARE_TASKS_LIST_FAIL:
-            return{
-                ...state,
-                unshareTaskList: { ...state.unshareTaskList, loading: false, error: payload, },
-            };
-        case actions.UNSHARE_TASKS_LIST_SUCCESS:
-            return{
-                ...state,
-                unshareTaskList: { ...state.unshareTaskList, loading: false, error: false,  },
-            };
+        // case actions.UNSHARE_TASKS_LIST_START:
+        //     return{
+        //         ...state,
+        //         unshareTaskList: { ...state.unshareTaskList, loading: true },
+        //     };
+        // case actions.UNSHARE_TASKS_LIST_FAIL:
+        //     return{
+        //         ...state,
+        //         unshareTaskList: { ...state.unshareTaskList, loading: false, error: payload, },
+        //     };
+        // case actions.UNSHARE_TASKS_LIST_SUCCESS:
+        //     return{
+        //         ...state,
+        //         unshareTaskList: { ...state.unshareTaskList, loading: false, error: false,  },
+        //     };
         
         
         case actions.SELECT_TASK_LIST:
@@ -335,71 +333,57 @@ export default (state = initialState, {
                 error: null,
                 loading: false,
                 type: null,
-
+            
                 friendsQuery: false,
                 tasksLists: null,
                 tasksItems: null,
-
+            
                 listId: null,
                 listName: null,
                 onListSelected: false,
-
+            
                 sortView: "description",
                 filterView: "All",
-
+                hasCompleted: false,
+            
                 // currentListId: null,
-
+            
                 addTaskList: {
                     error: null,
                     loading: false,
                 },
-
+            
                 editTaskList: {
                     error: null,
                     loading: false,
                 },
-
+            
                 deleteTaskList: {
                     error: null,
                     loading: false,
                 },
-
+            
                 shareTaskList: {
                     error: null,
                     loading: false,
                 },
-
-                unshareTaskList: {
-                    error: null,
-                    loading: false,
-                },
+            
+                // unshareTaskList: {
+                //     error: null,
+                //     loading: false,
+                // },
                 
                 addTaskItem: {
                     error: null,
                     loading: false,
                 },
-
+            
                 editTaskItem: {
                     error: null,
                     loading: false,
                 },
-
+            
                 deleteTaskItem: {
-                    error: null,
-                    loading: false,
-                },
-
-                addFriend: {
-                    error: null,
-                    loading: false,
-                },
-
-                deleteFriend: {
-                    error: null,
-                    loading: false,
-                },
-
-                acceptFriend: {
                     error: null,
                     loading: false,
                 },
@@ -438,11 +422,11 @@ export default (state = initialState, {
                     loading: false,
                 },
 
-                unshareTaskList: {
-                    ...state.unshareTaskList,
-                    error: null,
-                    loading: false,
-                },
+                // unshareTaskList: {
+                //     ...state.unshareTaskList,
+                //     error: null,
+                //     loading: false,
+                // },
                 
                 addTaskItem: {
                     ...state.addTaskItem,
@@ -462,23 +446,23 @@ export default (state = initialState, {
                     loading: false,
                 },
 
-                addFriend: {
-                    ...state.addFriend,
-                    error: null,
-                    loading: false,
-                },
+                // addFriend: {
+                //     ...state.addFriend,
+                //     error: null,
+                //     loading: false,
+                // },
 
-                deleteFriend: {
-                    ...state.deleteFriend,
-                    error: null,
-                    loading: false,
-                },
+                // deleteFriend: {
+                //     ...state.deleteFriend,
+                //     error: null,
+                //     loading: false,
+                // },
 
-                acceptFriend: {
-                    ...state.acceptFriend,
-                    error: null,
-                    loading: false,
-                },
+                // acceptFriend: {
+                //     ...state.acceptFriend,
+                //     error: null,
+                //     loading: false,
+                // },
             } 
 
         default:

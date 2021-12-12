@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import styled from 'styled-components';
 
 // Local imports
-import './DeleteAllCompletedButton';
+// import './DeleteAllCompletedButton';
 import Button from '../../Misc/Button';
 
 
