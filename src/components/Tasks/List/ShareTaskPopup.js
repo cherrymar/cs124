@@ -22,7 +22,6 @@ const Backdrop = styled.div`
     color: white;
     display: flex;
     z-index: 1;
-    opacity: 90%;
 `;
 
 const Modal = styled.div`
@@ -42,7 +41,6 @@ const Modal = styled.div`
     align-items: center;
     top: 150px;
 
-    opacity: 100%;
     z-index: 1;
 `;
 
