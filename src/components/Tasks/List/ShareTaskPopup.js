@@ -49,6 +49,25 @@ const ButtonContainer = styled.div`
     margin: auto;
 `;
 
+const Input = styled.input`
+    width: 60%;
+    height: 20px;
+`;
+
+const Text = styled.div`
+    color: white;
+    font-size: 20px;
+    padding: 20px;
+    opacity: 100%;
+
+`;
+
+const InputContainer = styled.div`
+    display: flex;
+    // justify-content: space-between;
+    align-items: center;
+`;
+
 const ShareTaskPopup = ({ onOK, onClose, OKText, cancelText, loading, error, cleanUp, listId, sortView, filterView, children }) => {
 
     const [email, setEmail] = useState("")
@@ -77,15 +96,17 @@ const ShareTaskPopup = ({ onOK, onClose, OKText, cancelText, loading, error, cle
     <Backdrop>
         <Modal>
             {children}
-                Share with: 
-                <input 
-                    aria-label="share with"
-                    completed={"false"} 
-                    placeholder="email" 
-                    value={email} 
-                    onChange={event => setEmail(event.target.value)} 
-                    onKeyDown={handleKeyDown}
-                />
+                <InputContainer>
+                    <Text> Share with: </Text>
+                    <Input 
+                        aria-label="share with"
+                        completed={"false"} 
+                        placeholder="email" 
+                        value={email} 
+                        onChange={event => setEmail(event.target.value)} 
+                        onKeyDown={handleKeyDown}
+                    />
+                </InputContainer>
                 <ButtonContainer>
                     
                     <Button
