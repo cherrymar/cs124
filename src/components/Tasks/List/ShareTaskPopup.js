@@ -52,6 +52,7 @@ const ButtonContainer = styled.div`
 const Input = styled.input`
     width: 60%;
     height: 20px;
+    font-size: 15px;
 `;
 
 const Text = styled.div`
