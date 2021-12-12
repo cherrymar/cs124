@@ -207,7 +207,7 @@ export const deleteAllTaskItems = data => async (dispatch, getState, { getFireba
     const firestore = getFirestore();
     dispatch({ type: actions.DELETE_ALL_TASKS_START });
     try {
-        const snapshot = await firestore.collection(TASKS_LISTS_COLLECTION).doc(data.listId).collection(TASKS_ITEMS_SUBCOLLECTION).get();
+        const snapshot = await firestore.collection(TASKS_LISTS_COLLECTION).doc(data.listId).collection(TASKS_ITEMS_SUBCOLLECTION).where('completed', '==', true).get();
         snapshot.forEach(doc => {
             firestore.collection(TASKS_LISTS_COLLECTION).doc(data.listId).collection(TASKS_ITEMS_SUBCOLLECTION).doc(doc.id).delete();
         });
