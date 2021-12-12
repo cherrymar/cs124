@@ -23,7 +23,7 @@ export const addTaskList = data => async (dispatch, getState, { getFirebase, get
             id: data.listId,
             name: data.name,
             owner: user.email,
-            sharedWith: [user.uid],
+            sharedWith: [user.email],
         });
 
         getTaskList(dispatch, getFirebase, getFirestore, data.sortView, data.filterView);
