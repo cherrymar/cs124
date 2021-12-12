@@ -1,0 +1,13 @@
+export const LANDING = '/';
+export const SIGN_UP = '/signup';
+export const LOG_IN = '/login';
+export const LOG_OUT = '/logout';
+export const HOME = '/home';
+export const TASKS = '/tasks';
+export const PASSWORD_RECOVERY = '/settings/password_recovery';
+export const PROFILE_EDIT = '/settings/profile_edit';
+export const ABOUT = '/about'
+// export const FRIENDS = '/friends';
+export const EMAIL_VERIFICATION = '/email_verification'
+export const ADD_FRIENDS = '/add_friends';
+export const EDIT_FRIENDS = '/edit_friends';
