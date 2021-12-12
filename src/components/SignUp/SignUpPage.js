@@ -3,7 +3,7 @@ import React from 'react';
 import LogInLink from '../LogIn/LogInLink';
 import SignUpForm from './SignUpForm';
 
-import logo from '../../images/clipboard.svg'
+import logo from '../../images/logo.png'
 
 const SignUpPage = () => (
   <div className = "sign-up">
